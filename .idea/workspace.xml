@@ -1,805 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="HW:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="531b5ed5-b52e-4cb0-9754-ca12c18ed83b" name="Default Changelist" comment="/***********************************************************************&#10; * Full Swing Golf Strip Test version 0.1, 6/10/2019&#10; * Raspberry Pi...can't get pi4j library attached&#10; * copyright 2019 Vic Wintriss&#10; ***********************************************************************/&#10; Working without pi4j">
-      <change afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/pi4j_1_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.bak_0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.mylyn/.taskListIndex/segments.gen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.mylyn/.taskListIndex/segments_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.mylyn/.tasks.xml.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.mylyn/repositories.xml.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.mylyn/tasks.xml.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/com.codeaffine.extras.launch/cleanup-launch-configurations.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ant.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.buildship.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/1/003ccad16812001716f9e9f8eee502eb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/1/5058391c3214001715a9fb3fdc1e2586" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/10/60e0df8ffea900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/20/2035cc9b9a14001714aee3b6a2f49856" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/20/d02b4150001100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/22/705ccb6ffca900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/26/007e18547e1200171e44faf85fcd6672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/28/000953c0071100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/2e/a07009363514001715a9fb3fdc1e2586" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/31/20487dd3faa900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/3d/d0cac33a081100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/41/90dc1fb7a21200171e44faf85fcd6672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/4e/a0441ae92cfd0016183093d1fec0d573" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/51/70fa2e75faa900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/52/a0c24b09081100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/55/607599f92e160017177eae98efd22c75" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/58/808d34627e1200171e44faf85fcd6672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/5b/70ebc86ffca900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/63/005fe19d2cfd0016183093d1fec0d573" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/66/70db3d3e7e1200171e44faf85fcd6672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/6d/104b675f9f1400171954bb43375750e6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/6e/80136676fda900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/74/80daee669d1400171954bb43375750e6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/76/500200e18b1100171a75ee118eeee0c1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/78/30a54ee1c51400171954bb43375750e6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/78/600b5ea6fda900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/84/d08a1c43a412001711daa42f505f0ebe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/89/f0c8ab8a1e13001713e3a90b7996f937" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/8e/007543197e1200171e44faf85fcd6672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/a/404ee99d2cfd0016183093d1fec0d573" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/a0/600828b68c1100171a75ee118eeee0c1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/a8/b0da3115fa130017181efcda703d4a99" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/ad/10e3cc6ffca900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/b2/c016f546071100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/b3/202a59aa3214001715a9fb3fdc1e2586" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/b3/307bef72071100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/b4/b08f21021e130017118bec6f58472766" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/b7/004b32708b1100171a75ee118eeee0c1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/b8/a0fbfa60fda900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/c4/a05fb2648a1100171a75ee118eeee0c1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/cd/a05cbfdefaa900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/d2/d066f5d10c1100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/d2/f063d8c8061100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/d9/10689dc33314001715a9fb3fdc1e2586" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/db/004bca6ffca900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/df/60640c14031100171c119c8624c5964f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/e1/7065376bf4130017181efcda703d4a99" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/e4/10ea0d588c1100171a75ee118eeee0c1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/e6/20567a77e91000171cb1974ae3139c71" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/e9/108ee18ffea900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/ea/2034fc60fda900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/ea/80859cb29e1400171954bb43375750e6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/ed/00573ae6faa900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/f5/30214a1c3214001715a9fb3fdc1e2586" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.history/fc/c0f0f80cfda900161741ae08db1b7c27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/.indexes/af/history.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/.indexes/e4/52/history.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/.indexes/e4/8e/history.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/.indexes/e4/d9/history.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/.indexes/properties.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/.markers" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/org.eclipse.egit.core/GitProjectData.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/PulsePi/org.eclipse.jdt.core/state.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/.indexes/85/properties.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/.indexes/e4/e4/f6/cc/3d/history.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/.indexes/e4/e4/f6/cc/5f/history.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/.indexes/properties.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/.markers" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/org.eclipse.egit.core/GitProjectData.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.projects/VicRoombaPi/org.eclipse.jdt.core/state.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/history.version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.root/168.tree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.net.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.epp.logging.aeri.ide.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.help.base.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.debug.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.launching.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.m2e.discovery.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.context.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.java.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.monitor.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.tasks.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.oomph.workingsets.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.recommenders.completion.rcp.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.team.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.browser.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.sse.ui.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/ADXL345.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/AsteroidGameController (1).launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/AsteroidGameController (3).launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/AsteroidGameController (4).launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/AsteroidGameController (5).launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/AsteroidGameController.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/CleverRobot.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/Controller.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/Hacker.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/Main (1).launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/Main (2).launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/Main.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.core/.launches/New_configuration.launch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.debug.ui/launchConfigurationHistory.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.egit.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_18_1.del" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_19.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_1a.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_1b.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_1c.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_1d.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/_1e.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/segments.gen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/segments_d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_a.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_b.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_c.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_d.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_e.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_f.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_g.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_h.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_i.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_j.cfs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/segments.gen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/segments_j" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/write.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_l.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/segments.gen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/segments_m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/server-config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.equinox.p2.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1001954280.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1271342938.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1359674564.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1384487945.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1428010590.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1542969262.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/156905802.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1628759026.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1765565202.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1769317737.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1819685514.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1833648217.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/1836440489.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2178737305.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2211732093.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2230034200.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2456149042.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2545238116.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2613648264.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2639854991.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2793427791.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2793574704.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/285891185.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/2885545355.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/31031388.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3266567714.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3270581164.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3302703152.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3321539481.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3348459436.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3370543651.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3637494283.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3712507179.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/3794497040.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/387826305.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/411166081.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/4259282187.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/4276456779.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/689195.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/assumedExternalFilesCache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/indexNamesMap.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/javaLikeNames.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.debug.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.launching/.install.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.launching/libraryInfos.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.ui/OpenTypeHistory.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2016/9/39/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2016/9/39/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/1/2/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/1/2/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/2/5/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/2/5/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/2/9/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/2/9/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/3/13/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2017/3/13/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/And/2016/8/33/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/And/2016/8/33/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/AsteroidsAttempt2/2016/10/42/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/AsteroidsAttempt2/2016/10/42/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/AsteroidsAttempt3/2016/10/44/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/AsteroidsAttempt3/2016/10/44/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/AsteroidsAttempt3b/2016/11/48/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/AsteroidsAttempt3b/2016/11/48/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/CleverRPiRobot/2017/1/2/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/CleverRPiRobot/2017/1/2/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/FSG/2016/12/52/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/FSG/2016/12/52/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/FX/2016/11/48/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/FX/2016/11/48/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/Hack The Bank/2016/11/47/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/Hack The Bank/2016/11/47/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/NewPiDebugger/2017/3/13/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/NewPiDebugger/2017/3/13/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/PiDebugger/2017/3/13/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/PiDebugger/2017/3/13/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/RPiGreenbot/2017/3/12/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/RPiGreenbot/2017/3/12/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/src(2)/2016/11/49/refactorings.history" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/src(2)/2016/11/49/refactorings.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ltk.ui.refactoring/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.1.7.0.20160603-1933.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.mylyn.tasks.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.oomph.setup/workspace.setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.search/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.team.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.team.ui/syncParticipants.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ui.editors/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ui.ide/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ui.intro/introstate" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ui.workbench.texteditor/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/externalLibsTimeStamps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/baseBrowserLibrary.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/browserWindow.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/dom5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/system.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/xhr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.jsdt.core/variablesAndContainers.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.sse.core/task-tags.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/.plugins/org.eclipse.wst.xml.ui/dialog_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.metadata/version.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/caches/identified-project-coordinates.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/caches/manual-mappings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.fdt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.fdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.fnm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.frq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.nrm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.prx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.tii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_1k.tis" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/segments.gen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/segments_1l" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ABC/ABC.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ABC/src/Sonar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/.idea/libraries/src.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/Laser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/src/Asteroid.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/src/AsteroidGameController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/src/PowerUpTest.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/src/Powerup.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/src/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Sonar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Asteroids/src/Utilities.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/bin/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/bin/si.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackgroundImageStudy/src/si.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.google/packaging.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.gradle/2.2.1/taskArtifacts/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.gradle/2.2.1/taskArtifacts/cache.properties.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.gradle/2.2.1/taskArtifacts/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/libraries/cardview_v7_21_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/libraries/support_annotations_21_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/libraries/support_v13_21_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/libraries/support_v4_21_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/Application.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/generated/source/buildConfig/debug/com/example/android/borderlessbuttons/BuildConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/generated/source/buildConfig/test/debug/com/example/android/borderlessbuttons/test/BuildConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/generated/source/r/debug/android/support/v7/cardview/R.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/generated/source/r/debug/com/example/android/borderlessbuttons/R.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/android/support/v7/cardview/R$attr.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/android/support/v7/cardview/R$color.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/android/support/v7/cardview/R$dimen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/android/support/v7/cardview/R$style.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/android/support/v7/cardview/R$styleable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/android/support/v7/cardview/R.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/BuildConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/MainActivity$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/MainActivity$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/MainActivity$3$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/MainActivity$3$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/MainActivity$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/MainActivity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$attr.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$color.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$dimen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$drawable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$id.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$layout.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$string.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$style.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R$styleable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/borderlessbuttons/R.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/Log.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/LogFragment$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/LogFragment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/LogNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/LogView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/LogView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/LogWrapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/classes/debug/com/example/android/common/logger/MessageOnlyLogFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/dex/debug/classes.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/R.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/classes.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v13/21.0.2/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v13/21.0.2/classes.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v13/21.0.2/libs/internal_impl-21.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/aidl/android/support/v4/app/INotificationSideChannel.aidl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/classes.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/libs/internal_impl-21.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/incremental/aidl/debug/dependency.store" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/incremental/aidl/test/debug/dependency.store" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/incremental/mergeAssets/debug/merger.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/incremental/mergeAssets/test/debug/merger.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/incremental/mergeResources/debug/merger.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/incremental/mergeResources/test/debug/merger.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/manifests/full/debug/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/manifests/test/debug/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/pre-dexed/debug/classes-23c66a3ddbc795eab3bac98da627badfbf42a0ba.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/pre-dexed/debug/classes-9706d065bbfb9db49fbab5072a0ae56f61769313.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/pre-dexed/debug/classes-f692752f14af96fbc3d67c66cc0cd09a1c51ef37.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-01a89a3672907ce5887371333b409246674e31dc.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-f961cf044e8555596d0a14ffd61dc8a0bd21d105.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-8ae17012995a60fa21994f42b6645b47ad845db1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-hdpi-v4/ic_action_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-hdpi-v4/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-hdpi-v4/tile.9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-mdpi-v4/ic_action_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-mdpi-v4/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-xhdpi-v4/ic_action_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-xhdpi-v4/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/drawable-xxhdpi-v4/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/layout/list_item.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/layout/sample_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/menu/main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/values-sw600dp-v13/values.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/values-v11/values.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/values-v21/values.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/debug/values/values.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/resources-debug-test.ap_" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/res/resources-debug.ap_" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/symbols/debug/R.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/intermediates/tmp/dex/debug/inputList.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/outputs/apk/Application-debug-unaligned.apk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/outputs/apk/Application-debug.apk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/build/outputs/apk/manifest-merger-debug-report.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/borderlessbuttons/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/common/logger/Log.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/common/logger/LogFragment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/common/logger/LogNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/common/logger/LogView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/common/logger/LogWrapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/java/com/example/android/common/logger/MessageOnlyLogFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-hdpi/ic_action_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-hdpi/tile.9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-mdpi/ic_action_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-xhdpi/ic_action_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/drawable-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/layout/list_item.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/layout/sample_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/menu/main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values-sw600dp/template-dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values-sw600dp/template-styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values-v11/template-styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values-v21/base-colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values-v21/base-template-styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values/base-strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values/template-dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/Application/src/main/res/values/template-styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/BorderlessButtons.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/CONTRIB.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/NOTICE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/build/intermediates/dex-cache/cache.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/build/intermediates/gradle_project_sync_data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/build/intermediates/model_data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/local.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/packaging.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/screenshots/1-activity.png.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/screenshots/big_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BorderlessButtons/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/RPiGreenbot.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/RPiGreenbotdoc.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/pi4j-core-javadoc.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/pi4j-core-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/pi4j-core.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/pi4j-device.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/pi4j-gpio-extension.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/lib/pi4j-service.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CleverRPiRobot-master/src/org/jointheleague/ecolban/cleverrobot/CleverRobot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CloneGitHubRepositories.pages" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Create2Demo2016/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GodAndMan/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HW.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/HW_jar/HW.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/HW_jar/HW.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HW/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HW/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/bin/BankA.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/bin/Hacker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/src/BankA.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hack The Bank/src/Hacker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/ReversedThomas8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/Thomas8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBase/src/com/wintrisstech/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PandLextractor/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PandLextractor/src/PandLextractor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PiDebugger/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PiDebugger/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PiDebugger/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PiDebugger/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PiDebugger/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PiDebugger/src/Sonar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/.settings/org.eclipse.ltk.core.refactoring.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/RPiGreenbot.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/RPiGreenbotdoc.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/pi4j-core-javadoc.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/pi4j-core-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/pi4j-core.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/pi4j-device.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/pi4j-gpio-extension.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/lib/pi4j-service.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PulsePi/src/pulsePi/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/androidTest/java/org/jointheleague/robocamp2016roombabaseline/ApplicationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/java/org/jointheleague/robocamp2016roombabaseline/Brain.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/java/org/jointheleague/robocamp2016roombabaseline/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/java/org/jointheleague/robocamp2016roombabaseline/UltrasonicSensor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/layout/content_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/layout/main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/menu/menu_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/values-v21/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/values-w820dp/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/values/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/app/src/test/java/org/jointheleague/robocamp2016roombabaseline/ExampleUnitTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RoboCamp2016RoombaBaseline/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/androidTest/java/com/example/vicmini/rylexwhiteline/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/java/com/example/vicmini/rylexwhiteline/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/values-w820dp/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/values/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/app/src/test/java/com/example/vicmini/rylexwhiteline/ExampleUnitTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLine/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/androidTest/java/com/example/vicmini/rylexwhiteliner/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/java/com/example/vicmini/rylexwhiteliner/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/values-w820dp/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/values/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/app/src/test/java/com/example/vicmini/rylexwhiteliner/ExampleUnitTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RylexWhiteLiner/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SaurianFlashCards/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SaurianFlashCards/src/com/wintrisstech/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/StateMachineStudy2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/out/production/StateMachineStudy2/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StateMachineStudy2/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/codeStyleSettings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/scopes/scope_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/StringBuilderStudy.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/out/production/StringBuilderStudy/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/out/production/StringBuilderStudy/StringBuilderStudy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/src/Person.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StringBuilderStudy/src/StringBuilderStudy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/WebScrapeControl/WebScrapeControl.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/WebScrapeControl/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebScrape/WebScraper.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../_mac/applicationLibraries.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../_mac/git.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../_mac/laf.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../_mac/path.macros.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../baseRefactoring.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code.style.schemes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codestyles/Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../debugger.renderers.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../debugger.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../diff.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../editor.codeinsight.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../editor.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../filetypes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../find.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ide.general.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../intentionSettings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../myFirstBot/src/main/java/com/github/sdvic/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../parameter.hints.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../projectView.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui.lnf.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../usageView.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vcs.xml" beforeDir="false" />
-    </list>
-    <ignored path="$PROJECT_DIR$/out/" />
+    <list default="true" id="148c029f-52f5-4aae-8f47-876e5ab0e4f8" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
-  </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
-  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <leaf>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="57" column="16" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
+            <state relative-caret-position="315">
+              <caret line="21" column="40" lean-forward="false" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -809,144 +27,121 @@
       </file>
     </leaf>
   </component>
-  <component name="Git.Settings">
-    <option name="UPDATE_TYPE" value="REBASE" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../myFirstBot/src/main/java/com/github/sdvic/Main.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1109" />
-    <option name="y" value="23" />
-    <option name="width" value="853" />
-    <option name="height" value="977" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="206" />
+    <option name="y" value="59" />
+    <option name="width" value="1400" />
+    <option name="height" value="955" />
+  </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-          <expand>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="HW_jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HW" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-              <item name="Extensions" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-              <item name="Extensions" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
-              <item name="com.intellij" type="1e004dc1:ScratchProjectViewPane$MyRootNode$1$1" />
-            </path>
-            <path>
-              <item name="HW" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-              <item name="Extensions" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
-              <item name="com.intellij" type="1e004dc1:ScratchProjectViewPane$MyRootNode$1$1" />
-              <item name="startup" type="1e004dc1:ScratchProjectViewPane$MyRootNode$1$1" />
-            </path>
-          </expand>
-          <select />
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/META-INF" />
-    </key>
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -961,198 +156,458 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
-      <Host>localhost</Host>
-      <Port>5050</Port>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+      <method />
     </configuration>
-    <configuration default="true" type="Applet">
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
+        <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
+        <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
+      </Profilers>
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="HW" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <module />
+      <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
     </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
+        <value defaultName="singleModule" />
       </option>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <envs />
+      <patterns />
+      <method />
     </configuration>
-    <configuration default="true" type="TestNG">
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
+    <configuration default="true" type="ArquillianTestNG" factoryName="">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
       </option>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
       <properties />
       <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <method />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+    <configuration default="true" type="Cold Fusion runner description" factoryName="Cold Fusion" custom_browser="" web_path="">
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file enabled="true" id="idea.log" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="passParentEnv" value="true" />
+      <setting name="launchBrowser" value="true" />
+      <setting name="launchBrowserUrl" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Java Scratch" factoryName="Java Scratch">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SCRATCH_FILE_ID" value="0" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="piwork" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
+      <method />
+    </configuration>
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="531b5ed5-b52e-4cb0-9754-ca12c18ed83b" name="Default Changelist" comment="" />
-      <created>1559533333792</created>
+      <changelist id="148c029f-52f5-4aae-8f47-876e5ab0e4f8" name="Default" comment="" />
+      <created>1560299929180</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1559533333792</updated>
+      <updated>1560299929180</updated>
+      <workItem from="1560300028221" duration="128000" />
     </task>
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="128000" />
+  </component>
   <component name="ToolWindowManager">
-    <frame x="1109" y="23" width="853" height="977" extended-state="0" />
+    <frame x="206" y="59" width="1400" height="955" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.37977806" />
-      <window_info id="Structure" order="1" side_tool="true" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="TODO" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.32946634" />
-      <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" order="5" visible="true" weight="0.32946634" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.09512761" />
-      <window_info anchor="bottom" id="Debug" order="7" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Ant Build" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="right" id="Maven" order="5" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="/***********************************************************************&#10; * Full Swing Golf Strip Test version 0.0, 6/8/2019&#10; * copyright 2019 Vic Wintriss&#10; ***********************************************************************/" />
-    <MESSAGE value="/***********************************************************************&#10; * Full Swing Golf Strip Test version 0.1, 6/10/2019&#10; * Raspberry Pi...can't get pi4j library attached&#10; * copyright 2019 Vic Wintriss&#10; ***********************************************************************/&#10; Working without pi4j" />
-    <option name="LAST_COMMIT_MESSAGE" value="/***********************************************************************&#10; * Full Swing Golf Strip Test version 0.1, 6/10/2019&#10; * Raspberry Pi...can't get pi4j library attached&#10; * copyright 2019 Vic Wintriss&#10; ***********************************************************************/&#10; Working without pi4j" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../myFirstBot/src/main/java/com/github/sdvic/Main.java" />
-    <entry file="file://$PROJECT_DIR$/src/META-INF/Sonar" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="57" column="16" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
+        <state relative-caret-position="315">
+          <caret line="21" column="40" lean-forward="false" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>HW:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>HW</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
