@@ -3,7 +3,27 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wintrisstech</groupId>
 	<artifactId>piwork</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<build>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+				<archive>
+					<manifest>
+						<addClasspath>true</addClasspath>
+						<classpathPrefix>libs/</classpathPrefix>
+						<mainClass>
+							Main
+						</mainClass>
+					</manifest>
+				</archive>
+			</configuration>
+		</plugin>
+	</plugins>
+	</build>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -13,6 +33,8 @@
 		<properties>
 		</properties>
 	</properties>
+
+
 	<!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-core -->
 	<dependencies>
 		<dependency>
