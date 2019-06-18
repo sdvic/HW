@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 /***********************************************************************
- * Full Swing Golf Strip Test version 99.25, 6/16/2019
+ * Full Swing Golf Strip Test version 99.27, 6/18/2019
  * copyright 2019 Vic Wintriss
  ***********************************************************************/
 public class Main extends JComponent implements ActionListener
@@ -32,7 +32,7 @@ public class Main extends JComponent implements ActionListener
 
     public void getGoing()
     {
-        System.out.println("<--Pi4J--> GPIO Control Example 99.26... started.");
+        System.out.println("<--Pi4J--> GPIO Control Example 99.27... started.");
         paintTicker = new Timer(20, this);
         screen = getDefaultToolkit().getImage("screen.jpg");
         jopInput = JOptionPane.showInputDialog("What do you want me to do for rev 99.26?");
