@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="piwork:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/piwork_jar</output-path>
+    <root id="archive" name="piwork.jar">
+      <element id="module-output" name="piwork" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/pi4j/pi4j-core/1.2/pi4j-core-1.2.jar" path-in-jar="/" />
+      <element id="directory" name="Users">
+        <element id="directory" name="VicMini">
+          <element id="directory" name="git">
+            <element id="directory" name="HW">
+              <element id="directory" name="target" />
+            </element>
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
