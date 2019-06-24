@@ -12,13 +12,13 @@ import static com.pi4j.io.gpio.RaspiPin.*;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 /***********************************************************************
- * Full Swing Golf Strip Test version 99.53, 6/22/2019
+ * Full Swing Golf Strip Test version 99.56, 6/24/2019
  * copyright 2019 Vic Wintriss
  ***********************************************************************/
 public class Main extends JComponent implements ActionListener, Runnable
 {
     final GpioController gpio = GpioFactory.getInstance();
-    private String version = "99.53";
+    private String version = "99.56";
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private JButton runButton = new JButton("RUN");
@@ -47,13 +47,13 @@ public class Main extends JComponent implements ActionListener, Runnable
 //    private GpioPinDigitalOutput dataIn = gpio.provisionDigitalOutputPin(GPIO_22, "RasPi pin 31", PinState.LOW);
 //    private GpioPinDigitalOutput lpclkIn = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
 //    private GpioPinDigitalOutput emitterFire = gpio.provisionDigitalOutputPin(GPIO_07, "RasPi pin 7", PinState.LOW);
-    private GpioPinDigitalOutput pin16 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 16", PinState.LOW);
-    private GpioPinDigitalOutput pin18 = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 18", PinState.LOW);
-    private GpioPinDigitalOutput pin22 = gpio.provisionDigitalOutputPin(GPIO_25, "RasPi pin 22", PinState.LOW);
-    private GpioPinDigitalOutput pin32 = gpio.provisionDigitalOutputPin(GPIO_12, "RasPi pin 32", PinState.LOW);
-    private GpioPinDigitalOutput pin36 = gpio.provisionDigitalOutputPin(GPIO_16, "RasPi pin 36", PinState.LOW);
-    private GpioPinDigitalOutput pin38 = gpio.provisionDigitalOutputPin(GPIO_20, "RasPi pin 38", PinState.LOW);
-    private GpioPinDigitalOutput pin40 = gpio.provisionDigitalOutputPin(GPIO_21, "RasPi pin 40", PinState.LOW);
+    final GpioPinDigitalOutput pin16 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 16", PinState.LOW);
+    final GpioPinDigitalOutput pin18 = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 18", PinState.LOW);
+    final GpioPinDigitalOutput pin22 = gpio.provisionDigitalOutputPin(GPIO_25, "RasPi pin 22", PinState.LOW);
+    final GpioPinDigitalOutput pin32 = gpio.provisionDigitalOutputPin(GPIO_12, "RasPi pin 32", PinState.LOW);
+    final GpioPinDigitalOutput pin36 = gpio.provisionDigitalOutputPin(GPIO_16, "RasPi pin 36", PinState.LOW);
+    final GpioPinDigitalOutput pin38 = gpio.provisionDigitalOutputPin(GPIO_20, "RasPi pin 38", PinState.LOW);
+    final GpioPinDigitalOutput pin40 = gpio.provisionDigitalOutputPin(GPIO_21, "RasPi pin 40", PinState.LOW);
 
     public static void main(String[] args)
     {
@@ -72,32 +72,15 @@ public class Main extends JComponent implements ActionListener, Runnable
         display.setVisible(true);
         while (isRunPressed)
         {
-            pin16.setState(PinState.HIGH);
-            pin18.setState(PinState.HIGH);
-            pin22.setState(PinState.HIGH);
-            pin32.setState(PinState.HIGH);
-            pin36.setState(PinState.HIGH);
-            pin38.setState(PinState.HIGH);
-            pin40.setState(PinState.HIGH);
-            pin16.setState(PinState.LOW);
-            pin18.setState(PinState.LOW);
-            pin22.setState(PinState.LOW);
-            pin32.setState(PinState.LOW);
-            pin36.setState(PinState.LOW);
-            pin38.setState(PinState.LOW);
-            pin40.setState(PinState.LOW);
+            pin16.blink(1000);
+            pin18.blink(1000);
+            pin22.blink(1000);
+            pin32.blink(1000);
+            pin36.blink(1000);
+            pin38.blink(1000);
+            pin40.blink(1000);
+            System.out.print(".");
         }
-    }
-
-    private void sleepNano(int i)
-    {
-        start = System.nanoTime();
-        long end = 0;
-        do
-        {
-            end = System.nanoTime();
-        } while (start + INTERVAL >= end);
-        System.out.println("Delay in nanoseconds is: " + (end - start));
     }
 
     @Override
@@ -110,7 +93,11 @@ public class Main extends JComponent implements ActionListener, Runnable
         if (e.getSource() == runButton)
         {
             isRunPressed = true;
-            System.out.println("you pushed run");
+           while(isRunPressed)
+           {
+               pin16.blink(1000);
+               System.out.print(".");
+           }
         }
         if (e.getSource() == setButton)
         {
