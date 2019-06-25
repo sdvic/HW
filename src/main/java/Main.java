@@ -8,17 +8,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.pi4j.io.gpio.RaspiPin.*;
+import static com.pi4j.io.gpio.RaspiPin.GPIO_23;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 /***********************************************************************
- * Full Swing Golf Strip Test version 99.56, 6/24/2019
+ * Full Swing Golf Strip Test version 99.80, 6/25/2019
  * copyright 2019 Vic Wintriss
  ***********************************************************************/
 public class Main extends JComponent implements ActionListener, Runnable
 {
+    private String version = "99.80";
     final GpioController gpio = GpioFactory.getInstance();
-    private String version = "99.56";
+    final GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
+    //    private GpioPinDigitalOutput clkIn = gpio.provisionDigitalOutputPin(GPIO_08, "RasPi pin 36", PinState.LOW);
+    //    private GpioPinDigitalOutput modeIn = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 35", PinState.LOW);
+    //    private GpioPinDigitalOutput dataIn = gpio.provisionDigitalOutputPin(GPIO_22, "RasPi pin 31", PinState.LOW);
+    //    private GpioPinDigitalOutput lpclkIn = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
+    //    private GpioPinDigitalOutput emitterFire = gpio.provisionDigitalOutputPin(GPIO_07, "RasPi pin 7", PinState.LOW);
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private JButton runButton = new JButton("RUN");
@@ -37,23 +43,10 @@ public class Main extends JComponent implements ActionListener, Runnable
     private JTextField failTextField = new JTextField("       FAIL");
     private boolean isRunPressed = false;
     private JFrame display = new JFrame("FSG StripTest ver " + version);
-    private long start;
     private Timer paintTicker = new Timer(1000, this);
-    private long INTERVAL = 1000;
+    private Timer pulseTicker = new Timer(1, this);
     private int leftMargin = 40;
     private int middleMargin = 250;
-//    private GpioPinDigitalOutput clkIn = gpio.provisionDigitalOutputPin(GPIO_08, "RasPi pin 36", PinState.LOW);
-//    private GpioPinDigitalOutput modeIn = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 35", PinState.LOW);
-//    private GpioPinDigitalOutput dataIn = gpio.provisionDigitalOutputPin(GPIO_22, "RasPi pin 31", PinState.LOW);
-//    private GpioPinDigitalOutput lpclkIn = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
-//    private GpioPinDigitalOutput emitterFire = gpio.provisionDigitalOutputPin(GPIO_07, "RasPi pin 7", PinState.LOW);
-    final GpioPinDigitalOutput pin16 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 16", PinState.LOW);
-    final GpioPinDigitalOutput pin18 = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 18", PinState.LOW);
-    final GpioPinDigitalOutput pin22 = gpio.provisionDigitalOutputPin(GPIO_25, "RasPi pin 22", PinState.LOW);
-    final GpioPinDigitalOutput pin32 = gpio.provisionDigitalOutputPin(GPIO_12, "RasPi pin 32", PinState.LOW);
-    final GpioPinDigitalOutput pin36 = gpio.provisionDigitalOutputPin(GPIO_16, "RasPi pin 36", PinState.LOW);
-    final GpioPinDigitalOutput pin38 = gpio.provisionDigitalOutputPin(GPIO_20, "RasPi pin 38", PinState.LOW);
-    final GpioPinDigitalOutput pin40 = gpio.provisionDigitalOutputPin(GPIO_21, "RasPi pin 40", PinState.LOW);
 
     public static void main(String[] args)
     {
@@ -65,45 +58,63 @@ public class Main extends JComponent implements ActionListener, Runnable
     {
         createGUI();
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
-        display.add(this);
+        display.add(this);//Adds Graphics
         paintTicker.start();
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.getContentPane().setBackground(new Color(193, 202, 202));
         display.setVisible(true);
-        while (isRunPressed)
-        {
-            pin16.blink(1000);
-            pin18.blink(1000);
-            pin22.blink(1000);
-            pin32.blink(1000);
-            pin36.blink(1000);
-            pin38.blink(1000);
-            pin40.blink(1000);
-            System.out.print(".");
-        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        repaint();
+        if (e.getSource() == pulseTicker)
+        {
+            makePulse();
+        }
         if (e.getSource() == paintTicker)
         {
+            repaint();
         }
         if (e.getSource() == runButton)
         {
             isRunPressed = true;
-           while(isRunPressed)
-           {
-               pin16.blink(1000);
-               System.out.print(".");
-           }
+            pulseTicker.start();
+            System.out.println("you pushed run");
         }
         if (e.getSource() == setButton)
         {
             isRunPressed = false;
+            pulseTicker.stop();
             System.out.println("you pushed set");
         }
+    }
+
+    private void makePulse()
+    {
+        try
+        {
+            pin33.setState(PinState.HIGH);
+            Thread.sleep(1);
+            pin33.setState(PinState.LOW);
+            System.out.print(".");
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void testWait()
+    {
+        final long INTERVAL = 100000;
+        long start = System.nanoTime();
+        long end = 0;
+        do
+        {
+            end = System.nanoTime();
+        } while (start + INTERVAL >= end);
+        System.out.println(end - start);
     }
 
     public void paint(Graphics g)
