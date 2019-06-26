@@ -12,12 +12,12 @@ import static com.pi4j.io.gpio.RaspiPin.GPIO_23;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 /***********************************************************************
- * Full Swing Golf Strip Test version 99.80, 6/25/2019
+ * Full Swing Golf Strip Test version 99.85, 6/25/2019
  * copyright 2019 Vic Wintriss
  ***********************************************************************/
 public class Main extends JComponent implements ActionListener, Runnable
 {
-    private String version = "99.80";
+    private String version = "99.85";
     final GpioController gpio = GpioFactory.getInstance();
     final GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
     //    private GpioPinDigitalOutput clkIn = gpio.provisionDigitalOutputPin(GPIO_08, "RasPi pin 36", PinState.LOW);
@@ -47,6 +47,24 @@ public class Main extends JComponent implements ActionListener, Runnable
     private Timer pulseTicker = new Timer(1, this);
     private int leftMargin = 40;
     private int middleMargin = 250;
+    private PinState[] streamA =
+            {
+            PinState.LOW,
+            PinState.HIGH,
+            PinState.LOW,
+            PinState.HIGH,
+            PinState.LOW,
+            PinState.LOW,
+            PinState.LOW,
+            PinState.LOW,
+            PinState.HIGH,
+            PinState.LOW,
+            PinState.HIGH,
+            PinState.HIGH,
+            PinState.HIGH,
+            PinState.HIGH,
+            PinState.LOW
+            };
 
     public static void main(String[] args)
     {
@@ -68,10 +86,6 @@ public class Main extends JComponent implements ActionListener, Runnable
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == pulseTicker)
-        {
-            makePulse();
-        }
         if (e.getSource() == paintTicker)
         {
             repaint();
@@ -79,29 +93,22 @@ public class Main extends JComponent implements ActionListener, Runnable
         if (e.getSource() == runButton)
         {
             isRunPressed = true;
-            pulseTicker.start();
+            makePulseStream(streamA);
             System.out.println("you pushed run");
         }
         if (e.getSource() == setButton)
         {
             isRunPressed = false;
-            pulseTicker.stop();
             System.out.println("you pushed set");
         }
     }
 
-    private void makePulse()
+    private void makePulseStream(PinState[] streamArray)
     {
-        try
+        for (int i = 0; i < streamArray.length; i++)
         {
-            pin33.setState(PinState.HIGH);
-            Thread.sleep(1);
-            pin33.setState(PinState.LOW);
+            pin33.setState(streamArray[i]);
             System.out.print(".");
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
         }
     }
 

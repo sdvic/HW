@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2d4228eb-f8e2-4cde-833d-645be9decbed" name="Default" comment="version 99.56...complete graphics...working on pulse...">
+    <list default="true" id="2d4228eb-f8e2-4cde-833d-645be9decbed" name="Default" comment="version 99.80, June 25, 2019...complete graphics...1 millisec pulse working OK...">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/piwork_jar/piwork.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/piwork_jar/piwork.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
     </list>
@@ -25,13 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3561#3562#0" expanded="true" />
-                <element signature="e#3615#3616#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="120">
+              <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -41,6 +38,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Vic Wintriss &lt;sdvic@me.com&gt;" />
         <option value="Vic Wintriss...with much help" />
       </list>
     </option>
@@ -80,7 +78,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="597" />
     <option name="y" value="23" />
-    <option name="width" value="1152" />
+    <option name="width" value="1170" />
     <option name="height" value="977" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -89,7 +87,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -119,6 +116,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -130,6 +128,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -473,17 +472,24 @@
       <option name="project" value="LOCAL" />
       <updated>1561395383517</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="version 99.80, June 25, 2019...complete graphics...1 millisec pulse working OK...">
+      <created>1561488539166</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1561488539166</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="1840000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="597" y="23" width="1152" height="977" extended-state="0" />
+    <frame x="597" y="23" width="1170" height="977" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.07747748" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.07801419" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -513,11 +519,14 @@
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info anchor="right" id="Coverage" order="10" sideWeight="0.50653595" side_tool="true" visible="true" weight="0.23855165" />
-      <window_info anchor="right" id="Maven" order="11" visible="true" weight="0.10900901" />
+      <window_info anchor="right" id="Maven" order="11" visible="true" weight="0.1072695" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Wlorks with RPI...graphics shapes...ver 190615" />
@@ -528,7 +537,8 @@
     <MESSAGE value="version 99.53, June 22, 2019...complete graphics...working on pulse..." />
     <MESSAGE value="version 99.55...complete graphics...working on pulse..." />
     <MESSAGE value="version 99.56...complete graphics...working on pulse..." />
-    <option name="LAST_COMMIT_MESSAGE" value="version 99.56...complete graphics...working on pulse..." />
+    <MESSAGE value="version 99.80, June 25, 2019...complete graphics...1 millisec pulse working OK..." />
+    <option name="LAST_COMMIT_MESSAGE" value="version 99.80, June 25, 2019...complete graphics...1 millisec pulse working OK..." />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -560,13 +570,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3561#3562#0" expanded="true" />
-            <element signature="e#3615#3616#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
         </state>
       </provider>
     </entry>
