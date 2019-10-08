@@ -1,23 +1,28 @@
-import com.pi4j.component.motor.MotorState;
-import com.pi4j.component.motor.StepperMotorBase;
-import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
-import com.pi4j.io.gpio.*;
+//import com.pi4j.component.motor.MotorState;
+//import com.pi4j.component.motor.StepperMotorBase;
+//import com.pi4j.component.motor.impl.GpioStepperMotorCompone
+
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinState;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.pi4j.io.gpio.RaspiPin.GPIO_23;
+import static com.pi4j.io.gpio.RaspiBcmPin.GPIO_23;
 import static java.awt.Toolkit.getDefaultToolkit;
 
-/***********************************************************************
- * Full Swing Golf Strip Test version 99.115, 7/2/2019
- * copyright 2019 Vic Wintriss
- ***********************************************************************/
 public class Main extends JComponent implements ActionListener
 {
-    private String version = "99.115";
+  /**************************************************************************************
+   *       Full Swing Golf Strip Test
+   *       copyright 2019 Vic Wintriss
+   */      private String version = "100.9";
+   /*      October 8, 2019
+   **************************************************************************************/
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private JButton runButton = new JButton("RUN");
@@ -45,14 +50,10 @@ public class Main extends JComponent implements ActionListener
     private PinState[] streamA =
             {
                     PinState.LOW,
-                    PinState.HIGH,
-                    PinState.LOW,
-                    PinState.HIGH,
                     PinState.LOW,
                     PinState.LOW,
                     PinState.LOW,
                     PinState.LOW,
-                    PinState.HIGH,
                     PinState.LOW,
                     PinState.HIGH,
                     PinState.HIGH,
@@ -172,61 +173,70 @@ public class Main extends JComponent implements ActionListener
     }
     private void makePulseStream(PinState[] streamArray)
     {
-        for (int i = 0; i < streamArray.length; i++)
+        //for (int i = 0; i < streamArray.length; i++)
+        while (true)
         {
-            pin33.setState(streamArray[i]);
             System.out.print(".");
+            try {
+                Thread.sleep(500);
+                pin33.setState( PinState.HIGH);
+                Thread.sleep(500);
+                pin33.setState( PinState.LOW);
+            }
+            catch (InterruptedException e) {
+                System.out.println("sleep exception in makePulseStream()");
+            }
         }
     }
 
-    class Stepper extends StepperMotorBase
-    {
-        final GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
-
-        public void getStepperGoing() throws InterruptedException
-        {
-            System.out.println("Starting Stepper");
-            final GpioPinDigitalOutput[] pins = {
-                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, PinState.LOW),
-                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, PinState.LOW),
-                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, PinState.LOW),
-                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, PinState.LOW)
-            };
-            gpio.setShutdownOptions(true, PinState.LOW, pins);
-            GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
-            byte[] single_step_sequence = new byte[4];
-            single_step_sequence[0] = (byte) 0b0001;
-            single_step_sequence[1] = (byte) 0b0010;
-            single_step_sequence[2] = (byte) 0b0100;
-            single_step_sequence[3] = (byte) 0b1000;
-            motor.setStepInterval(2);
-            motor.setStepSequence(single_step_sequence);
-            motor.setStepsPerRevolution(2038);
-            System.out.println("   Motor FORWARD for 2038 steps.");
-            motor.step(2038);
-            System.out.println("   Motor STOPPED for 2 seconds.");
-            Thread.sleep(2000);
-            motor.stop();
-            gpio.shutdown();
-        }
-
-        @Override
-        public void step(long l)
-        {
-
-        }
-
-        @Override
-        public MotorState getState()
-        {
-            return null;
-        }
-
-        @Override
-        public void setState(MotorState motorState)
-        {
-
-        }
-    }
+//    class Stepper extends StepperMotorBase
+//    {
+//        final GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
+//
+//        public void getStepperGoing() throws InterruptedException
+//        {
+//            System.out.println("Starting Stepper");
+//            final GpioPinDigitalOutput[] pins = {
+//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, PinState.LOW),
+//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, PinState.LOW),
+//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, PinState.LOW),
+//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, PinState.LOW)
+//            };
+//            gpio.setShutdownOptions(true, PinState.LOW, pins);
+//            GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
+//            byte[] single_step_sequence = new byte[4];
+//            single_step_sequence[0] = (byte) 0b0001;
+//            single_step_sequence[1] = (byte) 0b0010;
+//            single_step_sequence[2] = (byte) 0b0100;
+//            single_step_sequence[3] = (byte) 0b1000;
+//            motor.setStepInterval(2);
+//            motor.setStepSequence(single_step_sequence);
+//            motor.setStepsPerRevolution(2038);
+//            System.out.println("   Motor FORWARD for 2038 steps.");
+//            motor.step(2038);
+//            System.out.println("   Motor STOPPED for 2 seconds.");
+//            Thread.sleep(2000);
+//            motor.stop();
+//            gpio.shutdown();
+//        }
+//
+//        @Override
+//        public void step(long l)
+//        {
+//
+//        }
+//
+//        @Override
+//        public MotorState getState()
+//        {
+//            return null;
+//        }
+//
+//        @Override
+//        public void setState(MotorState motorState)
+//        {
+//
+//        }
+//    }
 }
 
