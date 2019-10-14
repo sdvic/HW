@@ -1,7 +1,7 @@
+//
 //import com.pi4j.component.motor.MotorState;
 //import com.pi4j.component.motor.StepperMotorBase;
-//import com.pi4j.component.motor.impl.GpioStepperMotorCompone
-
+//import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -12,17 +12,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static com.pi4j.io.gpio.RaspiBcmPin.GPIO_22;
 import static com.pi4j.io.gpio.RaspiBcmPin.GPIO_23;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main extends JComponent implements ActionListener
 {
-  /**************************************************************************************
-   *       Full Swing Golf Strip Test
-   *       copyright 2019 Vic Wintriss
-   */      private String version = "100.9";
-   /*      October 8, 2019
-   **************************************************************************************/
+    /**************************************************************************************
+     *       Full Swing Golf Strip Test
+     *       copyright 2019 Vic Wintriss
+     */
+    private String version = "100.13";
+    /*      October 13, 2019
+     **************************************************************************************/
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private JButton runButton = new JButton("RUN");
@@ -45,8 +47,9 @@ public class Main extends JComponent implements ActionListener
     private Timer pulseTicker = new Timer(1, this);
     private int leftMargin = 40;
     private int middleMargin = 250;
-    final GpioController gpio = GpioFactory.getInstance();
-    final GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
+    private GpioController gpio = GpioFactory.getInstance();
+    private GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
+    private GpioPinDigitalOutput pin31 = gpio.provisionDigitalOutputPin(GPIO_22, "RasPi pin 31", PinState.LOW);
     private PinState[] streamA =
             {
                     PinState.LOW,
@@ -61,6 +64,7 @@ public class Main extends JComponent implements ActionListener
                     PinState.HIGH,
                     PinState.LOW
             };
+    private  GpioPinDigitalOutput[] pins = {pin31, pin33};
 
     public static void main(String[] args) throws Exception
     {
@@ -69,7 +73,7 @@ public class Main extends JComponent implements ActionListener
 
     public void getGoing() throws Exception
     {
-        //Stepper step = new Stepper();
+//        Stepper step = new Stepper();
         createGUI();
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);//Adds Graphics
@@ -77,23 +81,21 @@ public class Main extends JComponent implements ActionListener
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.getContentPane().setBackground(new Color(193, 202, 202));
         display.setVisible(true);
+//        step.getStepperGoing();
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == paintTicker)
-        {
+        if (e.getSource() == paintTicker) {
             repaint();
         }
-        if (e.getSource() == runButton)
-        {
+        if (e.getSource() == runButton) {
             isRunPressed = true;
             makePulseStream(streamA);
             System.out.println("you pushed run");
         }
-        if (e.getSource() == setButton)
-        {
+        if (e.getSource() == setButton) {
             isRunPressed = false;
             System.out.println("you pushed set");
         }
@@ -102,8 +104,7 @@ public class Main extends JComponent implements ActionListener
     public void paint(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
-        for (int i = 0; i < 16; i++)
-        {
+        for (int i = 0; i < 16; i++) {
             g2.setStroke(new BasicStroke(4));
             g2.drawOval((40 * i + 40), 15, 30, 30);
             g2.setColor(new Color(255, 243, 20));
@@ -116,8 +117,7 @@ public class Main extends JComponent implements ActionListener
         g2.drawLine(40, 47, (screenWidth - 60), 47);
         g2.setColor(new Color(37, 243, 255));
         g2.fillRect(38, 48, (screenWidth - 80), 48);
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             g2.setColor(new Color(200, 123, 18));
             g2.fillOval((120 * i + 180), 53, 30, 30);
             g2.setColor(new Color(0, 0, 0));
@@ -125,8 +125,7 @@ public class Main extends JComponent implements ActionListener
             g2.drawString((i + 1) + "", (120 * i + 190), 72);
         }
         g2.drawString("EMITTERS", leftMargin, 72);
-        if (isRunPressed)
-        {
+        if (isRunPressed) {
             g2.setColor(Color.RED);
             g2.fillRect(500, 233, 150, 66);
         }
@@ -171,17 +170,21 @@ public class Main extends JComponent implements ActionListener
         display.getContentPane().setBackground(new Color(193, 202, 202));
         display.setVisible(true);
     }
+
     private void makePulseStream(PinState[] streamArray)
     {
         //for (int i = 0; i < streamArray.length; i++)
-        while (true)
-        {
+        while (true) {
             System.out.print(".");
             try {
+                pin33.setState(PinState.HIGH);//turn off
+                pin31.setState(PinState.HIGH);//turn off
                 Thread.sleep(500);
-                pin33.setState( PinState.HIGH);
+                pin31.setState(PinState.LOW);//turn on
                 Thread.sleep(500);
-                pin33.setState( PinState.LOW);
+                pin31.setState(PinState.HIGH);
+                pin33.setState(PinState.LOW);//turn on
+                Thread.sleep(500);
             }
             catch (InterruptedException e) {
                 System.out.println("sleep exception in makePulseStream()");
@@ -191,40 +194,29 @@ public class Main extends JComponent implements ActionListener
 
 //    class Stepper extends StepperMotorBase
 //    {
-//        final GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
-//
 //        public void getStepperGoing() throws InterruptedException
 //        {
 //            System.out.println("Starting Stepper");
-//            final GpioPinDigitalOutput[] pins = {
-//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, PinState.LOW),
-//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, PinState.LOW),
-//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, PinState.LOW),
-//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, PinState.LOW)
-//            };
 //            gpio.setShutdownOptions(true, PinState.LOW, pins);
 //            GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
-//            byte[] single_step_sequence = new byte[4];
-//            single_step_sequence[0] = (byte) 0b0001;
-//            single_step_sequence[1] = (byte) 0b0010;
-//            single_step_sequence[2] = (byte) 0b0100;
-//            single_step_sequence[3] = (byte) 0b1000;
-//            motor.setStepInterval(2);
-//            motor.setStepSequence(single_step_sequence);
+//            byte[] blinkSequence = new byte[4];
+//            blinkSequence[0] = (byte) 0b0000;
+//            blinkSequence[1] = (byte) 0b0000;
+//            blinkSequence[2] = (byte) 0b1111;
+//            blinkSequence[3] = (byte) 0b1111;
+//            motor.setStepInterval(100);
+//            motor.setStepSequence(blinkSequence);
 //            motor.setStepsPerRevolution(2038);
-//            System.out.println("   Motor FORWARD for 2038 steps.");
+//            System.out.println("   blink for 2038 times.");
 //            motor.step(2038);
-//            System.out.println("   Motor STOPPED for 2 seconds.");
+//            System.out.println("    STOPPED for 2 seconds.");
 //            Thread.sleep(2000);
 //            motor.stop();
 //            gpio.shutdown();
 //        }
 //
 //        @Override
-//        public void step(long l)
-//        {
-//
-//        }
+//        public void step(long l){}
 //
 //        @Override
 //        public MotorState getState()
@@ -233,10 +225,7 @@ public class Main extends JComponent implements ActionListener
 //        }
 //
 //        @Override
-//        public void setState(MotorState motorState)
-//        {
-//
-//        }
+//        public void setState(MotorState motorState){}
 //    }
 }
 
