@@ -1,7 +1,7 @@
 //
-//import com.pi4j.component.motor.MotorState;
-//import com.pi4j.component.motor.StepperMotorBase;
-//import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
+import com.pi4j.component.motor.MotorState;
+import com.pi4j.component.motor.StepperMotorBase;
+import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -22,8 +22,8 @@ public class Main extends JComponent implements ActionListener
      *       Full Swing Golf Strip Test
      *       copyright 2019 Vic Wintriss
      */
-    private String version = "100.13";
-    /*      October 13, 2019
+    private String version = "101.0";
+    /*      October 15, 2019
      **************************************************************************************/
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
@@ -73,7 +73,7 @@ public class Main extends JComponent implements ActionListener
 
     public void getGoing() throws Exception
     {
-//        Stepper step = new Stepper();
+        Stepper step = new Stepper();
         createGUI();
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);//Adds Graphics
@@ -81,7 +81,7 @@ public class Main extends JComponent implements ActionListener
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.getContentPane().setBackground(new Color(193, 202, 202));
         display.setVisible(true);
-//        step.getStepperGoing();
+        step.getStepperGoing();
     }
 
     @Override
@@ -192,40 +192,40 @@ public class Main extends JComponent implements ActionListener
         }
     }
 
-//    class Stepper extends StepperMotorBase
-//    {
-//        public void getStepperGoing() throws InterruptedException
-//        {
-//            System.out.println("Starting Stepper");
-//            gpio.setShutdownOptions(true, PinState.LOW, pins);
-//            GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
-//            byte[] blinkSequence = new byte[4];
-//            blinkSequence[0] = (byte) 0b0000;
-//            blinkSequence[1] = (byte) 0b0000;
-//            blinkSequence[2] = (byte) 0b1111;
-//            blinkSequence[3] = (byte) 0b1111;
-//            motor.setStepInterval(100);
-//            motor.setStepSequence(blinkSequence);
-//            motor.setStepsPerRevolution(2038);
-//            System.out.println("   blink for 2038 times.");
-//            motor.step(2038);
-//            System.out.println("    STOPPED for 2 seconds.");
-//            Thread.sleep(2000);
-//            motor.stop();
-//            gpio.shutdown();
-//        }
-//
-//        @Override
-//        public void step(long l){}
-//
-//        @Override
-//        public MotorState getState()
-//        {
-//            return null;
-//        }
-//
-//        @Override
-//        public void setState(MotorState motorState){}
-//    }
+    class Stepper extends StepperMotorBase
+    {
+        public void getStepperGoing() throws InterruptedException
+        {
+            System.out.println("Starting Stepper");
+            gpio.setShutdownOptions(true, PinState.LOW, pins);
+            GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
+            byte[] blinkSequence = new byte[4];
+            blinkSequence[0] = (byte) 0b0000;
+            blinkSequence[1] = (byte) 0b0000;
+            blinkSequence[2] = (byte) 0b1111;
+            blinkSequence[3] = (byte) 0b1111;
+            motor.setStepInterval(100);
+            motor.setStepSequence(blinkSequence);
+            motor.setStepsPerRevolution(2038);
+            System.out.println("   blink for 2038 times.");
+            motor.step(2038);
+            System.out.println("    STOPPED for 2 seconds.");
+            Thread.sleep(2000);
+            motor.stop();
+            gpio.shutdown();
+        }
+
+        @Override
+        public void step(long l){}
+
+        @Override
+        public MotorState getState()
+        {
+            return null;
+        }
+
+        @Override
+        public void setState(MotorState motorState){}
+    }
 }
 
