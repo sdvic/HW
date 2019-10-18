@@ -5,20 +5,17 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
-
 import javax.swing.*;
-
 import static com.pi4j.io.gpio.RaspiBcmPin.GPIO_22;
 import static com.pi4j.io.gpio.RaspiBcmPin.GPIO_23;
 
-public class Main
+public class Main extends StepperMotorBase
 {
     /**************************************************************************************
-     *       Full Swing Golf Strip Test
-     *       copyright 2019 Vic Wintriss
-     */
-    public String version = "102.6";
-    /*      October 16, 2019 Flashing lights OK
+     *      Full Swing Golf Strip Test
+     *      copyright 2019 Vic Wintriss
+     */     public String version = "102.26";
+    /*      October 17, 2019 Alternate Flashing lights OK, refactor
      **************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
@@ -27,24 +24,14 @@ public class Main
             pin31,
             pin33
     };
-    private GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
-    private Stepper step = new Stepper();
-    private PinState[] streamA = {
-            PinState.LOW,
-            PinState.LOW,
-            PinState.LOW,
-            PinState.LOW,
-            PinState.LOW,
-            PinState.LOW,
-            PinState.HIGH,
-            PinState.HIGH,
-            PinState.HIGH,
-            PinState.HIGH,
-            PinState.LOW
+
+    byte[] blinkSequence = {/* byte order (x)(x)(x)(x)(x)(x)(33)(31) */
+            (byte) 0b00000001,
+            (byte) 0b00000010
     };
+    private GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
     private UserExperience UX = new UserExperience();
-    private Timer paintTicker = new Timer(50, UX);
-    private Stepper stepper = new Stepper();
+    private Timer paintTicker = new Timer(100, UX);
 
     public static void main(String[] args) throws Exception
     {
@@ -53,32 +40,13 @@ public class Main
 
     public void getGoing() throws Exception
     {
-        paintTicker.start();
         UX.createGUI(version);
-        stepper.getStepperGoing();
+        paintTicker.start();
+        System.out.println("Starting Stepper");
+        motor.setStepInterval(1000);
+        motor.setStepSequence(blinkSequence);
+        motor.step(100);
     }
-
-    class Stepper extends StepperMotorBase
-    {
-        byte[] blinkSequence = new byte[4];
-
-        public void getStepperGoing() throws Exception
-        {
-            System.out.println("Starting Stepper");
-            while (true)
-            {
-                motor.setStepInterval(100);
-                motor.setStepSequence(blinkSequence);
-                motor.step(2);
-                blinkSequence[0] = (byte) 0b0000;
-                blinkSequence[1] = (byte) 0b0000;
-                Thread.sleep(2000);
-                blinkSequence[2] = (byte) 0b1111;
-                blinkSequence[3] = (byte) 0b1111;
-                Thread.sleep(2000);
-                System.out.println(".");
-            }
-        }
 
         @Override
         public void step(long l)
@@ -95,6 +63,5 @@ public class Main
         public void setState(MotorState motorState)
         {
         }
-    }
 }
 
