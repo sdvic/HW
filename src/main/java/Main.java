@@ -1,55 +1,24 @@
 import com.pi4j.component.motor.MotorState;
 import com.pi4j.component.motor.StepperMotorBase;
 import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
-import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinState;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import static com.pi4j.io.gpio.RaspiPin.*;
 
-public class Main extends StepperMotorBase
+public class Main extends StepperMotorBase implements ActionListener
 {
-    /**************************************************************************************
+    /***************************************************************************************
      *      Full Swing Golf Strip Test
-     *      copyright 2019 Vic Wintriss
-     */
-    public String version = "200.3";
-
-    /*
-    * Used in this program
-    * WiringPi GPIO         RaspberryPi Physical Pin    BroadCom GPIO (* on test board)
-    *   0                       11                              17*
-    *   1                       12                              18
-    *   2                       13                              27
-    *   3                       15                              22*
-    *   4                       16                              23*
-    *   5                       18                              24
-    *   6                       22                              25
-    *   7                        7                               4
-    *   8                        3                               2
-    *   9                        5                               3
-    *   10                      24                               8
-    *   11                      26                               7
-    *   12                      19                              10
-    *   13                      21                               9
-    *   14                      23                              11
-    *   15                       8                              14*
-    *   16                      10      Below are on P5         15*
-    *   17                                  51
-    *   18                                  52
-    *   19                                  53
-    *   20                                  54
-    *   21                      29                               5*
-    *   22                      31                               6*
-    *   23                      33                              13*
-    *   24                      35                              19*
-    *   25                      37                              26
-    *   26                      32                              12*
-    *   27                      36                              16*
-    *   28                      38                              20*
-    *   29                      40                              21*
-    *   30                      27                               0
-    *   31                      28                               1
-     **************************************************************************************/
-
+     *      copyright 2019 Vic Wintriss                                                    */
+            String version = "300.0";
+     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(GPIO_00, "RasPi pin 11", PinState.LOW);
     private GpioPinDigitalOutput pin12 = gpio.provisionDigitalOutputPin(GPIO_01, "RasPi pin 12", PinState.LOW);
@@ -69,7 +38,34 @@ public class Main extends StepperMotorBase
             pin23,
             pin07
     };
+    private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
+            {
+                    (byte) 0b11111111,
+                    (byte) 0b11111110,
+                    (byte) 0b11111101,
+                    (byte) 0b11111011,
+                    (byte) 0b11110111,
+                    (byte) 0b11101111,
+                    (byte) 0b11011111,
+                    (byte) 0b10111111,
+                    (byte) 0b01111111,
+                    (byte) 0b11111111
+            };
     private GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
+    private UserExperience ux;
+    private JButton runButton;
+    private JButton setButton;
+
+    private Main()
+    {
+        ux = new UserExperience(version, motor, gpio);
+        runButton = ux.getRunButton();
+        runButton.addActionListener(this);
+        setButton = ux.getSetButton();
+        setButton.addActionListener(this);
+        ux.createGUI(version);
+        new Timer(100, this).start();
+    }
 
     public static void main(String[] args) throws Exception
     {
@@ -81,13 +77,23 @@ public class Main extends StepperMotorBase
             }
         });
     }
-    private Main()
+    public void actionPerformed(ActionEvent e)
     {
-        UserExperience ux = new UserExperience(version, motor, gpio);
-        ux.createGUI(version);
-        new Timer(100, ux).start();
+        ux.repaint();
+        if (e.getSource() == ux.getRunButton())
+        {
+            System.out.println("You pushed run, Starting test version " + version + ".");
+            motor.setStepInterval(2000);
+            motor.setStepSequence(blinkSequence);
+            motor.step(10);
+        }
+        if (e.getSource() == setButton)
+        {
+            System.out.println("You pushed the set button!");
+//            PinState pin38State = pin38.getState();
+//            System.out.println("you pushed set and set pin38 " + pin38State);
+        }
     }
-
     @Override
     public void step(long l)
     {

@@ -1,15 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.*;
 import static java.awt.Toolkit.getDefaultToolkit;
 
-public class UserExperience extends JComponent implements ActionListener
+public class UserExperience extends JComponent
 {
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
-    private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private JButton runButton = new JButton("RUN");
     private JButton setButton = new JButton("SET");
     private JTextField allTextField = new JTextField("       ALL");
@@ -30,19 +27,6 @@ public class UserExperience extends JComponent implements ActionListener
     private Graphics g;
     private  String version;
     private GpioStepperMotorComponent motor;
-    private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
-            {
-                    (byte) 0b11111111,
-                    (byte) 0b11111110,
-                    (byte) 0b11111101,
-                    (byte) 0b11111011,
-                    (byte) 0b11110111,
-                    (byte) 0b11101111,
-                    (byte) 0b11011111,
-                    (byte) 0b10111111,
-                    (byte) 0b01111111,
-                    (byte) 0b11111111
-            };
     private GpioController gpio;
 
     public UserExperience(String version, GpioStepperMotorComponent motor, GpioController gpio)
@@ -60,10 +44,8 @@ public class UserExperience extends JComponent implements ActionListener
         display.setTitle(version);
         display.setVisible(true);
         runButton.setBounds(500, 350, 100, 50);
-        runButton.addActionListener(this);
         display.add(runButton);
         setButton.setBounds(150, 350, 100, 50);
-        setButton.addActionListener(this);
         display.add(setButton);
         allTextField.setBounds(leftMargin, 100, 150, 30);
         display.add(allTextField);
@@ -125,21 +107,14 @@ public class UserExperience extends JComponent implements ActionListener
         g2.drawString("EMITTERS", leftMargin, 72);
     }
 
-    public void actionPerformed(ActionEvent e)
+    public JButton getRunButton()
     {
-        repaint();
-        if (e.getSource() == runButton)
-        {
-            System.out.println("You pushed run, Starting test version " + version + ".");
-            motor.setStepInterval(2000);
-            motor.setStepSequence(blinkSequence);
-            motor.step(10);
-        }
-        if (e.getSource() == setButton)
-        {
-//            PinState pin38State = pin38.getState();
-//            System.out.println("you pushed set and set pin38 " + pin38State);
-        }
+        return runButton;
+    }
+
+    public JButton getSetButton()
+    {
+        return setButton;
     }
 }
 
