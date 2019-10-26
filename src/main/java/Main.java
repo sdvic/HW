@@ -5,13 +5,13 @@ import com.pi4j.io.gpio.*;
 import javax.swing.*;
 import static com.pi4j.io.gpio.RaspiPin.*;
 
-public class Main extends StepperMotorBase implements Runnable
+public class Main extends StepperMotorBase
 {
     /**************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss
      */
-    public String version = "102.62";
+    public String version = "200.2";
 
     /*
     * Used in this program
@@ -49,17 +49,7 @@ public class Main extends StepperMotorBase implements Runnable
     *   30                      27                               0
     *   31                      28                               1
      **************************************************************************************/
-    private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
-            {
-                    (byte) 0b11111110,
-                    (byte) 0b11111101,
-                    (byte) 0b11111011,
-                    (byte) 0b11110111,
-                    (byte) 0b11101111,
-                    (byte) 0b11011111,
-                    (byte) 0b10111111,
-                    (byte) 0b01111111
-            };
+
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(GPIO_00, "RasPi pin 11", PinState.LOW);
     private GpioPinDigitalOutput pin12 = gpio.provisionDigitalOutputPin(GPIO_01, "RasPi pin 12", PinState.LOW);
@@ -80,23 +70,22 @@ public class Main extends StepperMotorBase implements Runnable
             pin07
     };
     private GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
-    private UserExperience UX = new UserExperience();
-    private Timer paintTicker = new Timer(100, UX);
 
     public static void main(String[] args) throws Exception
     {
-        SwingUtilities.invokeLater(new Main());//To prevent interference with Swing graphics
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                new Main();
+            }
+        });
     }
-
-    @Override
-    public void run()
+    private Main()
     {
-        UX.createGUI(version);
-        paintTicker.start();
-        System.out.println("Starting Stepper");
-        motor.setStepInterval(2000);
-        motor.setStepSequence(blinkSequence);
-            motor.step(1000);
+        UserExperience ux = new UserExperience(version, motor, gpio);
+        ux.createGUI(version);
+        new Timer(100, ux).start();
     }
 
     @Override
@@ -114,7 +103,5 @@ public class Main extends StepperMotorBase implements Runnable
     public void setState(MotorState motorState)
     {
     }
-
-
 }
 

@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
+import com.pi4j.io.gpio.*;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class UserExperience extends JComponent implements ActionListener
@@ -27,7 +28,29 @@ public class UserExperience extends JComponent implements ActionListener
     private int leftMargin = 40;
     private int middleMargin = 250;
     private Graphics g;
+    private  String version;
+    private GpioStepperMotorComponent motor;
+    private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
+            {
+                    (byte) 0b11111111,
+                    (byte) 0b11111110,
+                    (byte) 0b11111101,
+                    (byte) 0b11111011,
+                    (byte) 0b11110111,
+                    (byte) 0b11101111,
+                    (byte) 0b11011111,
+                    (byte) 0b10111111,
+                    (byte) 0b01111111,
+                    (byte) 0b11111111
+            };
+    private GpioController gpio;
 
+    public UserExperience(String version, GpioStepperMotorComponent motor, GpioController gpio)
+    {
+        this.version = version;
+        this.motor = motor;
+        this.gpio = gpio;
+    }
     public void createGUI(String version )
     {
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
@@ -102,20 +125,20 @@ public class UserExperience extends JComponent implements ActionListener
         g2.drawString("EMITTERS", leftMargin, 72);
     }
 
-    //        if (isRunPressed) {
-//            g2.setColor(Color.RED);
-//            g2.fillRect(500, 233, 150, 66);
-//        }
     public void actionPerformed(ActionEvent e)
     {
-            repaint();
+        repaint();
         if (e.getSource() == runButton)
         {
-            System.out.println("you pushed run");
+            System.out.println("You pushed run, Starting test version " + version + ".");
+            motor.setStepInterval(2000);
+            motor.setStepSequence(blinkSequence);
+            motor.step(10);
         }
         if (e.getSource() == setButton)
         {
-            System.out.println("you pushed set");
+//            PinState pin38State = pin38.getState();
+//            System.out.println("you pushed set and set pin38 " + pin38State);
         }
     }
 }
