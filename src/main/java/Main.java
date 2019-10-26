@@ -11,7 +11,7 @@ public class Main extends StepperMotorBase
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss
      */
-    public String version = "200.2";
+    public String version = "200.3";
 
     /*
     * Used in this program
