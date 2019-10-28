@@ -1,10 +1,7 @@
 import com.pi4j.component.motor.MotorState;
 import com.pi4j.component.motor.StepperMotorBase;
 import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,26 +14,22 @@ public class Main extends StepperMotorBase implements ActionListener
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-            String version = "300.0";
+            String version = "400.0";
      /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
+    private GpioPinDigitalOutput pin10 = gpio.provisionDigitalOutputPin(GPIO_16, "RasPi pin 10", PinState.LOW);
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(GPIO_00, "RasPi pin 11", PinState.LOW);
-    private GpioPinDigitalOutput pin12 = gpio.provisionDigitalOutputPin(GPIO_01, "RasPi pin 12", PinState.LOW);
-    private GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(GPIO_02, "RasPi pin 13", PinState.LOW);
-    private GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(GPIO_03, "RasPi pin 15", PinState.LOW);
-    private GpioPinDigitalOutput pin16 = gpio.provisionDigitalOutputPin(GPIO_04, "RasPi pin 16", PinState.LOW);
-    private GpioPinDigitalOutput pin18 = gpio.provisionDigitalOutputPin(GPIO_05, "RasPi pin 18", PinState.LOW);
-    private GpioPinDigitalOutput pin23 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 23", PinState.LOW);
-    private GpioPinDigitalOutput pin07 = gpio.provisionDigitalOutputPin(GPIO_07, "RasPi pin 07", PinState.LOW);
+    private GpioPinDigitalOutput pin31 = gpio.provisionDigitalOutputPin(GPIO_22, "RasPi pin 31", PinState.LOW);
+    private GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
+    private GpioPinDigitalOutput pin35 = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 35", PinState.LOW);
+    private GpioPinDigitalOutput pin36 = gpio.provisionDigitalOutputPin(GPIO_27, "RasPi pin 36", PinState.LOW);
     private GpioPinDigitalOutput[] pins = {
+            pin10,
             pin11,
-            pin12,
-            pin13,
-            pin15,
-            pin16,
-            pin18,
-            pin23,
-            pin07
+            pin31,
+            pin33,
+            pin35,
+            pin36,
     };
     private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
             {
