@@ -6,18 +6,14 @@ import com.pi4j.io.gpio.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.pi4j.io.gpio.RCMPin.GPIO_38;
 
 public class Main extends StepperMotorBase implements ActionListener
 {
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-            String version = "400.23" + "";
-     /**************************************************************************************/
+    private String version = "400.25" + "";
+    /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_20, "Raspi pin 38", PinPullResistance.PULL_UP);
     private GpioPinDigitalInput pin32 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_26, "Raspi pin 38", PinPullResistance.PULL_UP);
@@ -65,7 +61,7 @@ public class Main extends StepperMotorBase implements ActionListener
         {
             blinkSequeneList = new byte[]{blinkSequence[i]};
             String fromByteToString = String.format("%8s", Integer.toBinaryString(blinkSequeneList[i] & 0xFF)).replace(' ', '0');
-            System.out.println(fromByteToString);;
+            System.out.println(fromByteToString);
         }
         System.out.println(blinkSequeneList.length + " => blinkSequenceLength");
         ux = new UserExperience(version, motor, gpio);
@@ -77,16 +73,14 @@ public class Main extends StepperMotorBase implements ActionListener
         new Timer(100, this).start();
     }
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()//Prevents graphics problems
-        {
-            public void run()
-            {
-                new Main();
-            }
+        SwingUtilities.invokeLater(() -> { //Prevents graphics problems
+            new Main();
+            Thread.currentThread().setPriority(10);
         });
     }
+
     public void actionPerformed(ActionEvent e)
     {
 
@@ -94,9 +88,9 @@ public class Main extends StepperMotorBase implements ActionListener
         if (e.getSource() == ux.getRunButton())
         {
             System.out.println("You pushed run, Starting test version " + version + ".");
-            motor.setStepInterval(10);
+            motor.setStepInterval(1);
             motor.setStepSequence(blinkSequence);
-            for (int i = 0; i < 1000 ; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 motor.step(2);
             }
@@ -113,6 +107,7 @@ public class Main extends StepperMotorBase implements ActionListener
             System.out.println("07" + pin07.getState());
         }
     }
+
     @Override
     public void step(long l)
     {
