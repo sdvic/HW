@@ -6,30 +6,39 @@ import com.pi4j.io.gpio.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import static com.pi4j.io.gpio.RaspiPin.*;
+import static com.pi4j.io.gpio.RCMPin.GPIO_38;
 
 public class Main extends StepperMotorBase implements ActionListener
 {
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-            String version = "400.0";
+            String version = "400.23" + "";
      /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
-    private GpioPinDigitalOutput pin10 = gpio.provisionDigitalOutputPin(GPIO_16, "RasPi pin 10", PinState.LOW);
-    private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(GPIO_00, "RasPi pin 11", PinState.LOW);
-    private GpioPinDigitalOutput pin31 = gpio.provisionDigitalOutputPin(GPIO_22, "RasPi pin 31", PinState.LOW);
-    private GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(GPIO_23, "RasPi pin 33", PinState.LOW);
-    private GpioPinDigitalOutput pin35 = gpio.provisionDigitalOutputPin(GPIO_24, "RasPi pin 35", PinState.LOW);
-    private GpioPinDigitalOutput pin36 = gpio.provisionDigitalOutputPin(GPIO_27, "RasPi pin 36", PinState.LOW);
+    private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_20, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalInput pin32 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_26, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalInput pin29 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_21, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalInput pin15 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalInput pin16 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalInput pin08 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_15, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalInput pin07 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "Raspi pin 38", PinPullResistance.PULL_UP);
+    private GpioPinDigitalOutput pin10 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16, "RasPi pin 10", PinState.LOW);
+    private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "RasPi pin 11", PinState.LOW);
+    private GpioPinDigitalOutput pin31 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "RasPi pin 31", PinState.LOW);
+    private GpioPinDigitalOutput pin33 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "RasPi pin 33", PinState.LOW);
+    private GpioPinDigitalOutput pin35 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "RasPi pin 35", PinState.LOW);
+    private GpioPinDigitalOutput pin36 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_27, "RasPi pin 36", PinState.LOW);
     private GpioPinDigitalOutput[] pins = {
             pin10,
-            pin11,
-            pin31,
-            pin33,
-            pin35,
-            pin36,
+//            pin11,
+//            pin31,
+//            pin33,
+//            pin35,
+//            pin36,
     };
     private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
             {
@@ -48,9 +57,17 @@ public class Main extends StepperMotorBase implements ActionListener
     private UserExperience ux;
     private JButton runButton;
     private JButton setButton;
+    private byte[] blinkSequeneList = new byte[10];
 
     private Main()
     {
+        for (int i = 0; i < blinkSequeneList.length; i++)
+        {
+            blinkSequeneList = new byte[]{blinkSequence[i]};
+            String fromByteToString = String.format("%8s", Integer.toBinaryString(blinkSequeneList[i] & 0xFF)).replace(' ', '0');
+            System.out.println(fromByteToString);;
+        }
+        System.out.println(blinkSequeneList.length + " => blinkSequenceLength");
         ux = new UserExperience(version, motor, gpio);
         runButton = ux.getRunButton();
         runButton.addActionListener(this);
@@ -62,7 +79,7 @@ public class Main extends StepperMotorBase implements ActionListener
 
     public static void main(String[] args) throws Exception
     {
-        SwingUtilities.invokeLater(new Runnable()
+        SwingUtilities.invokeLater(new Runnable()//Prevents graphics problems
         {
             public void run()
             {
@@ -72,19 +89,28 @@ public class Main extends StepperMotorBase implements ActionListener
     }
     public void actionPerformed(ActionEvent e)
     {
+
         ux.repaint();
         if (e.getSource() == ux.getRunButton())
         {
             System.out.println("You pushed run, Starting test version " + version + ".");
-            motor.setStepInterval(2000);
+            motor.setStepInterval(10);
             motor.setStepSequence(blinkSequence);
-            motor.step(10);
+            for (int i = 0; i < 1000 ; i++)
+            {
+                motor.step(2);
+            }
         }
         if (e.getSource() == setButton)
         {
-            System.out.println("You pushed the set button!");
-//            PinState pin38State = pin38.getState();
-//            System.out.println("you pushed set and set pin38 " + pin38State);
+            System.out.println("Reading pin states:");
+            System.out.print("38" + pin38.getState() + " ");
+            System.out.print("32" + pin32.getState() + " ");
+            System.out.print("29" + pin29.getState() + " ");
+            System.out.print("15" + pin15.getState() + " ");
+            System.out.print("16" + pin16.getState() + " ");
+            System.out.print("08" + pin08.getState() + " ");
+            System.out.println("07" + pin07.getState());
         }
     }
     @Override
