@@ -12,7 +12,7 @@ public class Main extends StepperMotorBase implements ActionListener
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "400.35" + "";
+    private String version = "401.00" + "";
     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
@@ -130,7 +130,7 @@ public class Main extends StepperMotorBase implements ActionListener
         new Timer(100, this).start();
     }
 
-    public static void main(String[] args)
+    synchronized public static void main(String[] args)
     {
         SwingUtilities.invokeLater(() -> { //Prevents graphics problems
             new Main();
@@ -164,18 +164,18 @@ public class Main extends StepperMotorBase implements ActionListener
     }
 
     @Override
-    public void step(long l)
+    synchronized public void step(long l)
     {
     }
 
     @Override
-    public MotorState getState()
+    synchronized public MotorState getState()
     {
         return null;
     }
 
     @Override
-    public void setState(MotorState motorState)
+    synchronized public void setState(MotorState motorState)
     {
     }
 }
