@@ -12,7 +12,7 @@ public class Main extends StepperMotorBase implements ActionListener
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "401.00" + "";
+    private String version = "402.00" + "";
     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
