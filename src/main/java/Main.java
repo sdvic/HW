@@ -1,5 +1,3 @@
-import com.pi4j.component.motor.MotorState;
-import com.pi4j.component.motor.StepperMotorBase;
 import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.*;
 
@@ -7,12 +5,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends StepperMotorBase implements ActionListener
+public class Main implements ActionListener
 {
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "403.00" + "";
+    private String version = "500.35";
     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
@@ -33,102 +31,9 @@ public class Main extends StepperMotorBase implements ActionListener
     private GpioPinDigitalOutput pin37 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "RasPi pin 37", PinState.LOW); // LedClk
     private GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "RasPi pin 13", PinState.LOW); // LedData
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "RasPi pin 11", PinState.LOW); // LedOn
-    private GpioPinDigitalOutput[] pins = {
-            pin05, // Esel1
-            pin03, // Esel0
-            pin11, // LedOn
-            pin10, // Sin
-            pin33, // LpClkIn
-            pin31, // DataIn
-            pin36, // ClkIn
-            pin35  // ModeIn
-    };
-    private byte[] blinkSequence = //byte order (07)(23)(18)(16)(15)(13)(12)(11) physical pins
-            {
-                    (byte) 0b11111111,
-                    (byte) 0b11111110,
-                    (byte) 0b11111101,
-                    (byte) 0b11111011,
-                    (byte) 0b11110111,
-                    (byte) 0b11101111,
-                    (byte) 0b11011111,
-                    (byte) 0b10111111,
-                    (byte) 0b01111111,
-                    (byte) 0b11111111
-            };
-    private byte[] blinkSequence2 =
-            {
-                    (byte) 0b00001000,
-                    (byte) 0b01000000,
-                    (byte) 0b11001000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b11000000,
-                    (byte) 0b11000000,
-                    (byte) 0b01000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b11000000,
-                    (byte) 0b11000000,
-                    (byte) 0b01000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000100,
-                    (byte) 0b11000000,
-                    (byte) 0b01000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b11000000,
-                    (byte) 0b10000000,
-                    (byte) 0b00000000
-            };
-    private GpioStepperMotorComponent motor = new GpioStepperMotorComponent(pins);
     private UserExperience ux;
     private JButton runButton;
     private JButton setButton;
-
-    private Main()
-    {
-        ux = new UserExperience(version, motor, gpio);
-        runButton = ux.getRunButton();
-        runButton.addActionListener(this);
-        setButton = ux.getSetButton();
-        setButton.addActionListener(this);
-        ux.createGUI(version);
-        new Timer(100, this).start();
-    }
 
     synchronized public static void main(String[] args)
     {
@@ -137,23 +42,43 @@ public class Main extends StepperMotorBase implements ActionListener
             Thread.currentThread().setPriority(10);
         });
     }
+    private Main()
+    {
+        ux = new UserExperience(version);
+        runButton = ux.getRunButton();
+        runButton.addActionListener(this);
+        setButton = ux.getSetButton();
+        setButton.addActionListener(this);
+        ux.createGUI(version);
+        new Timer(100, this).start();
+    }
 
     synchronized public void actionPerformed(ActionEvent e)
     {
         ux.repaint();
         if (e.getSource() == ux.getRunButton())
         {
-            motor.setStepInterval(100); //Pulse width
-            motor.setStepSequence(blinkSequence2);
-            for (int i = 0; i < 10; i++)
+            System.out.println("Run");
+            for (int i = 0; i < 100; i++)
             {
-                motor.step(blinkSequence2.length);
+                try {
+                    resetSequence();
+                    screenSequence();
+                    emitterSelSequence();
+                    emitterFireSequence(0);
+                    shiftOutSequence();
+                    resetSequence();
+                    Thread.sleep(100);
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
         if (e.getSource() == setButton)
         {
             System.out.println("Reading pin states:");
             System.out.print("38" + pin38.getState() + " ");
+            System.out.print("40" + pin40.getState() + " ");
             System.out.print("32" + pin32.getState() + " ");
             System.out.print("29" + pin29.getState() + " ");
             System.out.print("15" + pin15.getState() + " ");
@@ -162,21 +87,69 @@ public class Main extends StepperMotorBase implements ActionListener
             System.out.println("07" + pin07.getState());
         }
     }
-
-    @Override
-    synchronized public void step(long l)
-    {
+    synchronized private void resetSequence() {
+        pin35.low(); // ModeIn
+        pin36.low(); // ClkIn
+        pin33.low(); // LpClkIn
+        pin31.low(); // DataIn
+        pin11.low(); // LedOn
+        pin10.low(); // Sin
     }
-
-    @Override
-    synchronized public MotorState getState()
-    {
-        return null;
+    synchronized private void teeSequence() {
+        pin36.high(); // ClkIn
+        pin35.high(); // ModeIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+        pin36.high(); // ClkIn
+        pin36.high(); // ClkIn
     }
-
-    @Override
-    synchronized public void setState(MotorState motorState)
-    {
+    synchronized private void screenSequence() {
+        pin36.high(); // ClkIn
+        pin35.high(); // ModeIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+    }
+    synchronized private void emitterSelSequence() {
+        pin35.low();  // ModeIn
+        pin35.high(); // ModeIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+        pin36.high(); // ClkIn
+        pin36.high(); // ClkIn
+    }
+    synchronized private void emitterDeselSequence() {
+        pin35.low();  // ModeIn
+        pin35.high(); // ModeIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+    }
+    synchronized private void emitterFireSequence(int sin) {
+        pin35.low();  // ModeIn
+        pin35.high(); // ModeIn
+        if (sin == 0)
+        {
+            pin10.low();   // Sin
+        }
+        else pin10.high(); // Sin
+        pin11.high(); // LedOn
+        pin36.low();  // ClkIn
+        pin36.low();  // ClkIn
+        pin36.low();  // ClkIn
+        pin11.low();  // LedOn
+        pin36.high(); // ClkIn
+        pin35.low();  // ModeIn
+    }
+    synchronized private void shiftOutSequence() {
+        pin35.low();  // ModeIn
+        pin35.high(); // ModeIn
+        for (int i = 0; i < 18; i++)
+        {
+            pin36.low();  // ClkIn
+            pin36.high(); // ClkIn
+        }
     }
 }
-
