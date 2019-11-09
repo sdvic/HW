@@ -9,7 +9,7 @@ public class Main implements ActionListener
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.48";
+    private String version = "500.49";
     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
@@ -289,7 +289,7 @@ public class Main implements ActionListener
      public void actionPerformed(ActionEvent e)
     {
         ux.repaint();
-        if (e.getSource() == testSensorBitsButton)
+        if (e.getSource() == testSensorBitsButton)//====
         {
             System.out.println("testing sensor bits");
             selectEmitter(1);
@@ -314,7 +314,7 @@ public class Main implements ActionListener
                 }
             }
         }
-        if (e.getSource() == resetSequenceButton)//**************************************
+        if (e.getSource() == resetSequenceButton)//=====
         {
             System.out.println("reset sequence");
             resetSequence();
@@ -329,7 +329,7 @@ public class Main implements ActionListener
             System.out.println("load test");
             loadTestWord();
         }
-        if (e.getSource() == readPinStatesButton)
+        if (e.getSource() == readPinStatesButton)//========
         {
             System.out.println("Reading pin states:");
             System.out.print("38" + pin38.getState() + " ");

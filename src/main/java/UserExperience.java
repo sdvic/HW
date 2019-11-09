@@ -1,15 +1,17 @@
+import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
+
 import javax.swing.*;
 import java.awt.*;
-import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
-import com.pi4j.io.gpio.*;
+
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class UserExperience extends JComponent
 {
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
-    private JButton runButton = new JButton("RUN");
-    private JButton setButton = new JButton("SET");
-    private JTextField allTextField = new JTextField("       ALL");
+    private JButton testSensorBitsButton = new JButton("TEST SENSOR BITS");//************************************
+    private JButton readPinStatesButton = new JButton("READ PIN STATES");
+    private JButton resetSequenceButton = new JButton("RESET SEQUENCE");
+    private JButton emitterSelSequenceButton = new JButton("EMMITTER SEL SEQUENCE");
     private JTextField emittersTextField = new JTextField("       EMITTERS");
     private JTextField sensorsTextField = new JTextField("       SENSORS");
     private JTextField nextBoardTextField = new JTextField("       NEXT BOARD");
@@ -25,17 +27,15 @@ public class UserExperience extends JComponent
     private int leftMargin = 40;
     private int middleMargin = 250;
     private Graphics g;
-    private  String version;
-    private GpioStepperMotorComponent motor;
-    private GpioController gpio;
+    private String version;
+    private GpioStepperMotorComponent stepper;
 
-    public UserExperience(String version, GpioStepperMotorComponent motor, GpioController gpio)
+    public UserExperience(String version)
     {
         this.version = version;
-        this.motor = motor;
-        this.gpio = gpio;
     }
-    public void createGUI(String version )
+
+    public void createGUI(String version)
     {
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);//Adds Graphics
@@ -43,15 +43,15 @@ public class UserExperience extends JComponent
         display.getContentPane().setBackground(new Color(193, 202, 202));
         display.setTitle(version);
         display.setVisible(true);
-        runButton.setBounds(500, 350, 100, 50);
-        display.add(runButton);
-        setButton.setBounds(150, 350, 100, 50);
-        display.add(setButton);
-        allTextField.setBounds(leftMargin, 100, 150, 30);
-        display.add(allTextField);
+        testSensorBitsButton.setBounds(500, 350, 100, 50);
+        display.add(testSensorBitsButton);
+        readPinStatesButton.setBounds(150, 350, 100, 50);
+        display.add(readPinStatesButton);
+        resetSequenceButton.setBounds(leftMargin, 100, 150, 30);
+        display.add(resetSequenceButton);
         emittersTextField.setBounds(leftMargin, 150, 150, 30);
-        display.add(emittersTextField);
-        sensorsTextField.setBounds((leftMargin + 10), 200, 150, 30);
+        display.add(emitterSelSequenceButton);
+        emitterSelSequenceButton.setBounds((leftMargin + 10), 200, 150, 30);
         display.add(sensorsTextField);
         nextBoardTextField.setBounds(leftMargin, 250, 150, 30);
         display.add(nextBoardTextField);
@@ -107,15 +107,23 @@ public class UserExperience extends JComponent
         g2.drawString("EMITTERS", leftMargin, 72);
     }
 
-    public JButton getRunButton()
+    public JButton getTestSensorBitsButton()
     {
-        return runButton;
-    }
+        return testSensorBitsButton;
+    }//************************************
 
     public JButton getSetButton()
     {
-        return setButton;
+        return readPinStatesButton;
     }
+
+    public JButton getResetSequenceButton() { return resetSequenceButton; }
+
+    public JButton emitterJButton() {return emitterSelSequenceButton;}
+
+    public JButton getReadPinStatesButton() { return readPinStatesButton; }
+
+    public JButton getEmitterSelSequenceButton() { return emitterSelSequenceButton; }
 }
 
 
