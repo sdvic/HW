@@ -1,4 +1,3 @@
-import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.*;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ public class Main implements ActionListener
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.35";
+    private String version = "500.34Biill";
     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
@@ -31,20 +30,34 @@ public class Main implements ActionListener
     private GpioPinDigitalOutput pin37 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "RasPi pin 37", PinState.LOW); // LedClk
     private GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "RasPi pin 13", PinState.LOW); // LedData
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "RasPi pin 11", PinState.LOW); // LedOn
+    private GpioPinDigitalOutput[] pins =
+            {
+                    pin05, // Esel1
+                    pin03, // Esel0
+                    pin11, // LedOn
+                    pin10, // Sin
+                    pin33, // LpClkIn
+                    pin31, // DataIn
+                    pin36, // ClkIn
+                    pin35  // ModeIn
+            };
+
     private UserExperience ux;
     private JButton runButton;
     private JButton setButton;
+    private boolean errDataOut = false;
+    private boolean errLpClkOut = false;
+    private boolean errModeOut = false;
+    private boolean errClkOut = false;
+    private boolean errEripple = false;
+    private boolean errRck = false;
+    private boolean errShiftLoad = false;
+    private boolean errEmitter = false;
+    private byte testWord = 0;
+    private byte ledPattern = 0;
 
-    synchronized public static void main(String[] args)
-    {
-        SwingUtilities.invokeLater(() -> { //Prevents graphics problems
-            new Main();
-            Thread.currentThread().setPriority(10);
-        });
-    }
     private Main()
     {
-        ux = new UserExperience(version);
         runButton = ux.getRunButton();
         runButton.addActionListener(this);
         setButton = ux.getSetButton();
@@ -53,22 +66,179 @@ public class Main implements ActionListener
         new Timer(100, this).start();
     }
 
+    synchronized public static void main(String[] args)
+    {
+        SwingUtilities.invokeLater(() -> { //Prevents graphics problems
+            new Main();
+            Thread.currentThread().setPriority(10);
+        });
+    }
+
+    // Reset all errors before running tests
+    private void resetErrors() {
+        errDataOut = false;
+        errLpClkOut = false;
+        errModeOut = false;
+        errClkOut = false;
+        errEripple = false;
+        errRck = false;
+        errShiftLoad = false;
+        errEmitter = false;
+    }
+
+    //  Selects one of four emitter positions for testing
+    private void selectEmitter(int emitter) {
+        switch (emitter) {
+            case 1:
+                pin03.low();  // Esel0
+                pin05.low();  // Esel1
+                break;
+            case 2:
+                pin03.low();  // Esel0
+                pin05.high(); // Esel1
+                break;
+            case 3:
+                pin03.high(); // Esel0
+                pin05.low();  // Esel1
+                break;
+            case 4:
+                pin03.high(); // Esel0
+                pin05.high(); // Esel1
+                break;
+        }
+    }
+
+    private void loadLed() {
+    }
+
+    synchronized private void resetSequence() {
+        pin35.low(); // ModeIn t1
+        pin36.low(); // ClkIn t2
+        pin31.low(); // DataIn
+        pin33.low(); // LpClkIn
+        pin10.low(); // Sin
+        pin11.low(); // LedOn
+    }
+
+    synchronized private void teeSequence() {
+        pin36.high(); // ClkIn t3
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut
+        if ( pin15.isLow() ) errEripple = true;    // Eripple
+        if ( pin16.isLow() ) errRck = true;        // Rclk
+        if ( pin08.isLow() ) errShiftLoad = true;  // ShiftLoad
+        pin35.high(); // ModeIn t4
+        pin36.low();  // ClkIn t5
+        pin36.high(); // ClkIn t6
+        pin36.high(); // ClkIn t7
+        pin36.high(); // ClkIn t8
+    }
+
+    synchronized private void screenSequence() {
+        pin36.high(); // ClkIn
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut
+        if ( pin15.isLow() ) errEripple = true;    // Eripple
+        if ( pin16.isLow() ) errRck = true;        // Rclk
+        if ( pin08.isLow() ) errShiftLoad = true;  // ShiftLoad
+        pin35.high(); // ModeIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+        pin36.low();  // ClkIn
+        pin36.high(); // ClkIn
+    }
+
+    synchronized private void emitterSelSequence() {
+        pin35.low();  // ModeIn t9
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut Error
+        if ( pin15.isLow() ) errEripple = true;    // Eripple Error
+        if ( pin16.isLow() ) errRck = true;        // Rclk Error
+        if ( pin08.isLow() ) errShiftLoad = true;  // ShiftLoad Error
+        pin35.high(); // ModeIn t10
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut Error
+        if ( pin15.isLow() ) errEripple = true;    // Eripple Error
+        if ( pin16.isLow() ) errRck = true;        // Rclk Error
+        if ( pin08.isHigh() ) errShiftLoad = true; // ShiftLoad Error
+        pin36.low();  // ClkIn t11
+
+        pin36.high(); // ClkIn t12
+        pin36.high(); // ClkIn t13
+        if ( pin15.isLow() ) errEripple = true;    // Eripple Error
+        pin36.high(); // ClkIn t14
+    }
+
+    synchronized private void emitterDeselSequence() {
+        pin35.low();  // ModeIn t9
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut Error
+        if ( pin15.isLow() ) errEripple = true;    // Eripple Error
+        if ( pin16.isLow() ) errRck = true;        // Rclk Error
+        if ( pin08.isLow() ) errShiftLoad = true;  // ShiftLoad Error
+        pin35.high(); // ModeIn t10
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut Error
+        if ( pin15.isLow() ) errEripple = true;    // Eripple Error
+        if ( pin16.isLow() ) errRck = true;        // Rclk Error
+        if ( pin08.isHigh() ) errShiftLoad = true; // ShiftLoad Error
+        pin36.low();  // ClkIn t11
+        pin36.high(); // ClkIn t12
+        pin36.low();  // ClkIn t13
+        if ( pin15.isHigh() ) errEripple = true;   // Eripple Error
+        pin36.high(); // ClkIn t14
+    }
+
+    synchronized private void emitterFireSequence(int sin) {
+        if (sin == 0)
+            pin10.low();   // Sin
+        else pin10.high(); // Sin
+        pin35.low();  // ModeIn t15
+        if ( pin40.isLow() ) errLpClkOut = true;   // LpClkOut Error
+        if ( pin15.isLow() ) errEripple = true;    // Eripple Error
+        if ( pin16.isLow() ) errRck = true;        // Rclk Error
+        if ( pin08.isHigh() ) errShiftLoad = true; // ShiftLoad Error
+        pin35.high(); // ModeIn t16
+        if ( pin07.isHigh() ) errEmitter = true;   // Emitter Error
+        pin11.high(); // LedOn t17
+        pin36.low();  // ClkIn
+        if ( pin16.isHigh() ) errRck = true;       // Rclk Error
+        if ( pin07.isHigh() ) errEmitter = true;   // Emitter Error
+        pin36.high(); // ClkIn t18
+        pin11.low();  // LedOn
+
+    }
+
+    synchronized private void shiftOutSequence() {
+        pin35.low();  // ModeIn
+        pin35.high(); // ModeIn
+        for (int i = 0; i < 18; i++)
+        {
+            pin36.low();  // ClkIn
+            pin36.high(); // ClkIn
+        }
+    }
+
     synchronized public void actionPerformed(ActionEvent e)
     {
         ux.repaint();
         if (e.getSource() == ux.getRunButton())
         {
-            System.out.println("Run");
+            selectEmitter(1);
+            loadLed();
             for (int i = 0; i < 100; i++)
             {
+//            resetSequence();
+//            teeSequence();
+//            emitterSelSequence();
+//            emitterFireSequence(0);
+//            shiftOutSequence();
+//            resetSequence();
+
+                resetSequence();
+                teeSequence();
+//            screenSequence();
+                emitterSelSequence();
+//            emitterDeselSequence();
+                emitterFireSequence(0);
+                shiftOutSequence();
+                resetSequence();
                 try {
-                    resetSequence();
-                    screenSequence();
-                    emitterSelSequence();
-                    emitterFireSequence(0);
-                    shiftOutSequence();
-                    resetSequence();
-                    Thread.sleep(100);
+                    Thread.sleep(100);                 // 1000 milliseconds is one second.
                 } catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -87,69 +257,5 @@ public class Main implements ActionListener
             System.out.println("07" + pin07.getState());
         }
     }
-    synchronized private void resetSequence() {
-        pin35.low(); // ModeIn
-        pin36.low(); // ClkIn
-        pin33.low(); // LpClkIn
-        pin31.low(); // DataIn
-        pin11.low(); // LedOn
-        pin10.low(); // Sin
-    }
-    synchronized private void teeSequence() {
-        pin36.high(); // ClkIn
-        pin35.high(); // ModeIn
-        pin36.low();  // ClkIn
-        pin36.high(); // ClkIn
-        pin36.high(); // ClkIn
-        pin36.high(); // ClkIn
-    }
-    synchronized private void screenSequence() {
-        pin36.high(); // ClkIn
-        pin35.high(); // ModeIn
-        pin36.low();  // ClkIn
-        pin36.high(); // ClkIn
-        pin36.low();  // ClkIn
-        pin36.high(); // ClkIn
-    }
-    synchronized private void emitterSelSequence() {
-        pin35.low();  // ModeIn
-        pin35.high(); // ModeIn
-        pin36.low();  // ClkIn
-        pin36.high(); // ClkIn
-        pin36.high(); // ClkIn
-        pin36.high(); // ClkIn
-    }
-    synchronized private void emitterDeselSequence() {
-        pin35.low();  // ModeIn
-        pin35.high(); // ModeIn
-        pin36.low();  // ClkIn
-        pin36.high(); // ClkIn
-        pin36.low();  // ClkIn
-        pin36.high(); // ClkIn
-    }
-    synchronized private void emitterFireSequence(int sin) {
-        pin35.low();  // ModeIn
-        pin35.high(); // ModeIn
-        if (sin == 0)
-        {
-            pin10.low();   // Sin
-        }
-        else pin10.high(); // Sin
-        pin11.high(); // LedOn
-        pin36.low();  // ClkIn
-        pin36.low();  // ClkIn
-        pin36.low();  // ClkIn
-        pin11.low();  // LedOn
-        pin36.high(); // ClkIn
-        pin35.low();  // ModeIn
-    }
-    synchronized private void shiftOutSequence() {
-        pin35.low();  // ModeIn
-        pin35.high(); // ModeIn
-        for (int i = 0; i < 18; i++)
-        {
-            pin36.low();  // ClkIn
-            pin36.high(); // ClkIn
-        }
-    }
 }
+
