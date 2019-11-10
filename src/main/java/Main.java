@@ -1,6 +1,6 @@
 import com.pi4j.io.gpio.*;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +9,7 @@ public class Main implements ActionListener
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.49";
+    private String version = "500.93";
     /**************************************************************************************/
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
@@ -44,7 +44,7 @@ public class Main implements ActionListener
             };
 
     private UserExperience ux;
-    private JButton readPinStatesButton;//************************************
+    private JButton readPinStatesButton;
     private JButton resetSequenceButton;
     private JButton loadTestButton;
     private JButton emitterSelSequenceButton;
@@ -60,20 +60,47 @@ public class Main implements ActionListener
     private byte testByteHigh = 0;  // byte used for testing sensors, top 8 bits
     private byte testByteLow = 0;   // byte used for testing sensors, bottom 8 bits
     private boolean sIn = false;    // bit used for testing Sin from Long Board
+    private boolean errorCacahe = false;
 
     private Main()
     {
-        ux = new UserExperience(version);
-        readPinStatesButton = ux.getSetButton();//************************************
-        readPinStatesButton.addActionListener(this);//************************************
-        resetSequenceButton = ux.getResetSequenceButton();
-        resetSequenceButton.addActionListener(this);
-        emitterSelSequenceButton = ux.getEmitterSelSequenceButton();
-        emitterSelSequenceButton.addActionListener(this);
-        testSensorBitsButton = ux.getTestSensorBitsButton();
-        testSensorBitsButton.addActionListener(this);
-        ux.createGUI(version);
-        new Timer(100, this).start();
+        JPanel layoutPanel = new JPanel(new FlowLayout());
+        JCheckBox commBoard = new JCheckBox("Test COMM Board?");
+        JCheckBox longBoard = new JCheckBox("Test LONG Board?");
+            layoutPanel.add(commBoard);
+            layoutPanel.add(longBoard);
+        JScrollPane scroller = new JScrollPane(layoutPanel);
+        scroller.setPreferredSize(new Dimension(400, 50));
+        JOptionPane.showMessageDialog(null, scroller);
+        if (commBoard.isSelected() && !longBoard.isSelected())
+        {
+            ux = new UserExperience(version);
+            readPinStatesButton = ux.getSetButton();
+            readPinStatesButton.addActionListener(this);
+            resetSequenceButton = ux.getResetSequenceButton();
+            resetSequenceButton.addActionListener(this);
+            emitterSelSequenceButton = ux.getEmitterSelSequenceButton();
+            emitterSelSequenceButton.addActionListener(this);
+            testSensorBitsButton = ux.getTestSensorBitsButton();
+            testSensorBitsButton.addActionListener(this);
+            ux.createGUI(version);
+            new Timer(100, this).start();
+        }
+        if (longBoard.isSelected() && !commBoard.isSelected())
+        {
+            System.out.println("long board selected");
+        }
+        if (commBoard.isSelected() && longBoard.isSelected())
+        {
+            JOptionPane.showMessageDialog(null, "Please select only one test");
+            System.exit(0);
+        }
+        if (!commBoard.isSelected() && ! longBoard.isSelected())
+        {
+            JOptionPane.showMessageDialog(null, "PLease ease select at one test");
+            System.exit(0);
+        }
+
     }
 
      public static void main(String[] args)
@@ -289,7 +316,7 @@ public class Main implements ActionListener
      public void actionPerformed(ActionEvent e)
     {
         ux.repaint();
-        if (e.getSource() == testSensorBitsButton)//====
+        if (e.getSource() == testSensorBitsButton)
         {
             System.out.println("testing sensor bits");
             selectEmitter(1);
@@ -313,8 +340,13 @@ public class Main implements ActionListener
                     Thread.currentThread().interrupt();
                 }
             }
+            //if (errorCacahe)
+            {
+                ux.setErrorCodeTextField("Sensor Bit Test Failure");
+            }
+            System.out.println("Error Cacache =>  " + errorCacahe);
         }
-        if (e.getSource() == resetSequenceButton)//=====
+        if (e.getSource() == resetSequenceButton)
         {
             System.out.println("reset sequence");
             resetSequence();
@@ -329,7 +361,7 @@ public class Main implements ActionListener
             System.out.println("load test");
             loadTestWord();
         }
-        if (e.getSource() == readPinStatesButton)//========
+        if (e.getSource() == readPinStatesButton)
         {
             System.out.println("Reading pin states:");
             System.out.print("38" + pin38.getState() + " ");
