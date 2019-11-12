@@ -50,20 +50,30 @@ public class TestSequences implements ActionListener
     private int errTestByteLow = 0;  // byte used for sensors errors, bottom 8 bits
     private int testByte = 0;        // byte used for testing sensors, top and bottom 8 bits
     private boolean sIn = false;     // bit used for testing Sin from Long Board
+    private boolean[] errorList = new boolean[8];
 
     private void resetErrors()
     {
         errDataOut = false;
+        errorList[0] = false;
         errLpClkOut = false;
+        errorList[1] = false;
         errModeOut = false;
+        errorList[2] = false;
         errClkOut = false;
+        errorList[3] = false;
         errEripple = false;
+        errorList[4] = false;
         errRck = false;
+        errorList[5] = false;
         errShiftLoad = false;
+        errorList[6] = false;
         errSin = false;
+        errorList[7] = false;
         errEmitter = 0;
         errTestByteHigh = 0;
         errTestByteLow = 0;
+
     }
 
     private void resetSequence()// Set CPLD state machine to the RESET state
@@ -82,18 +92,22 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk
+            errorList[5] = true;
         }
         if (pin08.isLow())
         {
             errShiftLoad = true;  // ShiftLoad
+            errorList[6] = true;
         }
         pin35.high(); // ModeIn t4
         pin36.low();  // ClkIn t5
@@ -108,18 +122,22 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk
+            errorList[5] = true;
         }
         if (pin08.isLow())
         {
             errShiftLoad = true;  // ShiftLoad
+            errorList[6] = true;
         }
         pin35.high(); // ModeIn
         pin36.low();  // ClkIn
@@ -134,46 +152,56 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin08.isLow())
         {
             errShiftLoad = true;  // ShiftLoad Error
+            errorList[6] = true;
         }
         pin35.high(); // ModeIn t10
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin08.isHigh())
         {
             errShiftLoad = true; // ShiftLoad Error
+            errorList[6] = true;
         }
         pin36.low();  // ClkIn t11
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         pin36.high(); // ClkIn t12
         pin36.high(); // ClkIn t13
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         pin36.high(); // ClkIn t14
     }
@@ -184,46 +212,56 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin08.isLow())
         {
             errShiftLoad = true;  // ShiftLoad Error
+            errorList[6] = true;
         }
         pin35.high(); // ModeIn t10
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin08.isHigh())
         {
             errShiftLoad = true; // ShiftLoad Error
+            errorList[6] = true;
         }
         pin36.low();  // ClkIn t11
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         pin36.high(); // ClkIn t12
         pin36.low();  // ClkIn t13
         if (pin15.isHigh())
         {
             errEripple = true;   // Eripple Error
+            errorList[4] = true;
         }
         pin36.high(); // ClkIn t14
     }
@@ -235,18 +273,22 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin08.isHigh())
         {
             errShiftLoad = true; // ShiftLoad Error
+            errorList[6] = true;
         }
         pin35.high(); // ModeIn t16
         if (pin07.isHigh())
@@ -258,6 +300,8 @@ public class TestSequences implements ActionListener
         if (pin16.isHigh())
         {
             errRck = true;       // Rclk Error
+            errorList[5] = true;
+
         }
         if (pin07.isLow())
         {
@@ -268,6 +312,7 @@ public class TestSequences implements ActionListener
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin07.isHigh())
         {
@@ -291,18 +336,22 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
+            errorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRck = true;        // Rclk Error
+            errorList[5] = true;
         }
         if (pin08.isHigh())
         {
             errShiftLoad = true; // ShiftLoad Error
+            errorList[6] = true;
         }
         pin35.high(); // ModeIn t20
         if (pin07.isHigh())
@@ -315,17 +364,20 @@ public class TestSequences implements ActionListener
             if (pin40.isHigh())
             {
                 errLpClkOut = true;  // LpClkOut Error
+                errorList[1] = true;
             }
             pin36.high(); // ClkIn
             if (pin40.isLow())
             {
                 errLpClkOut = true;   // LpClkOut Error
+                errorList[1] = true;
             }
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
             if (state != (data != 0))
             {
                 errDataOut = true;   // DataOut Error
+                errorList[0] = true;
             }
         }
         for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, high byte
@@ -334,33 +386,39 @@ public class TestSequences implements ActionListener
             if (pin40.isHigh())
             {
                 errLpClkOut = true;  // LpClkOut Error
+                errorList[1] = true;
             }
             pin36.high(); // ClkIn
             if (pin40.isLow())
             {
                 errLpClkOut = true;   // LpClkOut Error
+                errorList[1] = true;
             }
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
             if (state != (data != 0))
             {
                 errDataOut = true;   // DataOut Error
+                errorList[0] = true;
             }
         }
         pin36.low();  // ClkIn t55  // shift out Sin data
         if (pin40.isHigh())
         {
             errLpClkOut = true;  // LpClkOut Error
+            errorList[1] = true;
         }
         pin36.high(); // ClkIn t56
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         state = pin38.getState().isHigh();
         if (state != sIn)
         {
             errSin = true;   // Sin Error
+            errorList[7] = true;
         }
     }
 
@@ -370,49 +428,59 @@ public class TestSequences implements ActionListener
         if (pin32.isHigh())
         {
             errModeOut = true;   // ModeOut Error
+            errorList[2] = true;
         }
         pin35.high(); // ModeIn t20
         if (pin32.isLow())
         {
             errModeOut = true;    // ModeOut Error
+            errorList[2] = true;
         }
         pin31.low();  // DataIn t21
         pin33.low();  // LpClkIn
         if (pin38.isHigh())
         {
             errLpClkOut = true;  // DataOut Error
+            errorList[1] = true;
         }
         if (pin40.isHigh())
         {
             errLpClkOut = true;  // LpClkOut Error
+            errorList[1] = true;
         }
         pin33.high(); // ClkIn t22
         if (pin38.isHigh())
         {
             errLpClkOut = true;  // DataOut Error
+            errorList[1] = true;
         }
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         pin31.high(); // DataIn t23
         pin33.low();  // LpClkIn
         if (pin38.isLow())
         {
             errLpClkOut = true;   // DataOut Error
+            errorList[1] = true;
         }
         if (pin40.isHigh())
         {
             errLpClkOut = true;  // LpClkOut Error
+            errorList[1] = true;
         }
         pin33.high(); // ClkIn t25
         if (pin38.isLow())
         {
             errLpClkOut = true;   // DataOut Error
+            errorList[1] = true;
         }
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
     }
 
@@ -479,39 +547,45 @@ public class TestSequences implements ActionListener
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
+            errorList[1] = true;
         }
         if (pin32.isLow())
         {
             errModeOut = true;    // ModeOut Error
+            errorList[2] = true;
         }
         if (pin29.isLow())
         {
             errClkOut = true;     // ClkOut Error
+            errorList[3] = true;
         }
         pin35.low();  // ModeIn t15
         if (pin32.isHigh())
         {
             errModeOut = true;   // ModeOut Error
+            errorList[2] = true;
         }
         pin35.high(); // ModeIn t16
         if (pin32.isLow())
         {
             errModeOut = true;    // ModeOut Error
+            errorList[2] = true;
         }
         pin36.low();  // ClkIn t17
         if (pin29.isHigh())
         {
             errClkOut = true;    // ClkOut Error
+            errorList[3] = true;
         }
         pin36.high(); // ClkIn t18
         if (pin29.isLow())
         {
             errClkOut = true;     // ClkOut Error
+            errorList[3] = true;
         }
         screenShiftOutSequence();
         resetSequence();
     }
-
     private void testSensors() // Test each individual IR photodiode for correct operation
     {
         resetErrors();
@@ -563,62 +637,39 @@ public class TestSequences implements ActionListener
         screenShiftOutSequence();
         resetSequence();// End of testing
     }
-
-    private void errorCollector()
-    {
-        boolean anyError = errDataOut || errLpClkOut || errModeOut || errClkOut || errEripple || errRck || errShiftLoad || errSin;
-        if (anyError)
-        {
-            ux.failTextField.setBackground(Color.RED);
-        }
-    }
-
-    private void errorTestBytePrinter()
-    {
-        System.out.println(errTestByteHigh + "  " + errTestByteLow);
-    }
-
     public void actionPerformed(ActionEvent e)
     {
-        errorCollector();
         if (e.getSource() == runButton)
         {
-            try
-            {
-                Thread.sleep(100);
-            }
-            catch (InterruptedException ex)
-            {
-                ex.printStackTrace();
-            }
+            System.out.println("runrun button pressed");
         }
         if (e.getSource() == allButton)
         {
+            ux.setCodeCat("All Test ");
             testBasic();
             System.out.print("allButton ");
-            errorTestBytePrinter();
         }
         if (e.getSource() == teeButton)
         {
+            ux.setCodeCat("Tee Test ");
             testTee();
             System.out.print("teeButton ");
-            errorTestBytePrinter();
         }
         if (e.getSource() == screenButton)
         {
+            ux.setCodeCat("Screen Test ");
             testScreen();
             System.out.print("screenButton ");
-            errorTestBytePrinter();
-
         }
         if (e.getSource() == sensorsButton)
         {
+            ux.setCodeCat("Sensor Test ");
             testSensors();
             System.out.print("sensorsButton ");
-            errorTestBytePrinter();
         }
+        ux.setErrorList(errorList);
+        ux.buildErrorListDisplay();
     }
-
     public void setAllButton(JButton allButton)
     {
         this.allButton = allButton;
@@ -673,4 +724,5 @@ public class TestSequences implements ActionListener
     {
         this.ux = ux;
     }
+
 }
