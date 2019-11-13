@@ -37,6 +37,8 @@ public class UserExperience extends JComponent implements ActionListener
     private boolean[] errorList = new boolean[8];
     private String codeCat = "";
     private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
+    private int errBit; // Error bit position
+    private int errEmitter = 2;      // byte used for emitter errors
 
     public UserExperience(String version)
     {
@@ -152,8 +154,7 @@ public class UserExperience extends JComponent implements ActionListener
     {
         Graphics2D g2 = (Graphics2D) g;
         g2.setFont(indicatorFont);
-        int errBit; // Error bit position
-        int errEmitter = 2;      // byte used for emitter errors
+
         int errTestByteLow = 1;  // byte used for sensors errors, bottom 8 bits
         int errTestByteHigh = 4; // byte used for sensors errors, top 8 bits
         // Draw sensor indicators 1-8 with pass/fail colors
@@ -274,6 +275,8 @@ public class UserExperience extends JComponent implements ActionListener
     {
         this.codeCat = codeCat;
     }
+
+    public void setErrEmitter(int errEmitter) {this.errEmitter = errEmitter;}
 }
 
 

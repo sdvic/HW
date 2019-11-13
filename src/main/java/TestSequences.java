@@ -737,6 +737,7 @@ public class TestSequences implements ActionListener
             }
             ux.setErrorList(errorList);
             ux.buildErrorListDisplay();
+            ux.setErrEmitter(errEmitter);
         }
     }
 

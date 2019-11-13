@@ -8,7 +8,7 @@ public class Main
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.40BO";
+    private String version = "500.40BQ";
     public UserExperience ux = new UserExperience(version);
 
     private Main()
@@ -23,7 +23,6 @@ public class Main
         JScrollPane scroller = new JScrollPane(layoutPanel);
         scroller.setPreferredSize(new Dimension(400, 50));
         JOptionPane.showMessageDialog(null, scroller);
-
         new Timer(100, ux).start();
         if (commBoard.isSelected() && !longBoard.isSelected())
         {
