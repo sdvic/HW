@@ -8,7 +8,7 @@ public class Main
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.40BQ";
+    private String version = "500.40BR";
     public UserExperience ux = new UserExperience(version);
 
     private Main()
