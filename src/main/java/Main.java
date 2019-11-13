@@ -3,13 +3,14 @@ import java.awt.*;
 
 public class Main
 {
+    /**************************************************************************************/
+    public TestSequences ts = new TestSequences();
     /***************************************************************************************
      *      Full Swing Golf Strip Test
      *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.40BA";
-    /**************************************************************************************/
-    public TestSequences ts = new TestSequences();
+    private String version = "500.40BO";
     public UserExperience ux = new UserExperience(version);
+
     private Main()
     {
         ts.setUx(ux);
@@ -50,8 +51,10 @@ public class Main
 
     public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new Main();
             }
         });

@@ -2,10 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class UserExperience extends JComponent implements ActionListener
 {
+    public JTextField failTextField = new JTextField("FAIL");
+    Timer paintTicker = new Timer(100, this);
     private TestSequences ts;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private JButton allButton = new JButton("ALL");
@@ -19,7 +23,6 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton long12 = new JButton("LONG 1/2");
     private JButton long14 = new JButton("LONG 1/4");
     private JTextField passTextField = new JTextField("PASS");
-    public JTextField failTextField = new JTextField("FAIL");
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display = new JFrame();
     private int leftMargin = 40;
@@ -31,12 +34,13 @@ public class UserExperience extends JComponent implements ActionListener
     private String version;
     private boolean isCommBoardFlag = false;
     private boolean isLongBoardFlag = false;
-    Timer paintTicker = new Timer(100, this);
+    private boolean[] errorList = new boolean[8];
+    private String codeCat = "";
+    private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
 
     public UserExperience(String version)
     {
         this.version = version;
-
         paintTicker.start();
     }
 
@@ -98,6 +102,8 @@ public class UserExperience extends JComponent implements ActionListener
         display.add(failTextField);
 
         errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
+        String codeCat = "";
+
         display.add(errorCodeDisplayField);
 
         if (isCommBoardFlag)
@@ -141,29 +147,79 @@ public class UserExperience extends JComponent implements ActionListener
         display.setTitle("FSG StripTest ver " + version);
         display.setVisible(true);
     }
+
     public void paint(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
         g2.setFont(indicatorFont);
-        for (int i = 0; i < 16; i++)
+        int errBit; // Error bit position
+        int errEmitter = 2;      // byte used for emitter errors
+        int errTestByteLow = 1;  // byte used for sensors errors, bottom 8 bits
+        int errTestByteHigh = 4; // byte used for sensors errors, top 8 bits
+        // Draw sensor indicators 1-8 with pass/fail colors
+        for (int i = 0; i < 8; i++)
         {
-            g2.setColor(new Color(255, 255, 255));
+            // test for correct IR detection by photo diodes
+            g2.setColor(new Color(255, 255, 153)); // Pale Yellow
+            errBit = 1;
+            errBit = errBit << i;
+            errBit = errTestByteLow & errBit; // current error masked
+            if (errBit == 0)
+            {
+                g2.setColor(new Color(0, 255, 0));  // Passed green
+            }
+            else
+            {
+                g2.setColor(new Color(255, 0, 0)); // Failed red
+            }
             g2.fillOval((42 * i + 26), 10, 32, 32);
             g2.setColor(Color.BLACK);
-            g2.drawString((i + 1) + "", (42 * i + 32), 32);
+            g2.drawString((i + 1) + "", (42 * i + 36), 32);
         }
-        g2.setStroke(new BasicStroke(.4f));
-        g2.setColor(Color.BLACK);
-        g2.drawLine(0, 52, (screenWidth), 52);
-        g2.setColor(new Color(153, 255, 255));
-        g2.setColor(Color.BLACK);
-        g2.drawLine(0, 97, (screenWidth), 97);
-        for (int i = 0; i < 4; i++)
+        // Draw sensor indicators 9-16 with pass/fail colors
+        for (int i = 0; i < 8; i++)
         {
-            g2.setColor(new Color(255, 255, 255));
-            g2.fillOval((120 * i + 180), 59, 30, 30);
-            g2.setColor(new Color(0, 0, 0));
-            g2.drawOval((120 * i + 180), 59, 30, 30);
+            // test for correct IR detection by photo diodes
+            g2.setColor(new Color(255, 255, 153)); // Pale Yellow
+            errBit = 1;
+            errBit = errBit << i;
+            errBit = errTestByteHigh & errBit; // current error masked
+            if (errBit == 0)
+            {
+                g2.setColor(new Color(0, 255, 0));  // Passed green
+            }
+            else
+            {
+                g2.setColor(new Color(255, 0, 0)); // Failed red
+            }
+            g2.fillOval((42 * i + 362), 10, 32, 32);
+            g2.setColor(Color.BLACK);
+            g2.drawString((i + 9) + "", (42 * i + 367), 32);
+            g2.setStroke(new BasicStroke(.4f));
+            g2.setColor(Color.BLACK);
+            g2.drawLine(0, 52, (screenWidth), 52);
+            g2.setColor(new Color(153, 255, 255));
+            g2.setColor(Color.BLACK);
+            g2.drawLine(0, 97, (screenWidth), 97);
+        }
+        for (int i = 0; i < emitterBubbleArray.length; i++)
+        {
+            emitterBubbleArray[i] = new Ellipse2D.Double((120 * i + 180), 59, 30, 30);
+            g2.setColor(new Color(255, 255, 153)); // Pale Yellow
+            errBit = 1;
+            errBit = errBit << i;
+            errBit = errEmitter & errBit; // current error masked
+            if (errBit == 0)
+            {
+                g2.setColor(new Color(0, 255, 0));  // Passed green
+            }
+            else
+            {
+                g2.setColor(new Color(255, 0, 0)); // Failed red
+            }
+            g2.fill(emitterBubbleArray[i]);
+            g2.setColor(Color.BLACK);
+            g2.draw(emitterBubbleArray[i]);
             g2.drawString((i + 1) + "", (120 * i + 190), 80);
         }
         g2.setFont(buttonFont);
@@ -174,20 +230,29 @@ public class UserExperience extends JComponent implements ActionListener
         g2.setColor(Color.BLACK);
         g2.drawLine(0, 333, (screenWidth), 333);
     }
+
     public void actionPerformed(ActionEvent e)
     {
         repaint();
     }
 
-    private void errPrintOut()
-    {
-//        System.out.println("errDataOut errLpClkOutut errModeOut errClkOut errEripple errRck errShiftLoad errSin");
-//        System.out.println(errDataOut + "         " + errLpClkOut + "         " + errModeOut + "         " + errClkOut + "         " + errEripple + "         " + errRck + "         " + errShiftLoad + "         " + errSin);
-    }
-
     public void setCommFlag(boolean isCommBoardFlag)
     {
         this.isCommBoardFlag = isCommBoardFlag;
+    }
+
+    public void buildErrorListDisplay()
+    {
+        for (int i = 0; i < errorList.length; i++)
+        {
+            if (errorList[i])
+            {
+                codeCat += (i + ", ");
+            }
+        }
+        errorCodeDisplayField.setFont(buttonFont);
+        errorCodeDisplayField.setText(codeCat);
+        codeCat = " ";
     }
 
     public void setLongFlag(boolean isLongBoardFlag)
@@ -198,6 +263,16 @@ public class UserExperience extends JComponent implements ActionListener
     public void setTs(TestSequences ts)
     {
         this.ts = ts;
+    }
+
+    public void setErrorList(boolean[] errorList)
+    {
+        this.errorList = errorList;
+    }
+
+    public void setCodeCat(String codeCat)
+    {
+        this.codeCat = codeCat;
     }
 }
 
