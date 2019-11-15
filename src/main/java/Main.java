@@ -1,62 +1,253 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Main
+public class Main implements ActionListener
 {
-    /**************************************************************************************/
+    /****************************************************************************************
+     *      Full Swing Golf Strip Test                                                      *
+     *      copyright 2019 Vic Wintriss                                                     *
+    /****************************************************************************************/
     public TestSequences ts = new TestSequences();
-    /***************************************************************************************
-     *      Full Swing Golf Strip Test
-     *      copyright 2019 Vic Wintriss                                                    */
-    private String version = "500.40BR";
+    private String version = "500.40BY";
     public UserExperience ux = new UserExperience(version);
-
-    private Main()
+    private boolean modeAllTest = false;
+    private boolean modeTeeTest = false;
+    private boolean modeScreenTest = false;
+    private boolean modeSensorTest = false;
+    private boolean modeBasicTest = false;
+    private JButton allButton;
+    private JButton screenButton;
+    private JButton sensorsButton;
+    private JButton teeButton;
+    private JButton commButton;
+    private JButton runButton;
+    private int testByte;
+    Main main;
+    public static void main(String[] args)
     {
-        ts.setUx(ux);
-        ux.setTs(ts);
-        JPanel layoutPanel = new JPanel(new FlowLayout());
-        JCheckBox commBoard = new JCheckBox(" COMM Board Test?");
-        JCheckBox longBoard = new JCheckBox(" LONG Board Test?");
-        layoutPanel.add(commBoard);
-        layoutPanel.add(longBoard);
-        JScrollPane scroller = new JScrollPane(layoutPanel);
-        scroller.setPreferredSize(new Dimension(400, 50));
-        JOptionPane.showMessageDialog(null, scroller);
-        new Timer(100, ux).start();
-        if (commBoard.isSelected() && !longBoard.isSelected())
+        new Main();
+    }
+   public Main()
+   {
+       main = this;
+       ts.setUx(ux);
+       ux.setTs(ts);
+       ux.setMain(main);
+       JPanel layoutPanel = new JPanel(new FlowLayout());
+       JCheckBox commBoard = new JCheckBox(" COMM Board Test?");
+       JCheckBox longBoard = new JCheckBox(" LONG Board Test?");
+       layoutPanel.add(commBoard);
+       layoutPanel.add(longBoard);
+       JScrollPane scroller = new JScrollPane(layoutPanel);
+       scroller.setPreferredSize(new Dimension(400, 50));
+       JOptionPane.showMessageDialog(null, scroller);
+       new Timer(100, ux).start();
+       if (commBoard.isSelected() && !longBoard.isSelected())
+       {
+           ux.setCommFlag(true);
+           ux.createGUI(version);
+           ux.setCommFlag(true);
+       }
+       if (longBoard.isSelected() && !commBoard.isSelected())
+       {
+           ux.setLongFlag(true);
+           ux.createGUI(version);
+           ux.setLongFlag(true);
+       }
+       if (commBoard.isSelected() && longBoard.isSelected())
+       {
+           JOptionPane.showMessageDialog(null, "Please select only one test");
+           System.exit(0);
+       }
+       if (!commBoard.isSelected() && !longBoard.isSelected())
+       {
+           JOptionPane.showMessageDialog(null, "PLease ease select at one test");
+           System.exit(0);
+       }
+   }
+    // Set CPLD state machine to the tee frame and test all the emitters
+    private void testTee()
+    {
+        ts.resetErrors();
+        for (int i = 1; i < 5; i++)
         {
-            ux.setCommFlag(true);
-            ux.createGUI(version);
-            ux.setCommFlag(true);
+            ts.resetSequence();        // t1-t2
+            ts.teeSequence();          // t3-t8
+            ts.emitterSelSequence();   // t9-t14
+            ts.emitterFireSequence(i); // t15-t18
+            ts.resetSequence();        // t1-t2
         }
-        if (longBoard.isSelected() && !commBoard.isSelected())
+   }
+    private void testSensors()// Test each individual IR photodiode for correct operation
+    {
+        ts.resetErrors();
+        for (int i = 0; i < 8; i++) // walking 1 test pattern
         {
-            ux.setLongFlag(true);
-            ux.createGUI(version);
-            ux.setLongFlag(true);
+            ts.resetSequence();      // t1-t2
+            ts.teeSequence();        // t3-t8
+            ts.emitterSelSequence(); // t9-t14
+            testByte = 128;
+            testByte = testByte >> i;
+            ts.loadTestWord();
+            ts.emitterFireSequence(0);          // t15-t18
+            ts.teeShiftOutSequence(false); // t19-t54
+            ts.resetSequence();                // t55-t56
         }
-        if (commBoard.isSelected() && longBoard.isSelected())
+        for (int i = 0; i < 8; i++) // walking 0 test pattern
         {
-            JOptionPane.showMessageDialog(null, "Please select only one test");
-            System.exit(0);
+            ts.resetSequence();      // t1-t2
+            ts.teeSequence();        // t3-t8
+            ts.emitterSelSequence(); // t9-t14
+            testByte = 128;
+            testByte = testByte >> i;
+            testByte = ~testByte;
+            ts.loadTestWord();
+            ts.emitterFireSequence(0);          // t15-t18
+            ts.teeShiftOutSequence(false); // t19-t54
+            ts.resetSequence();                // t55-t56
         }
-        if (!commBoard.isSelected() && !longBoard.isSelected())
+    }
+    private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
+    {
+        ts.resetErrors();
+        ts.loadTestWord();
+        // Test in tee frame mode with on-board emitter
+        ts.resetSequence();
+        ts.teeSequence();
+        ts.emitterSelSequence();
+        ts.emitterFireSequence(0);
+        ts.teeShiftOutSequence(false);
+        // Test in tee frame mode with next board emitter
+        ts.resetSequence();
+        ts.teeSequence();
+        ts.emitterDeselSequence();
+        ts.emitterFireSequence(1);
+        ts.teeShiftOutSequence(true);
+        // Test the screen frame connections
+        ts.resetSequence();
+        ts.screenSequence();
+        ts.emitterSelSequence();
+        ts.emitterFireSequence(2);
+        ts.screenShiftOutSequence();
+        // End of testing
+        ts.resetSequence();
+    }
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() == allButton)
         {
-            JOptionPane.showMessageDialog(null, "PLease ease select at one test");
-            System.exit(0);
+            modeAllTest = true;
+            modeTeeTest = false;
+            modeScreenTest = false;
+            modeSensorTest = false;
+            modeBasicTest = false;
+        }
+        if (e.getSource() == teeButton)
+        {
+            modeAllTest = false;
+            modeTeeTest = true;
+            modeScreenTest = false;
+            modeSensorTest = false;
+            modeBasicTest = false;
+        }
+        if (e.getSource() == screenButton)
+        {
+            modeAllTest = false;
+            modeTeeTest = false;
+            modeScreenTest = true;
+            modeSensorTest = false;
+            modeBasicTest = false;
+        }
+        if (e.getSource() == sensorsButton)
+        {
+            modeAllTest = false;
+            modeTeeTest = false;
+            modeScreenTest = false;
+            modeSensorTest = true;
+            modeBasicTest = false;
+        }
+        if (e.getSource() == commButton)
+        {
+            modeAllTest = false;
+            modeTeeTest = false;
+            modeScreenTest = false;
+            modeSensorTest = false;
+            modeBasicTest = true;
+        }
+        if (e.getSource() == runButton)
+        {
+            if (modeAllTest)
+            {
+                testTee();
+                ts.testScreen();
+                testSensors();
+                ux.setCodeCat("All Tests Error Codes => ");
+            }
+            if (modeTeeTest)
+            {
+                testTee();
+                ux.setCodeCat("Tee Test Error Codes => ");
+            }
+            if (modeScreenTest)
+            {
+                ts.testScreen();
+                ux.setCodeCat("Screen Error Codes => ");
+            }
+            if (modeSensorTest)
+            {
+                testSensors();
+                ux.setCodeCat("Sensors Error Codes => ");
+            }
+            if (modeBasicTest)
+            {
+                testByte = (byte) 0b10101110; // byte used for testing sensors
+                for (int i = 0; i < 200; i++)
+                {
+                    testBasic();
+                    try
+                    {
+                        Thread.sleep(100); // 1000 milliseconds is one second.
+                    }
+                    catch (InterruptedException ex)
+                    {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+            ux.buildErrorListDisplay();
         }
     }
 
-    public static void main(String[] args)
+    public void setAllButton(JButton allButton)
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new Main();
-            }
-        });
+        this.allButton = allButton;
+    }
+
+    public void setScreenButton(JButton screenButton)
+    {
+        this.screenButton = screenButton;
+    }
+
+    public void setSensorsButton(JButton sensorsButton)
+    {
+        this.sensorsButton = sensorsButton;
+    }
+
+    public void setTeeButton(JButton teeButton)
+    {
+        this.teeButton = teeButton;
+    }
+
+    public void setCommButton(JButton commButton)
+    {
+        this.commButton = commButton;
+    }
+
+    public void setRunButton(JButton runButton)
+    {
+        this.runButton = runButton;
     }
 }
 
