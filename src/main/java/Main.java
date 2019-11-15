@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +9,7 @@ public class Main implements ActionListener
      *      copyright 2019 Vic Wintriss                                                     *
     /****************************************************************************************/
     public TestSequences ts = new TestSequences();
-    private String version = "500.40CC";
+    private String version = "500.40CE";
     public UserExperience ux = new UserExperience(version);
     private boolean modeAllTest = false;
     private boolean modeTeeTest = false;
@@ -36,7 +35,6 @@ public class Main implements ActionListener
        ux.setTs(ts);
        ux.setMain(main);
        new Timer(100, ux).start();
-       ux.setCommFlag(true);
        ux.createGUI(version);
    }
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters
@@ -209,11 +207,6 @@ public class Main implements ActionListener
     public void setTeeButton(JButton teeButton)
     {
         this.teeButton = teeButton;
-    }
-
-    public void setCommButton(JButton commButton)
-    {
-        this.commButton = commButton;
     }
 
     public void setRunButton(JButton runButton)
