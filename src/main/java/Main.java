@@ -10,7 +10,7 @@ public class Main implements ActionListener
      *      copyright 2019 Vic Wintriss                                                     *
     /****************************************************************************************/
     public TestSequences ts = new TestSequences();
-    private String version = "500.40BY";
+    private String version = "500.40CC";
     public UserExperience ux = new UserExperience(version);
     private boolean modeAllTest = false;
     private boolean modeTeeTest = false;
@@ -27,7 +27,7 @@ public class Main implements ActionListener
     Main main;
     public static void main(String[] args)
     {
-        new Main();
+        SwingUtilities.invokeLater(Main::new);
     }
    public Main()
    {
@@ -35,40 +35,11 @@ public class Main implements ActionListener
        ts.setUx(ux);
        ux.setTs(ts);
        ux.setMain(main);
-       JPanel layoutPanel = new JPanel(new FlowLayout());
-       JCheckBox commBoard = new JCheckBox(" COMM Board Test?");
-       JCheckBox longBoard = new JCheckBox(" LONG Board Test?");
-       layoutPanel.add(commBoard);
-       layoutPanel.add(longBoard);
-       JScrollPane scroller = new JScrollPane(layoutPanel);
-       scroller.setPreferredSize(new Dimension(400, 50));
-       JOptionPane.showMessageDialog(null, scroller);
        new Timer(100, ux).start();
-       if (commBoard.isSelected() && !longBoard.isSelected())
-       {
-           ux.setCommFlag(true);
-           ux.createGUI(version);
-           ux.setCommFlag(true);
-       }
-       if (longBoard.isSelected() && !commBoard.isSelected())
-       {
-           ux.setLongFlag(true);
-           ux.createGUI(version);
-           ux.setLongFlag(true);
-       }
-       if (commBoard.isSelected() && longBoard.isSelected())
-       {
-           JOptionPane.showMessageDialog(null, "Please select only one test");
-           System.exit(0);
-       }
-       if (!commBoard.isSelected() && !longBoard.isSelected())
-       {
-           JOptionPane.showMessageDialog(null, "PLease ease select at one test");
-           System.exit(0);
-       }
+       ux.setCommFlag(true);
+       ux.createGUI(version);
    }
-    // Set CPLD state machine to the tee frame and test all the emitters
-    private void testTee()
+    private void testTee()// Set CPLD state machine to the tee frame and test all the emitters
     {
         ts.resetErrors();
         for (int i = 1; i < 5; i++)
