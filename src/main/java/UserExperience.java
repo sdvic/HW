@@ -50,10 +50,7 @@ public class UserExperience extends JComponent implements ActionListener
     {
         ts.setAllButton(allButton);
         ts.setCommButton(commButton);
-        ts.setLong12(long12);
-        ts.setLong14(long14);
-        ts.setLong34(long34);
-        ts.setLongFull(longFull);
+
         ts.setRunButton(runButton);
         ts.setScreenButton(screenButton);
         ts.setSensorsButton(sensorsButton);
@@ -278,5 +275,4 @@ public class UserExperience extends JComponent implements ActionListener
 
     public void setErrEmitter(int errEmitter) {this.errEmitter = errEmitter;}
 }
-
 

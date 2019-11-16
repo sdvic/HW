@@ -6,10 +6,10 @@ public class Main implements ActionListener
 {
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
-     *      copyright 2019 Vic Wintriss                                                     *
-    /****************************************************************************************/
+     *      copyright 2019 Vic Wintriss                                                     */
+     private String version = "501.7";
+     /****************************************************************************************/
     public TestSequences ts = new TestSequences();
-    private String version = "500.40CE";
     public UserExperience ux = new UserExperience(version);
     private boolean modeAllTest = false;
     private boolean modeTeeTest = false;
@@ -28,15 +28,14 @@ public class Main implements ActionListener
     {
         SwingUtilities.invokeLater(Main::new);
     }
-   public Main()
-   {
-       main = this;
-       ts.setUx(ux);
-       ux.setTs(ts);
-       ux.setMain(main);
-       new Timer(100, ux).start();
-       ux.createGUI(version);
-   }
+    public Main()
+    {
+        main = this;
+        ts.setUx(ux);
+        ux.setTs(ts);
+        new Timer(100, ux).start();
+        ux.createGUI(version);
+    }
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters
     {
         ts.resetErrors();
@@ -48,7 +47,7 @@ public class Main implements ActionListener
             ts.emitterFireSequence(i); // t15-t18
             ts.resetSequence();        // t1-t2
         }
-   }
+    }
     private void testSensors()// Test each individual IR photodiode for correct operation
     {
         ts.resetErrors();
@@ -59,7 +58,7 @@ public class Main implements ActionListener
             ts.emitterSelSequence(); // t9-t14
             testByte = 128;
             testByte = testByte >> i;
-            ts.loadTestWord();
+            ts.loadTestWord(testByte);
             ts.emitterFireSequence(0);          // t15-t18
             ts.teeShiftOutSequence(false); // t19-t54
             ts.resetSequence();                // t55-t56
@@ -72,7 +71,7 @@ public class Main implements ActionListener
             testByte = 128;
             testByte = testByte >> i;
             testByte = ~testByte;
-            ts.loadTestWord();
+            ts.loadTestWord(testByte);
             ts.emitterFireSequence(0);          // t15-t18
             ts.teeShiftOutSequence(false); // t19-t54
             ts.resetSequence();                // t55-t56
@@ -81,7 +80,7 @@ public class Main implements ActionListener
     private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
     {
         ts.resetErrors();
-        ts.loadTestWord();
+        ts.loadTestWord(testByte);
         // Test in tee frame mode with on-board emitter
         ts.resetSequence();
         ts.teeSequence();

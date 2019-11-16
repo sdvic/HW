@@ -1,12 +1,14 @@
 import com.pi4j.io.gpio.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TestSequences implements ActionListener
 {
     private UserExperience ux;
+    // Gpio pins used for the tester
     private GpioController gpio = GpioFactory.getInstance();
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
     private GpioPinDigitalInput pin40 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_29, "Raspi pin 40", PinPullResistance.PULL_UP);  // LpClkOut
@@ -26,63 +28,63 @@ public class TestSequences implements ActionListener
     private GpioPinDigitalOutput pin37 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "RasPi pin 37", PinState.LOW);  // LedClk
     private GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "RasPi pin 13", PinState.LOW);  // LedData
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "RasPi pin 11", PinState.LOW);  // LedOn
+    // Buttons visible on the display
     private JButton allButton;
     private JButton teeButton;
     private JButton screenButton;
     private JButton sensorsButton;
     private JButton commButton;
     private JButton runButton;
-    private JButton longFull;
-    private JButton long34;
-    private JButton long12;
-    private JButton long14;
-    private boolean modeAllTest = false;
+    // Flags used to set test mode
+    private boolean modeAllTest = true; // default test mode
     private boolean modeTeeTest = false;
     private boolean modeScreenTest = false;
     private boolean modeSensorTest = false;
     private boolean modeBasicTest = false;
-    private boolean errDataOut = false;  // flags for errors
+    private boolean modeReset = false;
+    // Flags used for error reporting
+    private boolean errDataOut = false; // flags for individual errors
     private boolean errLpClkOut = false;
     private boolean errModeOut = false;
     private boolean errClkOut = false;
     private boolean errEripple = false;
-    private boolean errRck = false;
+    private boolean errRclk = false;
     private boolean errShiftLoad = false;
     private boolean errSin = false;
-    private int errTestByteHigh = 0; // byte used for sensors errors, top 8 bits
-    private int errTestByteLow = 0;  // byte used for sensors errors, bottom 8 bits
-    private int errEmitter = 0;      // byte used for emitter errors
-    private int testByte = 0;        // byte used for testing sensors, top and bottom 8 bits
+    private boolean errFail = false; // one or more tests failed
     private boolean[] errorList = new boolean[8];
+    private int errTestByteHigh = 0; // byte used for reporting sensors errors, top 8 bits
+    private int errTestByteLow = 0;  // byte used for reporting sensors errors, bottom 8 bits
+    private int errEmitter = 0;      // byte used for reporting emitter errors
+    // Variables used for testing
+    private int testByte = 0;        // byte used for testing sensors, top and bottom 8 bits
 
-    // Reset all errors before running tests
-    private void resetErrors()
-    {
-        System.out.println("reset errors");
+    // Reset all errors and set all indicators to default state before running tests
+    public void resetErrors() {
         errDataOut = false;
-        errorList[0] = false;
+        errorList[0] = false; // errDataOut
         errLpClkOut = false;
-        errorList[1] = false;
+        errorList[1] = false; // errLpClkOut
         errModeOut = false;
-        errorList[2] = false;
+        errorList[2] = false; // errModeOut
         errClkOut = false;
-        errorList[3] = false;
+        errorList[3] = false; // errClkOut
         errEripple = false;
-        errorList[4] = false;
-        errRck = false;
-        errorList[5] = false;
+        errorList[4] = false; // errEripple
+        errRclk = false;
+        errorList[5] = false; // errRclk
         errShiftLoad = false;
-        errorList[6] = false;
+        errorList[6] = false; // errShiftLoad
         errSin = false;
-        errorList[7] = false;
-        errEmitter = 0;
-        errTestByteHigh = 0;
-        errTestByteLow = 0;
+        errorList[7] = false; // errSin
+        errTestByteLow = 0;  // reset sensors errors, bottom 8 bits
+        errTestByteHigh = 0; // reset sensors errors, top 8 bits
+        errEmitter = 0;      // reset emitter errors
+        System.out.println("reset errors");
     }
 
     // Set CPLD state machine to the RESET state
-    private void resetSequence()
-    {
+    public void resetSequence() {
         pin35.low();  // ModeIn t1
         pin36.low();  // ClkIn t2
         pin31.low();  // DataIn
@@ -92,8 +94,7 @@ public class TestSequences implements ActionListener
     }
 
     // Set CPLD state machine to the tee frame state. Test signals
-    private void teeSequence()
-    {
+    public void teeSequence() {
         pin36.high(); // ClkIn t3
         if (pin40.isLow())
         {
@@ -107,7 +108,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk
+            errRclk = true;        // Rclk
             errorList[5] = true;
         }
         if (pin08.isLow())
@@ -123,7 +124,7 @@ public class TestSequences implements ActionListener
     }
 
     // Set CPLD state machine to the screen frame state. Test signals
-    private void screenSequence()
+    void screenSequence()
     {
         pin36.high(); // ClkIn
         if (pin40.isLow())
@@ -138,7 +139,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk
+            errRclk = true;        // Rclk
             errorList[5] = true;
         }
         if (pin08.isLow())
@@ -153,7 +154,7 @@ public class TestSequences implements ActionListener
         pin36.high(); // ClkIn
     }
 
-    private void emitterSelSequence() // Set CPLD state machine to select on-board emitter. Test signals
+    void emitterSelSequence() // Set CPLD state machine to select on-board emitter. Test signals
     {
         pin35.low();  // ModeIn t9
         if (pin40.isLow())
@@ -168,7 +169,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin08.isLow())
@@ -189,7 +190,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin08.isHigh())
@@ -213,7 +214,7 @@ public class TestSequences implements ActionListener
         pin36.high(); // ClkIn t14
     }
 
-    private void emitterDeselSequence()// Set CPLD state machine to select next board emitter. Test signals
+    void emitterDeselSequence()// Set CPLD state machine to select next board emitter. Test signals
     {
         pin35.low();  // ModeIn t9
         if (pin40.isLow())
@@ -228,7 +229,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin08.isLow())
@@ -249,7 +250,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin08.isHigh())
@@ -273,7 +274,7 @@ public class TestSequences implements ActionListener
         pin36.high(); // ClkIn t14
     }
 
-    private void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
+    void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
     {
         selectEmitter(emitter);
         pin35.low();  // ModeIn t15
@@ -289,7 +290,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin08.isHigh())
@@ -306,7 +307,7 @@ public class TestSequences implements ActionListener
         pin36.low();  // ClkIn
         if (pin16.isHigh())
         {
-            errRck = true;       // Rclk Error
+            errRclk = true;       // Rclk Error
             errorList[5] = true;
 
         }
@@ -318,7 +319,7 @@ public class TestSequences implements ActionListener
         pin11.low();  // LedOn
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin07.isHigh())
@@ -327,7 +328,7 @@ public class TestSequences implements ActionListener
         }
     }
 
-    private void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
+    void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
     {
         int data = 0; // Photo diode test pattern data masked for each LED position
         boolean state; // Pin state
@@ -352,7 +353,7 @@ public class TestSequences implements ActionListener
         }
         if (pin16.isLow())
         {
-            errRck = true;        // Rclk Error
+            errRclk = true;        // Rclk Error
             errorList[5] = true;
         }
         if (pin08.isHigh())
@@ -429,7 +430,7 @@ public class TestSequences implements ActionListener
         }
     }
 
-    private void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
+    void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
     {
         pin35.low();  // ModeIn t19 // test the screen frame connector
         if (pin32.isHigh())
@@ -490,10 +491,10 @@ public class TestSequences implements ActionListener
             errorList[1] = true;
         }
     }
-    private void selectEmitter(int emitter)//  Selects one of four emitter positions for testing
-    {
-        switch (emitter)
-        {
+
+    //  Selects one of four emitter positions for testing
+    private void selectEmitter(int emitter) {
+        switch (emitter) {
             case 1:
                 pin03.low();  // Esel0
                 pin05.low();  // Esel1
@@ -514,15 +515,14 @@ public class TestSequences implements ActionListener
     }
 
     // Load the LED shift register with the sensor test pattern
-    private void loadTestWord()
-    {
-        boolean state = false;
+    public void loadTestWord(int testByte) {
+        boolean state;
         int led; // LED position to be loaded into shift register
-        for (int i = 0; i < 8; i++) // Load test pattern, msb D8 ... lsb D1
+        for (int i = 0; i < 8; i++) // Load test pattern, MSB D8 ... LSB D1
         {
             led = 128;
             led = led >> i;
-            led = testByte & led; // current byte test pattern masked
+            led = testByte & led;  // current byte test pattern masked
             state = !(led == 0);
             pin37.low();           // LedClk
             pin13.setState(state); // LedData
@@ -533,12 +533,11 @@ public class TestSequences implements ActionListener
     }
 
     // Set CPLD state machine to the tee frame and test all the emitters
-    private void testTee()
-    {
+    private void testTee() {
         System.out.println("tee test");
         resetErrors();
-        for (int i = 1; i < 5; i++)
-        {
+        errEmitter = 0;
+        for (int i = 1; i < 5; i++) {
             resetSequence();        // t1-t2
             teeSequence();          // t3-t8
             emitterSelSequence();   // t9-t14
@@ -547,7 +546,7 @@ public class TestSequences implements ActionListener
         }
     }
 
-    private void testScreen()// Set CPLD state machine to the screen frame and test the interconnection signals
+    void testScreen()// Set CPLD state machine to the screen frame and test the interconnection signals
     {
         resetSequence();      // t1-t2
         screenSequence();     // t3-t8
@@ -595,8 +594,9 @@ public class TestSequences implements ActionListener
         screenShiftOutSequence();
         resetSequence();
     }
-    private void testSensors()// Test each individual IR photodiode for correct operation
-    {
+
+    // Test each individual IR photodiode for correct operation
+    private void testSensors() {
         System.out.println("sensors test");
         resetErrors();
         for (int i = 0; i < 8; i++) // walking 1 test pattern
@@ -604,11 +604,12 @@ public class TestSequences implements ActionListener
             resetSequence();      // t1-t2
             teeSequence();        // t3-t8
             emitterSelSequence(); // t9-t14
-            testByte = 128;
-            testByte = testByte >> i;
-            loadTestWord();
+            testByte = 1;
+            testByte = testByte << i;
+            testByte = 0; // ### TEST ###
+            loadTestWord(testByte);
             emitterFireSequence(0);          // t15-t18
-            teeShiftOutSequence(false); // t19-t54
+            teeShiftOutSequence(true);  // t19-t54
             resetSequence();                // t55-t56
         }
         for (int i = 0; i < 8; i++) // walking 0 test pattern
@@ -616,20 +617,22 @@ public class TestSequences implements ActionListener
             resetSequence();      // t1-t2
             teeSequence();        // t3-t8
             emitterSelSequence(); // t9-t14
-            testByte = 128;
-            testByte = testByte >> i;
+            testByte = 1;
+            testByte = testByte << i;
             testByte = ~testByte;
-            loadTestWord();
+            testByte = 0; // ### TEST ###
+            loadTestWord(testByte);
             emitterFireSequence(0);          // t15-t18
             teeShiftOutSequence(false); // t19-t54
             resetSequence();                // t55-t56
         }
     }
-    private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
-    {
+
+    // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
+    private void testBasic() {
         System.out.println("basic test");
         resetErrors();
-        loadTestWord();
+        loadTestWord(testByte);
         // Test in tee frame mode with on-board emitter
         resetSequence();
         teeSequence();
@@ -769,26 +772,6 @@ public class TestSequences implements ActionListener
     public void setRunButton(JButton runButton)
     {
         this.runButton = runButton;
-    }
-
-    public void setLongFull(JButton longFull)
-    {
-        this.longFull = longFull;
-    }
-
-    public void setLong34(JButton long34)
-    {
-        this.long34 = long34;
-    }
-
-    public void setLong12(JButton long12)
-    {
-        this.long12 = long12;
-    }
-
-    public void setLong14(JButton long14)
-    {
-        this.long14 = long14;
     }
 
     public void setUx(UserExperience ux)
