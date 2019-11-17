@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TestSequences implements ActionListener
+public class TestSequences
 {
     private UserExperience ux;
     // Gpio pins used for the tester
@@ -28,13 +28,6 @@ public class TestSequences implements ActionListener
     private GpioPinDigitalOutput pin37 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "RasPi pin 37", PinState.LOW);  // LedClk
     private GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "RasPi pin 13", PinState.LOW);  // LedData
     private GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "RasPi pin 11", PinState.LOW);  // LedOn
-    // Buttons visible on the display
-    private JButton allButton;
-    private JButton teeButton;
-    private JButton screenButton;
-    private JButton sensorsButton;
-    private JButton commButton;
-    private JButton runButton;
     // Flags used to set test mode
     private boolean modeAllTest = true; // default test mode
     private boolean modeTeeTest = false;
@@ -80,7 +73,6 @@ public class TestSequences implements ActionListener
         errTestByteLow = 0;  // reset sensors errors, bottom 8 bits
         errTestByteHigh = 0; // reset sensors errors, top 8 bits
         errEmitter = 0;      // reset emitter errors
-        System.out.println("reset errors");
     }
 
     // Set CPLD state machine to the RESET state
@@ -121,6 +113,7 @@ public class TestSequences implements ActionListener
         pin36.high(); // ClkIn t6
         pin36.high(); // ClkIn t7
         pin36.high(); // ClkIn t8
+        ux.buildErrorListDisplay( errorList, "Tee Test errors: ");
     }
 
     // Set CPLD state machine to the screen frame state. Test signals
@@ -152,6 +145,7 @@ public class TestSequences implements ActionListener
         pin36.high(); // ClkIn
         pin36.low();  // ClkIn
         pin36.high(); // ClkIn
+        ux.buildErrorListDisplay( errorList, "Screen Test errors: ");
     }
 
     void emitterSelSequence() // Set CPLD state machine to select on-board emitter. Test signals
@@ -212,6 +206,7 @@ public class TestSequences implements ActionListener
             errorList[4] = true;
         }
         pin36.high(); // ClkIn t14
+        ux.buildErrorListDisplay( errorList, "Emitter Select Test errors: ");
     }
 
     void emitterDeselSequence()// Set CPLD state machine to select next board emitter. Test signals
@@ -272,6 +267,7 @@ public class TestSequences implements ActionListener
             errorList[4] = true;
         }
         pin36.high(); // ClkIn t14
+        ux.buildErrorListDisplay( errorList, "Emitter Deselect Test errors: ");
     }
 
     void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
@@ -326,6 +322,7 @@ public class TestSequences implements ActionListener
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
         }
+        ux.buildErrorListDisplay( errorList, "Fire Sequence Test errors: ");
     }
 
     void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
@@ -428,6 +425,7 @@ public class TestSequences implements ActionListener
             errSin = true;   // Sin Error
             errorList[7] = true;
         }
+        ux.buildErrorListDisplay( errorList, "Tee Shift Out Test errors: ");
     }
 
     void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
@@ -490,6 +488,7 @@ public class TestSequences implements ActionListener
             errLpClkOut = true;   // LpClkOut Error
             errorList[1] = true;
         }
+        ux.buildErrorListDisplay( errorList, "Sccreen Shift Out Test errors: ");
     }
 
     //  Selects one of four emitter positions for testing
@@ -531,21 +530,6 @@ public class TestSequences implements ActionListener
         pin13.low();  // LedData Leave low after done
         pin37.low();  // LedClk Leave low after done
     }
-
-    // Set CPLD state machine to the tee frame and test all the emitters
-    private void testTee() {
-        System.out.println("tee test");
-        resetErrors();
-        errEmitter = 0;
-        for (int i = 1; i < 5; i++) {
-            resetSequence();        // t1-t2
-            teeSequence();          // t3-t8
-            emitterSelSequence();   // t9-t14
-            emitterFireSequence(i); // t15-t18
-            resetSequence();        // t1-t2
-        }
-    }
-
     void testScreen()// Set CPLD state machine to the screen frame and test the interconnection signals
     {
         resetSequence();      // t1-t2
@@ -593,11 +577,9 @@ public class TestSequences implements ActionListener
         }
         screenShiftOutSequence();
         resetSequence();
+        ux.buildErrorListDisplay( errorList, "Screen Test errors: ");
     }
-
-    // Test each individual IR photodiode for correct operation
-    private void testSensors() {
-        System.out.println("sensors test");
+    private void testSensors() {// Test each individual IR photodiode for correct operation
         resetErrors();
         for (int i = 0; i < 8; i++) // walking 1 test pattern
         {
@@ -628,9 +610,9 @@ public class TestSequences implements ActionListener
         }
     }
 
-    // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
-    private void testBasic() {
-        System.out.println("basic test");
+
+    private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
+    {
         resetErrors();
         loadTestWord(testByte);
         // Test in tee frame mode with on-board emitter
@@ -654,129 +636,8 @@ public class TestSequences implements ActionListener
         // End of testing
         resetSequence();
     }
-
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource() == allButton)
-        {
-            modeAllTest = true;
-            modeTeeTest = false;
-            modeScreenTest = false;
-            modeSensorTest = false;
-            modeBasicTest = false;
-
-        }
-        if (e.getSource() == teeButton)
-        {
-            modeAllTest = false;
-            modeTeeTest = true;
-            modeScreenTest = false;
-            modeSensorTest = false;
-            modeBasicTest = false;
-        }
-        if (e.getSource() == screenButton)
-        {
-            modeAllTest = false;
-            modeTeeTest = false;
-            modeScreenTest = true;
-            modeSensorTest = false;
-            modeBasicTest = false;
-        }
-        if (e.getSource() == sensorsButton)
-        {
-            modeAllTest = false;
-            modeTeeTest = false;
-            modeScreenTest = false;
-            modeSensorTest = true;
-            modeBasicTest = false;
-        }
-        if (e.getSource() == commButton)
-        {
-            modeAllTest = false;
-            modeTeeTest = false;
-            modeScreenTest = false;
-            modeSensorTest = false;
-            modeBasicTest = true;
-        }
-        if (e.getSource() == runButton)
-        {
-            if (modeAllTest)
-            {
-                testTee();
-                testScreen();
-                testSensors();
-                ux.setCodeCat("All Tests Error Codes => ");
-            }
-            if (modeTeeTest)
-            {
-                testTee();
-                ux.setCodeCat("Tee Test Error Codes => ");
-            }
-            if (modeScreenTest)
-            {
-                testScreen();
-                ux.setCodeCat("Screen Error Codes => ");
-            }
-            if (modeSensorTest)
-            {
-                testSensors();
-                ux.setCodeCat("Sensors Error Codes => ");
-            }
-            if (modeBasicTest)
-            {
-                testByte = (byte) 0b10101110; // byte used for testing sensors
-                for (int i = 0; i < 200; i++)
-                {
-                    testBasic();
-                    try
-                    {
-                        Thread.sleep(100); // 1000 milliseconds is one second.
-                    }
-                    catch (InterruptedException ex)
-                    {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-            }
-            ux.setErrorList(errorList);
-            ux.buildErrorListDisplay();
-            ux.setErrEmitter(errEmitter);
-        }
-    }
-
-    public void setAllButton(JButton allButton)
-    {
-        this.allButton = allButton;
-    }
-
-    public void setTeeButton(JButton teeButton)
-    {
-        this.teeButton = teeButton;
-    }
-
-    public void setScreenButton(JButton screenButton)
-    {
-        this.screenButton = screenButton;
-    }
-
-    public void setSensorsButton(JButton sensorsButton)
-    {
-        this.sensorsButton = sensorsButton;
-    }
-
-    public void setCommButton(JButton commButton)
-    {
-        this.commButton = commButton;
-    }
-
-    public void setRunButton(JButton runButton)
-    {
-        this.runButton = runButton;
-    }
-
     public void setUx(UserExperience ux)
     {
         this.ux = ux;
     }
-
 }

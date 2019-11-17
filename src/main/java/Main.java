@@ -7,7 +7,7 @@ public class Main implements ActionListener
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     private String version = "501.7";
+     private String version = "501.37";
      /****************************************************************************************/
     public TestSequences ts = new TestSequences();
     public UserExperience ux = new UserExperience(version);
@@ -16,25 +16,27 @@ public class Main implements ActionListener
     private boolean modeScreenTest = false;
     private boolean modeSensorTest = false;
     private boolean modeBasicTest = false;
-    private JButton allButton;
-    private JButton screenButton;
-    private JButton sensorsButton;
-    private JButton teeButton;
-    private JButton commButton;
-    private JButton runButton;
     private int testByte;
-    Main main;
     public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(Main::new);
+        new Main();
     }
+
     public Main()
     {
-        main = this;
+        ux.setMain(this);
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ux.createGUI(version);
+            }
+        });
+
         ts.setUx(ux);
         ux.setTs(ts);
         new Timer(100, ux).start();
-        ux.createGUI(version);
     }
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters
     {
@@ -104,7 +106,7 @@ public class Main implements ActionListener
     }
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == allButton)
+        if (e.getActionCommand().equals("ALL"))
         {
             modeAllTest = true;
             modeTeeTest = false;
@@ -112,7 +114,7 @@ public class Main implements ActionListener
             modeSensorTest = false;
             modeBasicTest = false;
         }
-        if (e.getSource() == teeButton)
+        if (e.getActionCommand().equals("TEE"))
         {
             modeAllTest = false;
             modeTeeTest = true;
@@ -120,7 +122,7 @@ public class Main implements ActionListener
             modeSensorTest = false;
             modeBasicTest = false;
         }
-        if (e.getSource() == screenButton)
+        if(e.getActionCommand().equals("SCREEN"))
         {
             modeAllTest = false;
             modeTeeTest = false;
@@ -128,7 +130,7 @@ public class Main implements ActionListener
             modeSensorTest = false;
             modeBasicTest = false;
         }
-        if (e.getSource() == sensorsButton)
+        if(e.getActionCommand().equals("SENSORS"))
         {
             modeAllTest = false;
             modeTeeTest = false;
@@ -136,7 +138,7 @@ public class Main implements ActionListener
             modeSensorTest = true;
             modeBasicTest = false;
         }
-        if (e.getSource() == commButton)
+        if (e.getActionCommand().equals("COMM"))
         {
             modeAllTest = false;
             modeTeeTest = false;
@@ -144,29 +146,25 @@ public class Main implements ActionListener
             modeSensorTest = false;
             modeBasicTest = true;
         }
-        if (e.getSource() == runButton)
+        if (e.getActionCommand().equals("RUN"))
         {
             if (modeAllTest)
             {
                 testTee();
                 ts.testScreen();
                 testSensors();
-                ux.setCodeCat("All Tests Error Codes => ");
             }
             if (modeTeeTest)
             {
                 testTee();
-                ux.setCodeCat("Tee Test Error Codes => ");
             }
             if (modeScreenTest)
             {
                 ts.testScreen();
-                ux.setCodeCat("Screen Error Codes => ");
             }
             if (modeSensorTest)
             {
                 testSensors();
-                ux.setCodeCat("Sensors Error Codes => ");
             }
             if (modeBasicTest)
             {
@@ -184,33 +182,7 @@ public class Main implements ActionListener
                     }
                 }
             }
-            ux.buildErrorListDisplay();
         }
-    }
-
-    public void setAllButton(JButton allButton)
-    {
-        this.allButton = allButton;
-    }
-
-    public void setScreenButton(JButton screenButton)
-    {
-        this.screenButton = screenButton;
-    }
-
-    public void setSensorsButton(JButton sensorsButton)
-    {
-        this.sensorsButton = sensorsButton;
-    }
-
-    public void setTeeButton(JButton teeButton)
-    {
-        this.teeButton = teeButton;
-    }
-
-    public void setRunButton(JButton runButton)
-    {
-        this.runButton = runButton;
     }
 }
 

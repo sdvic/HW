@@ -8,6 +8,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 public class UserExperience extends JComponent implements ActionListener
 {
+    private Main main;
     public JTextField failTextField = new JTextField("FAIL");
     Timer paintTicker = new Timer(100, this);
     private TestSequences ts;
@@ -18,10 +19,6 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton sensorsButton = new JButton("SENSORS");
     private JButton commButton = new JButton("COMM");
     private JButton runButton = new JButton("RUN");
-    private JButton longFull = new JButton("LONG FULL");
-    private JButton long34 = new JButton("LONG 3/4");
-    private JButton long12 = new JButton("LONG 1/2");
-    private JButton long14 = new JButton("LONG 1/4");
     private JTextField passTextField = new JTextField("PASS");
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display = new JFrame();
@@ -30,16 +27,10 @@ public class UserExperience extends JComponent implements ActionListener
     private Font buttonFont = new Font("SansSerif", Font.PLAIN, 21);
     private Font resultFont = new Font("SansSerif", Font.BOLD, 28);
     private Font indicatorFont = new Font("Arial", Font.PLAIN, 17);
-    private Graphics g;
     private String version;
-    private boolean isCommBoardFlag = false;
-    private boolean isLongBoardFlag = false;
-    private boolean[] errorList = new boolean[8];
-    private String codeCat = "";
     private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
-
     public UserExperience(String version)
     {
         this.version = version;
@@ -48,13 +39,6 @@ public class UserExperience extends JComponent implements ActionListener
 
     public void createGUI(String version)
     {
-        ts.setAllButton(allButton);
-        ts.setCommButton(commButton);
-
-        ts.setRunButton(runButton);
-        ts.setScreenButton(screenButton);
-        ts.setSensorsButton(sensorsButton);
-        ts.setTeeButton(teeButton);
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);//Adds Graphics
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,31 +47,31 @@ public class UserExperience extends JComponent implements ActionListener
         allButton.setBounds(leftMargin, 108, 150, 34); // ALL Button
         allButton.setHorizontalAlignment(SwingConstants.CENTER);
         allButton.setFont(buttonFont);
-        allButton.addActionListener(ts);
+        allButton.addActionListener(main);
         display.add(allButton);
 
         teeButton.setBounds(leftMargin, 153, 150, 34); // TEE button
         teeButton.setHorizontalAlignment(SwingConstants.CENTER);
         teeButton.setFont(buttonFont);
-        teeButton.addActionListener(ts);
+        teeButton.addActionListener(main);
         display.add(teeButton);
 
         screenButton.setBounds(leftMargin, 198, 150, 34); // SCREEN button
         screenButton.setHorizontalAlignment(SwingConstants.CENTER);
         screenButton.setFont(buttonFont);
-        screenButton.addActionListener(ts);
+        screenButton.addActionListener(main);
         display.add(screenButton);
 
         sensorsButton.setBounds(leftMargin, 243, 150, 34); // SENSORS button
         sensorsButton.setHorizontalAlignment(SwingConstants.CENTER);
         sensorsButton.setFont(buttonFont);
-        sensorsButton.addActionListener(ts);
+        sensorsButton.addActionListener(main);
         display.add(sensorsButton);
 
         runButton.setBounds(500, 345, 100, 58); // RUN button
         runButton.setHorizontalAlignment(SwingConstants.CENTER);
         runButton.setFont(buttonFont);
-        runButton.addActionListener(ts);
+        runButton.addActionListener(main);
         display.add(runButton);
 
         passTextField.setBounds(500, 125, 120, 50); // PASS indicator
@@ -101,44 +85,14 @@ public class UserExperience extends JComponent implements ActionListener
         display.add(failTextField);
 
         errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
-        String codeCat = "";
-
         display.add(errorCodeDisplayField);
 
-        if (isCommBoardFlag)
-        {
-            commButton.setBounds(middleMargin, 108, 150, 34); // COMM button
-            commButton.setHorizontalAlignment(SwingConstants.CENTER);
-            commButton.setFont(buttonFont);
-            commButton.addActionListener(ts);
-            display.add(commButton);
-        }
-        else if (isLongBoardFlag)
-        {
-            longFull.setBounds(middleMargin, 108, 150, 34); // Long Full button
-            longFull.setHorizontalAlignment(SwingConstants.CENTER);
-            longFull.setFont(buttonFont);
-            longFull.addActionListener(ts);
-            display.add(longFull);
+        commButton.setBounds(middleMargin, 108, 150, 34); // COMM button
+        commButton.setHorizontalAlignment(SwingConstants.CENTER);
+        commButton.setFont(buttonFont);
+        commButton.addActionListener(main);
 
-            long34.setBounds(middleMargin, 153, 150, 34); // Long 3/4 button
-            long34.setHorizontalAlignment(SwingConstants.CENTER);
-            long34.setFont(buttonFont);
-            long34.addActionListener(ts);
-            display.add(long34);
-
-            long12.setBounds(middleMargin, 198, 150, 34); // Long 3/4 button
-            long12.setHorizontalAlignment(SwingConstants.CENTER);
-            long12.setFont(buttonFont);
-            long12.addActionListener(this);
-            display.add(long12);
-
-            long14.setBounds(middleMargin, 243, 150, 34); // Long 3/4 button
-            long14.setHorizontalAlignment(SwingConstants.CENTER);
-            long14.setFont(buttonFont);
-            long14.addActionListener(ts);
-            display.add(long14);
-        }
+        display.add(commButton);
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,8 +108,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         int errTestByteLow = 1;  // byte used for sensors errors, bottom 8 bits
         int errTestByteHigh = 4; // byte used for sensors errors, top 8 bits
-        // Draw sensor indicators 1-8 with pass/fail colors
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)// Draw sensor indicators 1-8 with pass/fail colors
         {
             // test for correct IR detection by photo diodes
             g2.setColor(new Color(255, 255, 153)); // Pale Yellow
@@ -174,8 +127,7 @@ public class UserExperience extends JComponent implements ActionListener
             g2.setColor(Color.BLACK);
             g2.drawString((i + 1) + "", (42 * i + 36), 32);
         }
-        // Draw sensor indicators 9-16 with pass/fail colors
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)// Draw sensor indicators 9-16 with pass/fail colors
         {
             // test for correct IR detection by photo diodes
             g2.setColor(new Color(255, 255, 153)); // Pale Yellow
@@ -234,12 +186,7 @@ public class UserExperience extends JComponent implements ActionListener
         repaint();
     }
 
-    public void setCommFlag(boolean isCommBoardFlag)
-    {
-        this.isCommBoardFlag = isCommBoardFlag;
-    }
-
-    public void buildErrorListDisplay()
+    public void buildErrorListDisplay(boolean[] errorList, String codeCat)
     {
         for (int i = 0; i < errorList.length; i++)
         {
@@ -250,29 +197,15 @@ public class UserExperience extends JComponent implements ActionListener
         }
         errorCodeDisplayField.setFont(buttonFont);
         errorCodeDisplayField.setText(codeCat);
-        codeCat = " ";
+        codeCat = "";
     }
-
-    public void setLongFlag(boolean isLongBoardFlag)
-    {
-        this.isLongBoardFlag = isLongBoardFlag;
-    }
-
     public void setTs(TestSequences ts)
     {
         this.ts = ts;
     }
-
-    public void setErrorList(boolean[] errorList)
+    public void setMain(Main main)
     {
-        this.errorList = errorList;
+        this.main = main;
     }
-
-    public void setCodeCat(String codeCat)
-    {
-        this.codeCat = codeCat;
-    }
-
-    public void setErrEmitter(int errEmitter) {this.errEmitter = errEmitter;}
 }
 
