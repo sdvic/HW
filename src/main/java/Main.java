@@ -7,7 +7,7 @@ public class Main implements ActionListener
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     private String version = "501.37";
+     private String version = "501.72";
      /****************************************************************************************/
     public TestSequences ts = new TestSequences();
     public UserExperience ux = new UserExperience(version);
@@ -16,6 +16,7 @@ public class Main implements ActionListener
     private boolean modeScreenTest = false;
     private boolean modeSensorTest = false;
     private boolean modeBasicTest = false;
+    private boolean errFail = false;
     private int testByte;
     public static void main(String[] args)
     {
@@ -33,12 +34,11 @@ public class Main implements ActionListener
                 ux.createGUI(version);
             }
         });
-
         ts.setUx(ux);
         ux.setTs(ts);
         new Timer(100, ux).start();
     }
-    private void testTee()// Set CPLD state machine to the tee frame and test all the emitters
+    private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
         ts.resetErrors();
         for (int i = 1; i < 5; i++)
@@ -50,7 +50,7 @@ public class Main implements ActionListener
             ts.resetSequence();        // t1-t2
         }
     }
-    private void testSensors()// Test each individual IR photodiode for correct operation
+    private void testSensors()// Test each individual IR photodiode for correct operation...mode 4
     {
         ts.resetErrors();
         for (int i = 0; i < 8; i++) // walking 1 test pattern
@@ -79,7 +79,7 @@ public class Main implements ActionListener
             ts.resetSequence();                // t55-t56
         }
     }
-    private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
+    private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin...mode 5
     {
         ts.resetErrors();
         ts.loadTestWord(testByte);
@@ -106,81 +106,83 @@ public class Main implements ActionListener
     }
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getActionCommand().equals("ALL"))
+        if (e.getActionCommand().equals("ALL"))//mode 1
         {
             modeAllTest = true;
-            modeTeeTest = false;
-            modeScreenTest = false;
-            modeSensorTest = false;
-            modeBasicTest = false;
         }
-        if (e.getActionCommand().equals("TEE"))
+        if (e.getActionCommand().equals("TEE"))//mode 2
         {
-            modeAllTest = false;
             modeTeeTest = true;
-            modeScreenTest = false;
-            modeSensorTest = false;
-            modeBasicTest = false;
         }
-        if(e.getActionCommand().equals("SCREEN"))
+        if(e.getActionCommand().equals("SCREEN"))//mode 3
         {
-            modeAllTest = false;
-            modeTeeTest = false;
             modeScreenTest = true;
-            modeSensorTest = false;
-            modeBasicTest = false;
         }
-        if(e.getActionCommand().equals("SENSORS"))
+        if(e.getActionCommand().equals("SENSORS"))//mode 4
         {
-            modeAllTest = false;
-            modeTeeTest = false;
-            modeScreenTest = false;
             modeSensorTest = true;
-            modeBasicTest = false;
         }
-        if (e.getActionCommand().equals("COMM"))
+        if (e.getActionCommand().equals("COMM"))//mode 5
         {
-            modeAllTest = false;
-            modeTeeTest = false;
-            modeScreenTest = false;
-            modeSensorTest = false;
-            modeBasicTest = true;
+            System.out.println("COMM button pressed");
         }
-        if (e.getActionCommand().equals("RUN"))
+        if (e.getActionCommand().equals("RESET"))//mode 0
         {
-            if (modeAllTest)
+            System.out.println("RESET");//action 1
+        }
+        if (e.getActionCommand().equals("PRINT"))
+        {
+            System.out.println("PRINT");// action 2
+        }
+        if (e.getActionCommand().equals("RUN"))//action 3
+        {
+            if (modeAllTest)//mode 1...ALL
             {
+                ts.resetErrors();
+                ts.testScreen(); // run first because to resetErrors() in test.
                 testTee();
-                ts.testScreen();
                 testSensors();
+                ts.setErrTestByteLow(1);  // byte used for testing sensors errors, bottom 8 bits   ### REMOVE ###
+                ts.setErrTestByteHigh(4); // byte used for testing sensors errors, top 8 bits   ### REMOVE ###
+                ts.setErrEmitter(2);    // byte used for testing emitter errors  ### REMOVE ###
+                ts.setErrFail(true);     // bit indicating FAIL   ### REMOVE ###
+                ux.buildErrorListDisplay(ts.getErrorList(), "All Test Errors => ");
             }
-            if (modeTeeTest)
+            if (modeTeeTest)//mode 2...TEE
             {
+                ts.resetErrors();
                 testTee();
+                ts.setErrFail(false);
+                errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
+                ux.buildErrorListDisplay(ts.getErrorList(), "Tee Test Errors => ");
             }
-            if (modeScreenTest)
+            if (modeScreenTest)//mode 3...SCREEN
             {
+                ts.resetErrors();
                 ts.testScreen();
+                ts.setErrFail(false);
+                errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
+                ux.buildErrorListDisplay(ts.getErrorList(), "Screen Test Errors =>  ");
             }
-            if (modeSensorTest)
+            if (modeSensorTest)//mode 4...SENSORS
             {
+                ts.resetErrors();
                 testSensors();
+                errFail = false;
+                //errFail = errDataOut | errSin;
+                ux.buildErrorListDisplay(ts.getErrorList(), "Sensor Test Errors =>  ");
             }
-            if (modeBasicTest)
+            if (modeBasicTest)//mode 5...COMM?
             {
-                testByte = (byte) 0b10101110; // byte used for testing sensors
+                testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
                 for (int i = 0; i < 200; i++)
                 {
+                    ts.resetErrors();
                     testBasic();
-                    try
-                    {
-                        Thread.sleep(100); // 1000 milliseconds is one second.
-                    }
-                    catch (InterruptedException ex)
-                    {
-                        Thread.currentThread().interrupt();
-                    }
+                    try { Thread.sleep(100); }   // 1000 milliseconds is one second.
+                    catch(InterruptedException ex) { Thread.currentThread().interrupt(); }
                 }
+                ux.buildErrorListDisplay(ts.getErrorList(), "Baasic Test Errors => ");
             }
         }
     }

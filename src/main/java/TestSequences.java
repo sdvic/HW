@@ -52,28 +52,7 @@ public class TestSequences
     // Variables used for testing
     private int testByte = 0;        // byte used for testing sensors, top and bottom 8 bits
 
-    // Reset all errors and set all indicators to default state before running tests
-    public void resetErrors() {
-        errDataOut = false;
-        errorList[0] = false; // errDataOut
-        errLpClkOut = false;
-        errorList[1] = false; // errLpClkOut
-        errModeOut = false;
-        errorList[2] = false; // errModeOut
-        errClkOut = false;
-        errorList[3] = false; // errClkOut
-        errEripple = false;
-        errorList[4] = false; // errEripple
-        errRclk = false;
-        errorList[5] = false; // errRclk
-        errShiftLoad = false;
-        errorList[6] = false; // errShiftLoad
-        errSin = false;
-        errorList[7] = false; // errSin
-        errTestByteLow = 0;  // reset sensors errors, bottom 8 bits
-        errTestByteHigh = 0; // reset sensors errors, top 8 bits
-        errEmitter = 0;      // reset emitter errors
-    }
+
 
     // Set CPLD state machine to the RESET state
     public void resetSequence() {
@@ -113,7 +92,6 @@ public class TestSequences
         pin36.high(); // ClkIn t6
         pin36.high(); // ClkIn t7
         pin36.high(); // ClkIn t8
-        ux.buildErrorListDisplay( errorList, "Tee Test errors: ");
     }
 
     // Set CPLD state machine to the screen frame state. Test signals
@@ -145,7 +123,6 @@ public class TestSequences
         pin36.high(); // ClkIn
         pin36.low();  // ClkIn
         pin36.high(); // ClkIn
-        ux.buildErrorListDisplay( errorList, "Screen Test errors: ");
     }
 
     void emitterSelSequence() // Set CPLD state machine to select on-board emitter. Test signals
@@ -206,7 +183,6 @@ public class TestSequences
             errorList[4] = true;
         }
         pin36.high(); // ClkIn t14
-        ux.buildErrorListDisplay( errorList, "Emitter Select Test errors: ");
     }
 
     void emitterDeselSequence()// Set CPLD state machine to select next board emitter. Test signals
@@ -267,9 +243,7 @@ public class TestSequences
             errorList[4] = true;
         }
         pin36.high(); // ClkIn t14
-        ux.buildErrorListDisplay( errorList, "Emitter Deselect Test errors: ");
     }
-
     void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
     {
         selectEmitter(emitter);
@@ -322,9 +296,7 @@ public class TestSequences
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
         }
-        ux.buildErrorListDisplay( errorList, "Fire Sequence Test errors: ");
     }
-
     void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
     {
         int data = 0; // Photo diode test pattern data masked for each LED position
@@ -425,7 +397,6 @@ public class TestSequences
             errSin = true;   // Sin Error
             errorList[7] = true;
         }
-        ux.buildErrorListDisplay( errorList, "Tee Shift Out Test errors: ");
     }
 
     void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
@@ -488,9 +459,7 @@ public class TestSequences
             errLpClkOut = true;   // LpClkOut Error
             errorList[1] = true;
         }
-        ux.buildErrorListDisplay( errorList, "Sccreen Shift Out Test errors: ");
     }
-
     //  Selects one of four emitter positions for testing
     private void selectEmitter(int emitter) {
         switch (emitter) {
@@ -512,7 +481,6 @@ public class TestSequences
                 break;
         }
     }
-
     // Load the LED shift register with the sensor test pattern
     public void loadTestWord(int testByte) {
         boolean state;
@@ -577,40 +545,7 @@ public class TestSequences
         }
         screenShiftOutSequence();
         resetSequence();
-        ux.buildErrorListDisplay( errorList, "Screen Test errors: ");
     }
-    private void testSensors() {// Test each individual IR photodiode for correct operation
-        resetErrors();
-        for (int i = 0; i < 8; i++) // walking 1 test pattern
-        {
-            resetSequence();      // t1-t2
-            teeSequence();        // t3-t8
-            emitterSelSequence(); // t9-t14
-            testByte = 1;
-            testByte = testByte << i;
-            testByte = 0; // ### TEST ###
-            loadTestWord(testByte);
-            emitterFireSequence(0);          // t15-t18
-            teeShiftOutSequence(true);  // t19-t54
-            resetSequence();                // t55-t56
-        }
-        for (int i = 0; i < 8; i++) // walking 0 test pattern
-        {
-            resetSequence();      // t1-t2
-            teeSequence();        // t3-t8
-            emitterSelSequence(); // t9-t14
-            testByte = 1;
-            testByte = testByte << i;
-            testByte = ~testByte;
-            testByte = 0; // ### TEST ###
-            loadTestWord(testByte);
-            emitterFireSequence(0);          // t15-t18
-            teeShiftOutSequence(false); // t19-t54
-            resetSequence();                // t55-t56
-        }
-    }
-
-
     private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin
     {
         resetErrors();
@@ -636,8 +571,116 @@ public class TestSequences
         // End of testing
         resetSequence();
     }
+    // Reset all errors and set all indicators to default state before running tests
+    public void resetErrors() {
+        errDataOut = false;
+        errorList[0] = false; // errDataOut
+        errLpClkOut = false;
+        errorList[1] = false; // errLpClkOut
+        errModeOut = false;
+        errorList[2] = false; // errModeOut
+        errClkOut = false;
+        errorList[3] = false; // errClkOut
+        errEripple = false;
+        errorList[4] = false; // errEripple
+        errRclk = false;
+        errorList[5] = false; // errRclk
+        errShiftLoad = false;
+        errorList[6] = false; // errShiftLoad
+        errSin = false;
+        errorList[7] = false; // errSin
+        errTestByteLow = 0;  // reset sensors errors, bottom 8 bits
+        errTestByteHigh = 0; // reset sensors errors, top 8 bits
+        errEmitter = 0;      // reset emitter errors
+    }
     public void setUx(UserExperience ux)
     {
         this.ux = ux;
+    }
+
+    public void setErrTestByteHigh(int errTestByteHigh)
+    {
+        this.errTestByteHigh = errTestByteHigh;
+    }
+
+    public void setErrTestByteLow(int errTestByteLow)
+    {
+        this.errTestByteLow = errTestByteLow;
+    }
+
+    public void setErrFail(boolean errFail)
+    {
+        this.errFail = errFail;
+    }
+
+    public void setErrEmitter(int errEmitter)
+    {
+        this.errEmitter = errEmitter;
+    }
+
+    public void setErrDataOut(boolean errDataOut)
+    {
+        this.errDataOut = errDataOut;
+    }
+
+    public void setErrLpClkOut(boolean errLpClkOut)
+    {
+        this.errLpClkOut = errLpClkOut;
+    }
+
+    public void setErrModeOut(boolean errModeOut)
+    {
+        this.errModeOut = errModeOut;
+    }
+
+    public void setErrClkOut(boolean errClkOut)
+    {
+        this.errClkOut = errClkOut;
+    }
+
+    public void setErrEripple(boolean errEripple)
+    {
+        this.errEripple = errEripple;
+    }
+
+    public void setErrRclk(boolean errRclk)
+    {
+        this.errRclk = errRclk;
+    }
+
+    public void setErrShiftLoad(boolean errShiftLoad)
+    {
+        this.errShiftLoad = errShiftLoad;
+    }
+
+    public void setErrSin(boolean errSin)
+    {
+        this.errSin = errSin;
+    }
+
+    public void setErrorList(boolean[] errorList)
+    {
+        this.errorList = errorList;
+    }
+    public boolean getErrLpClkOut()
+    {
+       return errLpClkOut;
+    }
+    public boolean getErrRipple()
+    {
+        return errEripple;
+    }
+    public boolean getErrRclk()
+    {
+        return errRclk;
+    }
+    public boolean getErrShiftLoad()
+    {
+        return errShiftLoad;
+    }
+
+    public boolean[] getErrorList()
+    {
+        return errorList;
     }
 }

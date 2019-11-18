@@ -9,7 +9,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 public class UserExperience extends JComponent implements ActionListener
 {
     private Main main;
-    public JTextField failTextField = new JTextField("FAIL");
+
     Timer paintTicker = new Timer(100, this);
     private TestSequences ts;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
@@ -19,7 +19,10 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton sensorsButton = new JButton("SENSORS");
     private JButton commButton = new JButton("COMM");
     private JButton runButton = new JButton("RUN");
+    private JButton resetButton = new JButton("RESET");
+    private JButton printButton = new JButton("PRINT");
     private JTextField passTextField = new JTextField("PASS");
+    public JTextField failTextField = new JTextField("FAIL");
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display = new JFrame();
     private int leftMargin = 40;
@@ -31,6 +34,7 @@ public class UserExperience extends JComponent implements ActionListener
     private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
+    private String codeCat;
     public UserExperience(String version)
     {
         this.version = version;
@@ -91,6 +95,18 @@ public class UserExperience extends JComponent implements ActionListener
         commButton.setHorizontalAlignment(SwingConstants.CENTER);
         commButton.setFont(buttonFont);
         commButton.addActionListener(main);
+
+        resetButton.setBounds(100, 345, 120, 58); // RESET button
+        resetButton.setHorizontalAlignment(SwingConstants.CENTER);
+        resetButton.setFont(buttonFont);
+        resetButton.addActionListener(main);
+        display.add(resetButton);
+
+        printButton.setBounds(300, 345, 120, 58); // PRINT button
+        printButton.setHorizontalAlignment(SwingConstants.CENTER);
+        printButton.setFont(buttonFont);
+        printButton.addActionListener(main);
+        display.add(printButton);
 
         display.add(commButton);
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
@@ -186,8 +202,9 @@ public class UserExperience extends JComponent implements ActionListener
         repaint();
     }
 
-    public void buildErrorListDisplay(boolean[] errorList, String codeCat)
+    public void buildErrorListDisplay(boolean[] errorList, String testSource)
     {
+        codeCat = testSource;
         for (int i = 0; i < errorList.length; i++)
         {
             if (errorList[i])
@@ -206,6 +223,16 @@ public class UserExperience extends JComponent implements ActionListener
     public void setMain(Main main)
     {
         this.main = main;
+    }
+
+    public void setCodeCat(String codeCat)
+    {
+        this.codeCat = codeCat;
+    }
+
+    public String getCodeCat()
+    {
+        return codeCat;
     }
 }
 
