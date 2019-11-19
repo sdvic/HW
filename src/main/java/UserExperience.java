@@ -22,7 +22,7 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
     private JTextField passTextField = new JTextField("PASS");
-    public JTextField failTextField = new JTextField("FAIL");
+    private JTextField failTextField = new JTextField("FAIL");
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display = new JFrame();
     private int leftMargin = 40;
@@ -34,7 +34,8 @@ public class UserExperience extends JComponent implements ActionListener
     private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
-    private String codeCat;
+    private boolean isTestPassed = true;
+
     public UserExperience(String version)
     {
         this.version = version;
@@ -81,11 +82,13 @@ public class UserExperience extends JComponent implements ActionListener
         passTextField.setBounds(500, 125, 120, 50); // PASS indicator
         passTextField.setHorizontalAlignment(SwingConstants.CENTER);
         passTextField.setFont(resultFont);
+        passTextField.setBackground(Color.WHITE);
         display.add(passTextField);
 
         failTextField.setBounds(500, 210, 120, 50); // FAIL indicator
         failTextField.setHorizontalAlignment(SwingConstants.CENTER);
         failTextField.setFont(resultFont);
+        failTextField.setBackground(Color.WHITE);
         display.add(failTextField);
 
         errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
@@ -121,13 +124,11 @@ public class UserExperience extends JComponent implements ActionListener
     {
         Graphics2D g2 = (Graphics2D) g;
         g2.setFont(indicatorFont);
-
         int errTestByteLow = 1;  // byte used for sensors errors, bottom 8 bits
         int errTestByteHigh = 4; // byte used for sensors errors, top 8 bits
         for (int i = 0; i < 8; i++)// Draw sensor indicators 1-8 with pass/fail colors
         {
-            // test for correct IR detection by photo diodes
-            g2.setColor(new Color(255, 255, 153)); // Pale Yellow
+            g2.setColor(new Color(255, 255, 153)); // Pale Yellow // test for correct IR detection by photo diodes
             errBit = 1;
             errBit = errBit << i;
             errBit = errTestByteLow & errBit; // current error masked
@@ -152,7 +153,7 @@ public class UserExperience extends JComponent implements ActionListener
             errBit = errTestByteHigh & errBit; // current error masked
             if (errBit == 0)
             {
-                g2.setColor(new Color(0, 255, 0));  // Passed green
+                g2.setColor(new Color(255, 255, 0));  // Passed green
             }
             else
             {
@@ -195,26 +196,19 @@ public class UserExperience extends JComponent implements ActionListener
         g2.fillRect(0, 289, (screenWidth), 44);
         g2.setColor(Color.BLACK);
         g2.drawLine(0, 333, (screenWidth), 333);
+        if (isTestPassed)
+        {
+            passTextField.setBackground(Color.GREEN);
+        }
+        if (!isTestPassed)
+        {
+            failTextField.setBackground(Color.RED);
+        }
     }
 
     public void actionPerformed(ActionEvent e)
     {
         repaint();
-    }
-
-    public void buildErrorListDisplay(boolean[] errorList, String testSource)
-    {
-        codeCat = testSource;
-        for (int i = 0; i < errorList.length; i++)
-        {
-            if (errorList[i])
-            {
-                codeCat += (i + ", ");
-            }
-        }
-        errorCodeDisplayField.setFont(buttonFont);
-        errorCodeDisplayField.setText(codeCat);
-        codeCat = "";
     }
     public void setTs(TestSequences ts)
     {
@@ -225,14 +219,44 @@ public class UserExperience extends JComponent implements ActionListener
         this.main = main;
     }
 
-    public void setCodeCat(String codeCat)
+    public void setTestPassed(boolean testPassed)
     {
-        this.codeCat = codeCat;
+        isTestPassed = testPassed;
     }
 
-    public String getCodeCat()
+    public JTextField getErrorCodeDisplayField()
     {
-        return codeCat;
+        return errorCodeDisplayField;
+    }
+
+    public JFrame getDisplay()
+    {
+        return display;
+    }
+
+    public void setDisplay(JFrame display)
+    {
+        this.display = display;
+    }
+
+    public void setPassTextField(JTextField passTextField)
+    {
+        this.passTextField = passTextField;
+    }
+
+    public void setFailTextField(JTextField failTextField)
+    {
+        this.failTextField = failTextField;
+    }
+
+    public JTextField getPassTextField()
+    {
+        return passTextField;
+    }
+
+    public JTextField getFailTextField()
+    {
+        return failTextField;
     }
 }
 

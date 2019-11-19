@@ -45,15 +45,13 @@ public class TestSequences
     private boolean errShiftLoad = false;
     private boolean errSin = false;
     private boolean errFail = false; // one or more tests failed
-    private boolean[] errorList = new boolean[8];
     private int errTestByteHigh = 0; // byte used for reporting sensors errors, top 8 bits
     private int errTestByteLow = 0;  // byte used for reporting sensors errors, bottom 8 bits
     private int errEmitter = 0;      // byte used for reporting emitter errors
     // Variables used for testing
     private int testByte = 0;        // byte used for testing sensors, top and bottom 8 bits
-
-
-
+    private Main main;
+    private boolean[] errorList = {true, false,true, false,true, false,true, false};
     // Set CPLD state machine to the RESET state
     public void resetSequence() {
         pin35.low();  // ModeIn t1
@@ -592,6 +590,8 @@ public class TestSequences
         errTestByteLow = 0;  // reset sensors errors, bottom 8 bits
         errTestByteHigh = 0; // reset sensors errors, top 8 bits
         errEmitter = 0;      // reset emitter errors
+        ux.getFailTextField().setBackground(Color.WHITE);
+        ux.getPassTextField().setBackground(Color.WHITE);
     }
     public void setUx(UserExperience ux)
     {
@@ -658,10 +658,6 @@ public class TestSequences
         this.errSin = errSin;
     }
 
-    public void setErrorList(boolean[] errorList)
-    {
-        this.errorList = errorList;
-    }
     public boolean getErrLpClkOut()
     {
        return errLpClkOut;
