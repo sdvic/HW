@@ -590,8 +590,6 @@ public class TestSequences
         errTestByteLow = 0;  // reset sensors errors, bottom 8 bits
         errTestByteHigh = 0; // reset sensors errors, top 8 bits
         errEmitter = 0;      // reset emitter errors
-        ux.getFailTextField().setBackground(Color.WHITE);
-        ux.getPassTextField().setBackground(Color.WHITE);
     }
     public void setUx(UserExperience ux)
     {

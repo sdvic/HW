@@ -21,8 +21,7 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton runButton = new JButton("RUN");
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
-    private JTextField passTextField = new JTextField("PASS");
-    private JTextField failTextField = new JTextField("FAIL");
+    private JTextField passFailTextField = new JTextField();
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display = new JFrame();
     private int leftMargin = 40;
@@ -30,11 +29,13 @@ public class UserExperience extends JComponent implements ActionListener
     private Font buttonFont = new Font("SansSerif", Font.PLAIN, 21);
     private Font resultFont = new Font("SansSerif", Font.BOLD, 28);
     private Font indicatorFont = new Font("Arial", Font.PLAIN, 17);
+    private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 45);
     private String version;
     private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
-    private boolean isTestPassed = true;
+    private boolean isTestFinished;// = true;
+    private boolean isTestStarting;
 
     public UserExperience(String version)
     {
@@ -79,17 +80,12 @@ public class UserExperience extends JComponent implements ActionListener
         runButton.addActionListener(main);
         display.add(runButton);
 
-        passTextField.setBounds(500, 125, 120, 50); // PASS indicator
-        passTextField.setHorizontalAlignment(SwingConstants.CENTER);
-        passTextField.setFont(resultFont);
-        passTextField.setBackground(Color.WHITE);
-        display.add(passTextField);
-
-        failTextField.setBounds(500, 210, 120, 50); // FAIL indicator
-        failTextField.setHorizontalAlignment(SwingConstants.CENTER);
-        failTextField.setFont(resultFont);
-        failTextField.setBackground(Color.WHITE);
-        display.add(failTextField);
+        passFailTextField.setBounds(500, 108, 120, 169);
+        passFailTextField.setHorizontalAlignment((SwingConstants.CENTER));
+        passFailTextField.setFont(resultFont);
+        passFailTextField.setBackground(Color.WHITE);
+        passFailTextField.setText("");
+        display.add(passFailTextField);
 
         errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
         display.add(errorCodeDisplayField);
@@ -128,17 +124,21 @@ public class UserExperience extends JComponent implements ActionListener
         int errTestByteHigh = 4; // byte used for sensors errors, top 8 bits
         for (int i = 0; i < 8; i++)// Draw sensor indicators 1-8 with pass/fail colors
         {
-            g2.setColor(new Color(255, 255, 153)); // Pale Yellow // test for correct IR detection by photo diodes
+            g2.setColor(Color.YELLOW); // Pale Yellow // test for correct IR detection by photo diodes
             errBit = 1;
             errBit = errBit << i;
             errBit = errTestByteLow & errBit; // current error masked
             if (errBit == 0)
             {
-                g2.setColor(new Color(0, 255, 0));  // Passed green
+                g2.setColor(Color.GREEN);  // Passed green
             }
-            else
+            if (errBit == 1)
             {
-                g2.setColor(new Color(255, 0, 0)); // Failed red
+                g2.setColor(Color.RED); // Failed red
+            }
+            if (isTestStarting)
+            {
+                g2.setColor(Color.WHITE);  // Starting white
             }
             g2.fillOval((42 * i + 26), 10, 32, 32);
             g2.setColor(Color.BLACK);
@@ -147,17 +147,21 @@ public class UserExperience extends JComponent implements ActionListener
         for (int i = 0; i < 8; i++)// Draw sensor indicators 9-16 with pass/fail colors
         {
             // test for correct IR detection by photo diodes
-            g2.setColor(new Color(255, 255, 153)); // Pale Yellow
+            g2.setColor(Color.YELLOW); // Pale Yellow
             errBit = 1;
             errBit = errBit << i;
             errBit = errTestByteHigh & errBit; // current error masked
             if (errBit == 0)
             {
-                g2.setColor(new Color(255, 255, 0));  // Passed green
+                g2.setColor(Color.GREEN);  // Passed green
             }
-            else
+            if (errBit == 1)
             {
-                g2.setColor(new Color(255, 0, 0)); // Failed red
+                g2.setColor(Color.RED); // Failed red
+            }
+            if (isTestStarting)
+            {
+                g2.setColor(Color.WHITE);  // Starting white
             }
             g2.fillOval((42 * i + 362), 10, 32, 32);
             g2.setColor(Color.BLACK);
@@ -178,11 +182,15 @@ public class UserExperience extends JComponent implements ActionListener
             errBit = errEmitter & errBit; // current error masked
             if (errBit == 0)
             {
-                g2.setColor(new Color(0, 255, 0));  // Passed green
+                g2.setColor(Color.GREEN);  // Passed green
             }
-            else
+            if (errBit == 1)
             {
-                g2.setColor(new Color(255, 0, 0)); // Failed red
+                g2.setColor(Color.RED); // Failed red
+            }
+            if (isTestStarting)
+            {
+                g2.setColor(Color.WHITE);  // Starting white
             }
             g2.fill(emitterBubbleArray[i]);
             g2.setColor(Color.BLACK);
@@ -196,16 +204,27 @@ public class UserExperience extends JComponent implements ActionListener
         g2.fillRect(0, 289, (screenWidth), 44);
         g2.setColor(Color.BLACK);
         g2.drawLine(0, 333, (screenWidth), 333);
-        if (isTestPassed)
-        {
-            passTextField.setBackground(Color.GREEN);
-        }
-        if (!isTestPassed)
-        {
-            failTextField.setBackground(Color.RED);
-        }
+      if (!isTestStarting)
+      {
+          if (isTestFinished)
+          {
+              passFailTextField.setBackground(Color.GREEN);
+              passFailTextField.setFont(passFailFont);
+              passFailTextField.setText("PASS");
+          }
+          if (!isTestFinished)
+          {
+              passFailTextField.setBackground(Color.RED);
+              passFailTextField.setFont(passFailFont);
+              passFailTextField.setText("FAIL");
+          }
+      }
+      if (isTestStarting)
+      {
+          passFailTextField.setBackground(Color.WHITE);
+          passFailTextField.setText("");
+      }
     }
-
     public void actionPerformed(ActionEvent e)
     {
         repaint();
@@ -219,9 +238,9 @@ public class UserExperience extends JComponent implements ActionListener
         this.main = main;
     }
 
-    public void setTestPassed(boolean testPassed)
+    public void setTestFinished(boolean testFinished)
     {
-        isTestPassed = testPassed;
+        isTestFinished = testFinished;
     }
 
     public JTextField getErrorCodeDisplayField()
@@ -238,25 +257,9 @@ public class UserExperience extends JComponent implements ActionListener
     {
         this.display = display;
     }
-
-    public void setPassTextField(JTextField passTextField)
+    public void setTestStarting(boolean testStarting)
     {
-        this.passTextField = passTextField;
-    }
-
-    public void setFailTextField(JTextField failTextField)
-    {
-        this.failTextField = failTextField;
-    }
-
-    public JTextField getPassTextField()
-    {
-        return passTextField;
-    }
-
-    public JTextField getFailTextField()
-    {
-        return failTextField;
+        isTestStarting = testStarting;
     }
 }
 

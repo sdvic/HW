@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,7 +7,7 @@ public class Main implements ActionListener
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     private String version = "501.92";
+     private String version = "501.132";
      /****************************************************************************************/
     public TestSequences ts = new TestSequences();
     public UserExperience ux = new UserExperience(version);
@@ -52,6 +51,96 @@ public class Main implements ActionListener
             }
         }
         return codeCat;
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getActionCommand().equals("ALL"))//mode 1
+        {
+            modeAllTest = true;
+            //set all button blue
+
+        }
+        if (e.getActionCommand().equals("TEE"))//mode 2
+        {
+            modeTeeTest = true;
+        }
+        if(e.getActionCommand().equals("SCREEN"))//mode 3
+        {
+            modeScreenTest = true;
+        }
+        if(e.getActionCommand().equals("SENSORS"))//mode 4
+        {
+            modeSensorTest = true;
+        }
+        if (e.getActionCommand().equals("COMM"))//mode 5
+        {
+            System.out.println("COMM button pressed");
+        }
+        if (e.getActionCommand().equals("RESET"))//mode 0
+        {
+            System.out.println("RESET button pressed");//action 1
+        }
+        if (e.getActionCommand().equals("PRINT"))
+        {
+            System.out.println("PRINT button pressed");// action 2
+        }
+        ux.setTestStarting(true);
+        if (e.getActionCommand().equals("RUN"))//action 3
+        {
+            ux.setTestStarting(false);
+            if (modeAllTest)//mode 1...ALL
+            {
+                ts.resetErrors();
+                ts.testScreen(); // run first because to resetErrors() in test.
+                testTee();
+                testSensors();
+                ts.setErrTestByteLow(1);  // byte used for testing sensors errors, bottom 8 bits   ### REMOVE ###
+                ts.setErrTestByteHigh(4); // byte used for testing sensors errors, top 8 bits   ### REMOVE ###
+                ts.setErrEmitter(2);    // byte used for testing emitter errors  ### REMOVE ###
+                ts.setErrFail(true);     // bit indicating FAIL   ### REMOVE ###
+                buildErrorListDisplay(ts.getErrorList(), "All Test Errors => ");
+            }
+            if (modeTeeTest)//mode 2...TEE
+            {
+                ts.resetErrors();
+                testTee();
+                ts.setErrFail(false);
+                errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
+                buildErrorListDisplay(ts.getErrorList(), "Tee Test Errors => ");
+            }
+            if (modeScreenTest)//mode 3...SCREEN
+            {
+                ts.resetErrors();
+                ts.testScreen();
+                ts.setErrFail(false);
+                errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
+                buildErrorListDisplay(ts.getErrorList(), "Screen Test Errors =>  ");
+            }
+            if (modeSensorTest)//mode 4...SENSORS
+            {
+                ts.resetErrors();
+                testSensors();
+                errFail = false;
+                //errFail = errDataOut | errSin;
+                buildErrorListDisplay(ts.getErrorList(), "Sensor Test Errors =>  ");
+            }
+            if (modeBasicTest)//mode 5...COMM?
+            {
+                testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
+                for (int i = 0; i < 200; i++)
+                {
+                    ts.resetErrors();
+                    testBasic();
+                    try { Thread.sleep(100); }   // 1000 milliseconds is one second.
+                    catch(InterruptedException ex) { Thread.currentThread().interrupt(); }
+                }
+                buildErrorListDisplay(ts.getErrorList(), "Basic Test Errors => ");
+            }
+            ux.setTestFinished(isTestPassed);
+        }
+
+        ux.getErrorCodeDisplayField().setText(codeCat);
     }
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
@@ -118,93 +207,6 @@ public class Main implements ActionListener
         ts.screenShiftOutSequence();
         // End of testing
         ts.resetSequence();
-    }
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getActionCommand().equals("ALL"))//mode 1
-        {
-            modeAllTest = true;
-        }
-        if (e.getActionCommand().equals("TEE"))//mode 2
-        {
-            modeTeeTest = true;
-        }
-        if(e.getActionCommand().equals("SCREEN"))//mode 3
-        {
-            modeScreenTest = true;
-        }
-        if(e.getActionCommand().equals("SENSORS"))//mode 4
-        {
-            modeSensorTest = true;
-        }
-        if (e.getActionCommand().equals("COMM"))//mode 5
-        {
-            System.out.println("COMM button pressed");
-        }
-        if (e.getActionCommand().equals("RESET"))//mode 0
-        {
-            System.out.println("RESET button pressed");//action 1
-        }
-        if (e.getActionCommand().equals("PRINT"))
-        {
-            System.out.println("PRINT button pressed");// action 2
-        }
-        codeCat = "";
-        if (e.getActionCommand().equals("RUN"))//action 3
-        {
-            if (modeAllTest)//mode 1...ALL
-            {
-                ts.resetErrors();
-                ts.testScreen(); // run first because to resetErrors() in test.
-                testTee();
-                testSensors();
-                ts.setErrTestByteLow(1);  // byte used for testing sensors errors, bottom 8 bits   ### REMOVE ###
-                ts.setErrTestByteHigh(4); // byte used for testing sensors errors, top 8 bits   ### REMOVE ###
-                ts.setErrEmitter(2);    // byte used for testing emitter errors  ### REMOVE ###
-                ts.setErrFail(true);     // bit indicating FAIL   ### REMOVE ###
-                buildErrorListDisplay(ts.getErrorList(), "All Test Errors => ");
-            }
-            if (modeTeeTest)//mode 2...TEE
-            {
-                ts.resetErrors();
-                testTee();
-                ts.setErrFail(false);
-                errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-                buildErrorListDisplay(ts.getErrorList(), "Tee Test Errors => ");
-            }
-            if (modeScreenTest)//mode 3...SCREEN
-            {
-                ts.resetErrors();
-                ts.testScreen();
-                ts.setErrFail(false);
-                errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-                buildErrorListDisplay(ts.getErrorList(), "Screen Test Errors =>  ");
-            }
-            if (modeSensorTest)//mode 4...SENSORS
-            {
-                ts.resetErrors();
-                testSensors();
-                errFail = false;
-                //errFail = errDataOut | errSin;
-                buildErrorListDisplay(ts.getErrorList(), "Sensor Test Errors =>  ");
-            }
-            if (modeBasicTest)//mode 5...COMM?
-            {
-                testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
-                for (int i = 0; i < 200; i++)
-                {
-                    ts.resetErrors();
-                    testBasic();
-                    try { Thread.sleep(100); }   // 1000 milliseconds is one second.
-                    catch(InterruptedException ex) { Thread.currentThread().interrupt(); }
-                }
-                buildErrorListDisplay(ts.getErrorList(), "Basic Test Errors => ");
-            }
-        }
-        ux.setTestPassed(isTestPassed);
-        ux.getErrorCodeDisplayField().setText(codeCat);
-        ux.getPassTextField().setBackground(Color.WHITE);
-        ux.getFailTextField().setBackground(Color.WHITE);
     }
 }
 
