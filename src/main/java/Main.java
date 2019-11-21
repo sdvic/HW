@@ -7,7 +7,7 @@ public class Main implements ActionListener
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     private String version = "501.132";
+     private String version = "501.160";
      /****************************************************************************************/
     public TestSequences ts = new TestSequences();
     public UserExperience ux = new UserExperience(version);
@@ -19,7 +19,8 @@ public class Main implements ActionListener
     private boolean errFail = false;
     private int testByte;
     private String codeCat;
-    private boolean isTestPassed = true;
+    private int errEmitter;
+    private boolean isTestFinished = true;
     public static void main(String[] args)
     {
         new Main();
@@ -39,7 +40,7 @@ public class Main implements ActionListener
         ux.setTs(ts);
         new Timer(100, ux).start();
     }
-    public String buildErrorListDisplay(boolean[] errorList, String testSource)
+    public String buildDisplayErrorList(boolean[] errorList, String testSource)
     {
         codeCat = testSource;
         for (int i = 0; i < errorList.length; i++)
@@ -47,48 +48,49 @@ public class Main implements ActionListener
             if (errorList[i])
             {
                 codeCat += (i + ", ");
-                isTestPassed = false;
+                isTestFinished = false;
             }
         }
         return codeCat;
     }
-
     public void actionPerformed(ActionEvent e)
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
         {
             modeAllTest = true;
-            //set all button blue
-
+            isTestFinished = false;
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
             modeTeeTest = true;
+            isTestFinished = false;
         }
         if(e.getActionCommand().equals("SCREEN"))//mode 3
         {
             modeScreenTest = true;
+            isTestFinished = false;
         }
         if(e.getActionCommand().equals("SENSORS"))//mode 4
         {
             modeSensorTest = true;
+            isTestFinished = false;
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
             System.out.println("COMM button pressed");
+            isTestFinished = false;
         }
         if (e.getActionCommand().equals("RESET"))//mode 0
         {
             System.out.println("RESET button pressed");//action 1
+            isTestFinished = false;
         }
         if (e.getActionCommand().equals("PRINT"))
         {
             System.out.println("PRINT button pressed");// action 2
         }
-        ux.setTestStarting(true);
         if (e.getActionCommand().equals("RUN"))//action 3
         {
-            ux.setTestStarting(false);
             if (modeAllTest)//mode 1...ALL
             {
                 ts.resetErrors();
@@ -99,7 +101,7 @@ public class Main implements ActionListener
                 ts.setErrTestByteHigh(4); // byte used for testing sensors errors, top 8 bits   ### REMOVE ###
                 ts.setErrEmitter(2);    // byte used for testing emitter errors  ### REMOVE ###
                 ts.setErrFail(true);     // bit indicating FAIL   ### REMOVE ###
-                buildErrorListDisplay(ts.getErrorList(), "All Test Errors => ");
+                buildDisplayErrorList(ts.getDisplayErrorList(), "All Test Errors => ");
             }
             if (modeTeeTest)//mode 2...TEE
             {
@@ -107,7 +109,7 @@ public class Main implements ActionListener
                 testTee();
                 ts.setErrFail(false);
                 errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-                buildErrorListDisplay(ts.getErrorList(), "Tee Test Errors => ");
+                buildDisplayErrorList(ts.getDisplayErrorList(), "Tee Test Errors => ");
             }
             if (modeScreenTest)//mode 3...SCREEN
             {
@@ -115,7 +117,7 @@ public class Main implements ActionListener
                 ts.testScreen();
                 ts.setErrFail(false);
                 errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-                buildErrorListDisplay(ts.getErrorList(), "Screen Test Errors =>  ");
+                buildDisplayErrorList(ts.getDisplayErrorList(), "Screen Test Errors =>  ");
             }
             if (modeSensorTest)//mode 4...SENSORS
             {
@@ -123,7 +125,7 @@ public class Main implements ActionListener
                 testSensors();
                 errFail = false;
                 //errFail = errDataOut | errSin;
-                buildErrorListDisplay(ts.getErrorList(), "Sensor Test Errors =>  ");
+                buildDisplayErrorList(ts.getDisplayErrorList(), "Sensor Test Errors =>  ");
             }
             if (modeBasicTest)//mode 5...COMM?
             {
@@ -135,12 +137,13 @@ public class Main implements ActionListener
                     try { Thread.sleep(100); }   // 1000 milliseconds is one second.
                     catch(InterruptedException ex) { Thread.currentThread().interrupt(); }
                 }
-                buildErrorListDisplay(ts.getErrorList(), "Basic Test Errors => ");
+                buildDisplayErrorList(ts.getDisplayErrorList(), "Basic Test Errors => ");
             }
-            ux.setTestFinished(isTestPassed);
+            ux.setErrEmitter(ts.getErrEmitter());
+            ux.setTestFinished(isTestFinished);
+            ux.getErrorCodeDisplayField().setText(codeCat);
+            ux.setErrEmitter(errEmitter);
         }
-
-        ux.getErrorCodeDisplayField().setText(codeCat);
     }
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
