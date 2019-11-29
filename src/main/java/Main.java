@@ -8,7 +8,7 @@ public class Main implements ActionListener
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     public String version = "502.15";
+     public String version = "502.16";
      /****************************************************************************************/
     //public TestSequences ts = new TestSequences();
     public UserExperience ux = new UserExperience(version);

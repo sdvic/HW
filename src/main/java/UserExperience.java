@@ -23,7 +23,6 @@ public class UserExperience extends JComponent implements ActionListener
     private int emitterBubblePitch = screenWidth/8;
     private int emitterRowYpos = screenHeight/10;
     private int sensorRowYpos = screenHeight/120;
-
     private JButton allButton = new JButton("ALL");
     private JButton teeButton = new JButton("TEE");
     private JButton screenButton = new JButton("SCREEN");
@@ -35,7 +34,6 @@ public class UserExperience extends JComponent implements ActionListener
     private JTextField passFailTextField = new JTextField();
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display;
-
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 45);
     private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[8];
@@ -46,6 +44,8 @@ public class UserExperience extends JComponent implements ActionListener
     private boolean isCommTestRunning;
     private BasicStroke bubbleStroke = new BasicStroke(4.0f);
     private int bubbleDiameter = 30;
+    private float width;
+    private float height;
 
     public UserExperience(String version)
     {
@@ -114,7 +114,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         for (int i = 0; i < sensorBubbleArray.length; i++)// Load 16 sensor indicators
         {
-            sensorBubbleArray[i] = new Ellipse2D.Double((sensorBubblePitch * i), sensorRowYpos, bubbleDiameter, bubbleDiameter);
+            sensorBubbleArray[i] = new Ellipse2D.Double((sensorBubblePitch * i), sensorRowYpos + height, bubbleDiameter, bubbleDiameter);
         }
         for (int i = 0; i < emitterBubbleArray.length; i++)//Load 8 emitter indicators
         {
@@ -129,7 +129,6 @@ public class UserExperience extends JComponent implements ActionListener
         g2.setFont(buttonFont);
         g2.setStroke(bubbleStroke);
         FontRenderContext frc = g2.getFontRenderContext();
-
         if (isCommTestRunning)
         {
             commButton.setBackground(Color.BLUE);
@@ -137,14 +136,15 @@ public class UserExperience extends JComponent implements ActionListener
         for (int i = 0; i < sensorBubbleArray.length; i++)
         {
             g2.draw(sensorBubbleArray[i]);
-            s = "" + i;
+            s = "" + (i + 1);
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-            float width = (float) bounds.getWidth();
+            width = (float) bounds.getWidth();
+            height = (float)(1.2 * bounds.getHeight());
             if (width > 10)
             {
                 width = width/4;
             }
-            g2.drawString(s, (int) ((sensorBubblePitch * i) + width), sensorRowYpos);
+            g2.drawString(s, (int) ((sensorBubblePitch * i) + width), sensorRowYpos + height);
         }
         for (int i = 0; i < emitterBubbleArray.length; i++)
         {
@@ -164,10 +164,11 @@ public class UserExperience extends JComponent implements ActionListener
             g2.setStroke(bubbleStroke);
             g2.setColor(Color.BLACK);
             g2.draw(emitterBubbleArray[i]);
-            s = i + "";
+            s = (i + 1) + "";
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-            float width = (float) bounds.getWidth();
-            g2.drawString(s, (int) ((emitterBubblePitch * i) + width), emitterRowYpos);
+             width = (float) bounds.getWidth();
+             height = (float)(1.2 * bounds.getHeight());
+            g2.drawString(s, (int) ((emitterBubblePitch * i) + width), emitterRowYpos + height);
         }
     }
     public void actionPerformed(ActionEvent e)
