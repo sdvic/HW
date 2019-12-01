@@ -3,15 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main implements ActionListener
-
 {
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     public String version = "502.16";
      /****************************************************************************************/
     //public TestSequences ts = new TestSequences();
-    public UserExperience ux = new UserExperience(version);
     private boolean modeAllTest = false;
     private boolean modeTeeTest = false;
     private boolean modeScreenTest = false;
@@ -21,55 +18,60 @@ public class Main implements ActionListener
     private int testByte;
     private String codeCat;
     private int errEmitter;
+    private Timer ticker = new Timer(100, this);
+    private Main main;
+    private UserExperience ux;
+    private TestSequences ts;
+    private boolean isComTestRunning;
 
     public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(
-                Main::new);
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                new Main();
+            }
+        });
     }
     public Main()
     {
-        ux.setMain(this);
-
-//        ts.setUx(ux);
-//        ux.setTs(ts);
-        new Timer(100, ux).start();
+       ux = new UserExperience("ver 502.17",this);
+       ts = new TestSequences();
     }
 
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getActionCommand().equals("ALL"))//mode 1
-        {
-            modeAllTest = true;
-        }
-        if (e.getActionCommand().equals("TEE"))//mode 2
-        {
-            modeTeeTest = true;
-        }
-        if (e.getActionCommand().equals("SCREEN"))//mode 3
-        {
-            modeScreenTest = true;
-        }
-        if (e.getActionCommand().equals("SENSORS"))//mode 4
-        {
-            modeSensorTest = true;
-        }
-        if (e.getActionCommand().equals("COMM"))//mode 5
-        {
-            System.out.println("COMM button pressed");
-            ux.setCommTestRunning(true);
-            System.out.println("comm key");
-        }
-        if (e.getActionCommand().equals("RESET"))//mode 0
-        {
-            System.out.println("RESET button pressed");//action 1
-        }
-        if (e.getActionCommand().equals("PRINT")) {
-            System.out.println("PRINT button pressed");// action 2
-        }
-    }
+            if (e.getActionCommand().equals("ALL"))//mode 1
+            {
+                modeAllTest = true;
+            }
+            if (e.getActionCommand().equals("TEE"))//mode 2
+            {
+                modeTeeTest = true;
+            }
+            if (e.getActionCommand().equals("SCREEN"))//mode 3
+            {
+                modeScreenTest = true;
+            }
+            if (e.getActionCommand().equals("SENSORS"))//mode 4
+            {
+                modeSensorTest = true;
+            }
+            if (e.getActionCommand().equals("COMM"))//mode 5
+            {
+                isComTestRunning = true;
+                ux.setCommTestRunning(true);
 
-
+            }
+            if (e.getActionCommand().equals("RESET"))//mode 0
+            {
+                System.out.println("RESET button pressed");//action 1
+            }
+            if (e.getActionCommand().equals("PRINT")) {
+                System.out.println("PRINT button pressed");// action 2
+            }
+        }
 //        if (e.getActionCommand().equals("RUN"))//action 3
 //        {
 //            if (modeAllTest)//mode 1...ALL
@@ -191,6 +193,7 @@ public class Main implements ActionListener
 //        ts.screenShiftOutSequence();
 //        // End of testing
 //        ts.resetSequence();
-//    }
+//     }
 }
+
 

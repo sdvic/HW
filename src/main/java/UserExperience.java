@@ -11,8 +11,6 @@ import static java.awt.Toolkit.getDefaultToolkit;
 public class UserExperience extends JComponent implements ActionListener
 {
     private Main main;
-
-    Timer paintTicker = new Timer(100, this);
    // private TestSequences ts;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
@@ -44,14 +42,14 @@ public class UserExperience extends JComponent implements ActionListener
     private boolean isCommTestRunning;
     private BasicStroke bubbleStroke = new BasicStroke(4.0f);
     private int bubbleDiameter = 30;
-    private float width;
-    private float height;
+    private float fontWidth;
+    private float fontHeight;
+    private Timer paintTicker = new Timer(100, this);
 
-    public UserExperience(String version)
+    public UserExperience(String version, Main main)
     {
+        this.main = main;
         display = new JFrame(version);
-        paintTicker.start();
-
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);//Adds Graphics
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,9 +86,6 @@ public class UserExperience extends JComponent implements ActionListener
         passFailTextField.setText("");
         display.add(passFailTextField);
 
-        errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
-        display.add(errorCodeDisplayField);
-
         commButton.setBounds(middleMargin, 108, 150, 34); // COMM button
         commButton.setHorizontalAlignment(SwingConstants.CENTER);
         commButton.addActionListener(main);
@@ -106,6 +101,9 @@ public class UserExperience extends JComponent implements ActionListener
         printButton.addActionListener(main);
         display.add(printButton);
 
+        errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
+        display.add(errorCodeDisplayField);
+
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,7 +112,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         for (int i = 0; i < sensorBubbleArray.length; i++)// Load 16 sensor indicators
         {
-            sensorBubbleArray[i] = new Ellipse2D.Double((sensorBubblePitch * i), sensorRowYpos + height, bubbleDiameter, bubbleDiameter);
+            sensorBubbleArray[i] = new Ellipse2D.Double((sensorBubblePitch * i), sensorRowYpos + fontHeight, bubbleDiameter, bubbleDiameter);
         }
         for (int i = 0; i < emitterBubbleArray.length; i++)//Load 8 emitter indicators
         {
@@ -129,8 +127,9 @@ public class UserExperience extends JComponent implements ActionListener
         g2.setFont(buttonFont);
         g2.setStroke(bubbleStroke);
         FontRenderContext frc = g2.getFontRenderContext();
-        if (isCommTestRunning)
+        //if (isCommTestRunning)
         {
+            System.out.println("comm test running");
             commButton.setBackground(Color.BLUE);
         }
         for (int i = 0; i < sensorBubbleArray.length; i++)
@@ -138,13 +137,13 @@ public class UserExperience extends JComponent implements ActionListener
             g2.draw(sensorBubbleArray[i]);
             s = "" + (i + 1);
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-            width = (float) bounds.getWidth();
-            height = (float)(1.2 * bounds.getHeight());
-            if (width > 10)
+            fontWidth = (float) bounds.getWidth();
+            fontHeight = (float)(1.2 * bounds.getHeight());
+            if (fontWidth > 10)
             {
-                width = width/4;
+                fontWidth = fontWidth /4;
             }
-            g2.drawString(s, (int) ((sensorBubblePitch * i) + width), sensorRowYpos + height);
+            g2.drawString(s, (int) ((sensorBubblePitch * i) + fontWidth), sensorRowYpos + fontHeight);
         }
         for (int i = 0; i < emitterBubbleArray.length; i++)
         {
@@ -166,22 +165,10 @@ public class UserExperience extends JComponent implements ActionListener
             g2.draw(emitterBubbleArray[i]);
             s = (i + 1) + "";
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-             width = (float) bounds.getWidth();
-             height = (float)(1.2 * bounds.getHeight());
-            g2.drawString(s, (int) ((emitterBubblePitch * i) + width), emitterRowYpos + height);
+             fontWidth = (float) bounds.getWidth();
+             fontHeight = (float)(1.2 * bounds.getHeight());
+            g2.drawString(s, (int) ((emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
         }
-    }
-    public void actionPerformed(ActionEvent e)
-    {
-        repaint();
-    }
-//    public void setTs(TestSequences ts)
-//    {
-//        this.ts = ts;
-//    }
-    public void setMain(Main main)
-    {
-        this.main = main;
     }
     public JTextField getErrorCodeDisplayField()
     {
@@ -195,9 +182,15 @@ public class UserExperience extends JComponent implements ActionListener
     {
         this.errEmitter = errEmitter;
     }
-    public void setCommTestRunning(boolean commTestRunning)
+    public void setCommTestRunning(boolean isCommTestRunning)
     {
-        isCommTestRunning = commTestRunning;
+        this.isCommTestRunning = isCommTestRunning;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent)
+    {
+        repaint();
     }
 }
 

@@ -1,7 +1,7 @@
 //import com.pi4j.io.gpio.*;
 //
-//public class TestSequences
-//{
+public class TestSequences
+{
 //    private UserExperience ux;
 //    // Gpio pins used for the tester
 //    private GpioController gpio = GpioFactory.getInstance();
@@ -675,4 +675,4 @@
 //    {
 //        return errEmitter;
 //    }
-//}
+}
