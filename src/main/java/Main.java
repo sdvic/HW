@@ -35,7 +35,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-       ux = new UserExperience("ver 502.23",this);
+       ux = new UserExperience("ver 502.24",this);
        ts = new TestSequences();
     }
 
@@ -49,7 +49,7 @@ public class Main implements ActionListener
             if (e.getActionCommand().equals("TEE"))//mode 2
             {
                 isTeeTestRunning = true;
-                ux.setCommTestRunning(true);
+                ux.setTeeTestRunning(true);
             }
             if (e.getActionCommand().equals("SCREEN"))//mode 3
             {
