@@ -14,13 +14,16 @@ public class UserExperience extends JComponent implements ActionListener
    // private TestSequences ts;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
-    private int leftMargin = screenWidth/20;
+    private int leftMargin = screenWidth/10;
     private int middleMargin = screenWidth/2;
-    private int rightMargin = screenWidth - screenWidth/10;
-    private int sensorBubblePitch = screenWidth/16;
+    private int rightMargin = screenWidth - screenWidth/3;
+    private int sensorBubblePitch = screenWidth/32;
     private int emitterBubblePitch = screenWidth/8;
-    private int emitterRowYpos = screenHeight/10;
+    private int emitterRowYpos = screenHeight/20;
     private int sensorRowYpos = screenHeight/120;
+    private int buttonRow1 = screenHeight/10;
+    private int buttonRow2 = screenHeight/5;
+    private int buttonWidth = 150;
     private JButton allButton = new JButton("ALL");
     private JButton teeButton = new JButton("TEE");
     private JButton screenButton = new JButton("SCREEN");
@@ -29,22 +32,26 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton runButton = new JButton("RUN");
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
-    private JTextField passFailTextField = new JTextField();
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display;
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 45);
-    private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[8];
+    private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
     private Ellipse2D.Double[] sensorBubbleArray = new Ellipse2D.Double[16];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
     private boolean isPass;
     private boolean isCommTestRunning;
+    private boolean isAllTestRunning;
+    private boolean isTeeTestRunning;
+    private boolean isSensorsTestRunning;
     private BasicStroke bubbleStroke = new BasicStroke(4.0f);
     private int bubbleDiameter = 30;
     private float fontWidth;
     private float fontHeight;
     private Timer paintTicker = new Timer(100, this);
+    private Color pressedButtonColor = new Color(142, 195, 222,128);
+    private boolean isScreenTestRunning;
 
     public UserExperience(String version, Main main)
     {
@@ -55,54 +62,72 @@ public class UserExperience extends JComponent implements ActionListener
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.setVisible(true);
 
-        allButton.setBounds(leftMargin, 108, 150, 34); // ALL Button
+        allButton.setBounds(leftMargin, buttonRow1, buttonWidth, 34); // ALL Button
         allButton.setHorizontalAlignment(SwingConstants.CENTER);
+        allButton.setBackground(Color.GRAY);
+        allButton.setBorderPainted(false);
+        allButton.setOpaque(true);
         allButton.addActionListener(main);
         display.add(allButton);
 
-        teeButton.setBounds(leftMargin, 153, 150, 34); // TEE button
-        teeButton.setHorizontalAlignment(SwingConstants.CENTER);
-        teeButton.addActionListener(main);
-        display.add(teeButton);
-
-        screenButton.setBounds(leftMargin, 198, 150, 34); // SCREEN button
-        screenButton.setHorizontalAlignment(SwingConstants.CENTER);
-        screenButton.addActionListener(main);
-        display.add(screenButton);
-
-        sensorsButton.setBounds(leftMargin, 243, 150, 34); // SENSORS button
-        sensorsButton.setHorizontalAlignment(SwingConstants.CENTER);
-        sensorsButton.addActionListener(main);
-        display.add(sensorsButton);
-
-        runButton.setBounds(rightMargin, 345, 100, 58); // RUN button
-        runButton.setHorizontalAlignment(SwingConstants.CENTER);
-        runButton.addActionListener(main);
-        display.add(runButton);
-
-        passFailTextField.setBounds(rightMargin, 108, 120, 169);
-        passFailTextField.setHorizontalAlignment((SwingConstants.CENTER));
-        passFailTextField.setBackground(Color.WHITE);
-        passFailTextField.setText("");
-        display.add(passFailTextField);
-
-        commButton.setBounds(middleMargin, 108, 150, 34); // COMM button
+        commButton.setBounds(middleMargin, buttonRow1, buttonWidth, 34); // COMM button
         commButton.setHorizontalAlignment(SwingConstants.CENTER);
+        commButton.setBackground(Color.GRAY);
+        commButton.setBorderPainted(false);
+        commButton.setOpaque(true);
         commButton.addActionListener(main);
         display.add(commButton);
 
-        resetButton.setBounds(leftMargin, 345, 120, 58); // RESET button
-        resetButton.setHorizontalAlignment(SwingConstants.CENTER);
-        resetButton.addActionListener(main);
-        display.add(resetButton);
+        errorCodeDisplayField.setBounds(leftMargin, 500, screenWidth - (screenWidth/10), 100);
+        display.add(errorCodeDisplayField);
 
         printButton.setBounds(middleMargin, 345, 120, 58); // PRINT button
         printButton.setHorizontalAlignment(SwingConstants.CENTER);
+        printButton.setBackground(Color.GRAY);
+        printButton.setBorderPainted(false);
+        printButton.setOpaque(true);
         printButton.addActionListener(main);
         display.add(printButton);
 
-        errorCodeDisplayField.setBounds(0, 289, screenWidth, 44);
-        display.add(errorCodeDisplayField);
+        resetButton.setBounds(leftMargin, 345, 120, 58); // RESET button
+        resetButton.setHorizontalAlignment(SwingConstants.CENTER);
+        resetButton.setBackground(Color.GRAY);
+        resetButton.setBorderPainted(false);
+        resetButton.setOpaque(true);
+        resetButton.addActionListener(main);
+        display.add(resetButton);
+
+        runButton.setBounds(rightMargin, 345, buttonWidth, 58); // RUN button
+        runButton.setHorizontalAlignment(SwingConstants.CENTER);
+        runButton.setBackground(Color.GRAY);
+        runButton.setBorderPainted(false);
+        runButton.setOpaque(true);
+        runButton.addActionListener(main);
+        display.add(runButton);
+
+        screenButton.setBounds(leftMargin, 198, buttonWidth, 34); // SCREEN button
+        screenButton.setHorizontalAlignment(SwingConstants.CENTER);
+        screenButton.setBackground(Color.GRAY);
+        screenButton.setBorderPainted(false);
+        screenButton.setOpaque(true);
+        screenButton.addActionListener(main);
+        display.add(screenButton);
+
+        sensorsButton.setBounds(leftMargin, 243, buttonWidth, 34); // SENSORS button
+        sensorsButton.setHorizontalAlignment(SwingConstants.CENTER);
+        sensorsButton.setBackground(Color.GRAY);
+        sensorsButton.setBorderPainted(false);
+        sensorsButton.setOpaque(true);
+        sensorsButton.addActionListener(main);
+        display.add(sensorsButton);
+
+        teeButton.setBounds(leftMargin, buttonRow2, buttonWidth, 34); // TEE button
+        teeButton.setHorizontalAlignment(SwingConstants.CENTER);
+        teeButton.setBackground(Color.GRAY);
+        teeButton.setBorderPainted(false);
+        teeButton.setOpaque(true);
+        teeButton.addActionListener(main);
+        display.add(teeButton);
 
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);
@@ -112,12 +137,13 @@ public class UserExperience extends JComponent implements ActionListener
 
         for (int i = 0; i < sensorBubbleArray.length; i++)// Load 16 sensor indicators
         {
-            sensorBubbleArray[i] = new Ellipse2D.Double((sensorBubblePitch * i), sensorRowYpos + fontHeight, bubbleDiameter, bubbleDiameter);
+            sensorBubbleArray[i] = new Ellipse2D.Double((leftMargin + sensorBubblePitch * i), sensorRowYpos + fontHeight, bubbleDiameter, bubbleDiameter);
         }
         for (int i = 0; i < emitterBubbleArray.length; i++)//Load 8 emitter indicators
         {
-            emitterBubbleArray[i] = new Ellipse2D.Double(emitterBubblePitch * i, emitterRowYpos, bubbleDiameter, bubbleDiameter);
+            emitterBubbleArray[i] = new Ellipse2D.Double(leftMargin + emitterBubblePitch * i, emitterRowYpos, bubbleDiameter, bubbleDiameter);
         }
+        paintTicker.start();
     }
    public void paint(Graphics g)
     {
@@ -127,10 +153,30 @@ public class UserExperience extends JComponent implements ActionListener
         g2.setFont(buttonFont);
         g2.setStroke(bubbleStroke);
         FontRenderContext frc = g2.getFontRenderContext();
-        //if (isCommTestRunning)
+        if (isCommTestRunning)
         {
-            System.out.println("comm test running");
-            commButton.setBackground(Color.BLUE);
+            commButton.setOpaque(true);
+            commButton.setBackground(pressedButtonColor);
+        }
+        if (isAllTestRunning)
+        {
+            allButton.setOpaque(true);
+            allButton.setBackground(pressedButtonColor);
+        }
+        if (isTeeTestRunning)
+        {
+            teeButton.setOpaque(true);
+            teeButton.setBackground(pressedButtonColor);
+        }
+        if (isSensorsTestRunning)
+        {
+            sensorsButton.setOpaque(true);
+            sensorsButton.setBackground(pressedButtonColor);
+        }
+        if (isScreenTestRunning)
+        {
+            screenButton.setOpaque(true);
+            screenButton.setBackground(pressedButtonColor);
         }
         for (int i = 0; i < sensorBubbleArray.length; i++)
         {
@@ -143,7 +189,7 @@ public class UserExperience extends JComponent implements ActionListener
             {
                 fontWidth = fontWidth /4;
             }
-            g2.drawString(s, (int) ((sensorBubblePitch * i) + fontWidth), sensorRowYpos + fontHeight);
+            g2.drawString(s, (int) (leftMargin + (sensorBubblePitch * i) + fontWidth), sensorRowYpos + fontHeight);
         }
         for (int i = 0; i < emitterBubbleArray.length; i++)
         {
@@ -167,7 +213,7 @@ public class UserExperience extends JComponent implements ActionListener
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
              fontWidth = (float) bounds.getWidth();
              fontHeight = (float)(1.2 * bounds.getHeight());
-            g2.drawString(s, (int) ((emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
+            g2.drawString(s, (int) (leftMargin + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
         }
     }
     public JTextField getErrorCodeDisplayField()
@@ -191,6 +237,26 @@ public class UserExperience extends JComponent implements ActionListener
     public void actionPerformed(ActionEvent actionEvent)
     {
         repaint();
+    }
+
+    public void setAllTestRunning(boolean allTestRunning)
+    {
+        isAllTestRunning = allTestRunning;
+    }
+
+    public void setTeeTestRunning(boolean teeTestRunning)
+    {
+        isTeeTestRunning = teeTestRunning;
+    }
+
+    public void setScreenTestRunning(boolean iScreenTestRunning)
+    {
+        this.isScreenTestRunning = iScreenTestRunning;
+    }
+
+    public void setSensorsTestRunning(boolean sensorsTestRunning)
+    {
+        isSensorsTestRunning = sensorsTestRunning;
     }
 }
 

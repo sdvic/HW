@@ -9,11 +9,11 @@ public class Main implements ActionListener
      *      copyright 2019 Vic Wintriss                                                     */
      /****************************************************************************************/
     //public TestSequences ts = new TestSequences();
-    private boolean modeAllTest = false;
-    private boolean modeTeeTest = false;
-    private boolean modeScreenTest = false;
-    private boolean modeSensorTest = false;
-    private boolean modeBasicTest = false;
+    private boolean isAllTestRunning;
+    private boolean isComTestRunning;
+    private boolean isTeeTestRunning;
+    private boolean isSensorTestRunning;
+    private boolean isScreenTestRunning;
     private boolean errFail = false;
     private int testByte;
     private String codeCat;
@@ -22,7 +22,6 @@ public class Main implements ActionListener
     private Main main;
     private UserExperience ux;
     private TestSequences ts;
-    private boolean isComTestRunning;
 
     public static void main(String[] args)
     {
@@ -36,7 +35,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-       ux = new UserExperience("ver 502.18",this);
+       ux = new UserExperience("ver 502.22",this);
        ts = new TestSequences();
     }
 
@@ -44,25 +43,28 @@ public class Main implements ActionListener
     {
             if (e.getActionCommand().equals("ALL"))//mode 1
             {
-                modeAllTest = true;
+                isAllTestRunning = true;
+                ux.setAllTestRunning(true);
             }
             if (e.getActionCommand().equals("TEE"))//mode 2
             {
-                modeTeeTest = true;
+                isTeeTestRunning = true;
+                ux.setCommTestRunning(true);
             }
             if (e.getActionCommand().equals("SCREEN"))//mode 3
             {
-                modeScreenTest = true;
+                isScreenTestRunning = true;
+                ux.setScreenTestRunning(true);
             }
             if (e.getActionCommand().equals("SENSORS"))//mode 4
             {
-                modeSensorTest = true;
+                isSensorTestRunning= true;
+                ux.setSensorsTestRunning(true);
             }
             if (e.getActionCommand().equals("COMM"))//mode 5
             {
                 isComTestRunning = true;
                 ux.setCommTestRunning(true);
-
             }
             if (e.getActionCommand().equals("RESET"))//mode 0
             {
