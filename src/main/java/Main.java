@@ -35,7 +35,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-       ux = new UserExperience("ver 502.22",this);
+       ux = new UserExperience("ver 502.23",this);
        ts = new TestSequences();
     }
 
