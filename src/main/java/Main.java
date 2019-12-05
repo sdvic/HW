@@ -35,7 +35,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-       ux = new UserExperience("ver 503.00",this);
+       ux = new UserExperience("ver 503.01",this);
        ts = new TestSequences();
     }
 
@@ -46,14 +46,13 @@ public class Main implements ActionListener
                 isAllTestRunning = true;
                 ux.setAllTestRunning(true);
                 ts.resetErrors();
-                ts.testScreen(); // run first because to resetErrors() in test.
+                testScreen(); // run first because to resetErrors() in test.
                 testTee();
                 testSensors();
                 ts.setErrTestByteLow(1);  // byte used for testing sensors errors, bottom 8 bits   ### REMOVE ###
                 ts.setErrTestByteHigh(4); // byte used for testing sensors errors, top 8 bits   ### REMOVE ###
                 ts.setErrEmitter(2);    // byte used for testing emitter errors  ### REMOVE ###
                 ts.setErrFail(true);     // bit indicating FAIL   ### REMOVE ###
-                buildDisplayErrorList(ts.getDisplayErrorList(), "All Test Errors => ");
             }
             if (e.getActionCommand().equals("TEE"))//mode 2
             {
@@ -63,14 +62,14 @@ public class Main implements ActionListener
                 testTee();
                 ts.setErrFail(false);
                 errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-                buildDisplayErrorList(ts.getDisplayErrorList(), "Tee Test Errors => ");
+                //ux.setCodeCat(buildDisplayErrorList(ts.getDisplayErrorList(), "Tee Test Errors => "));
             }
             if (e.getActionCommand().equals("SCREEN"))//mode 3
             {
                 isScreenTestRunning = true;
                 ux.setScreenTestRunning(true);
                 ts.resetErrors();
-                ts.testScreen();
+                testScreen();
                 ts.setErrFail(false);
                 errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
                 buildDisplayErrorList(ts.getDisplayErrorList(), "Screen Test Errors =>  ");
@@ -106,12 +105,9 @@ public class Main implements ActionListener
             if (e.getActionCommand().equals("PRINT")) {
                 System.out.println("PRINT button pressed");// action 2
             }
+        ux.setCodeCat(codeCat);
+        ux.setErrEmitter(errEmitter);
         }
-//            ux.setErrEmitter(ts.getErrEmitter());
-//            ux.setTestFinished(isTestFinished);
-//            ux.getErrorCodeDisplayField().setText(codeCat);
-//            ux.setErrEmitter(errEmitter);
-
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
         ts.resetErrors();
@@ -123,6 +119,12 @@ public class Main implements ActionListener
             ts.emitterFireSequence(i); // t15-t18
             ts.resetSequence();        // t1-t2
         }
+    }
+    void testScreen()// Set CPLD state machine to the screen frame and test the interconnection signals
+    {
+        ts.screenTestSequence();
+        ts.screenShiftOutSequence();
+        ts.resetSequence();
     }
     private void testSensors()// Test each individual IR photodiode for correct operation...mode 4
     {
@@ -182,7 +184,7 @@ public class Main implements ActionListener
     {
         codeCat = testSource;
         for (int i = 0; i < errorList.length; i++)
-        {
+          {
             if (errorList[i])
             {
                 codeCat += (i + ", ");
