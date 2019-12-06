@@ -7,8 +7,7 @@ public class Main implements ActionListener
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     */
-     /****************************************************************************************/
-    //public TestSequences ts = new TestSequences();
+     //public TestSequences ts = new TestSequences();
     private boolean isAllTestRunning;
     private boolean isComTestRunning;
     private boolean isTeeTestRunning;
@@ -35,7 +34,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-       ux = new UserExperience("ver 503.02",this);
+       ux = new UserExperience("ver 503.11",this);
        ts = new TestSequences(main);
     }
 
@@ -86,20 +85,23 @@ public class Main implements ActionListener
             }
             if (e.getActionCommand().equals("COMM"))//mode 5
             {
-                isComTestRunning = true;
-                System.out.println("isCommTestRunning => " + isComTestRunning);
                 ux.setCommTestRunning(true);
                 testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
                 for (int i = 0; i < 200; i++)
                 {
                     resetErrors();
                     testBasic();
-                    try { Thread.sleep(100); }   // 1000 milliseconds is one second.
-                    catch(InterruptedException ex) { Thread.currentThread().interrupt(); }
+                    try
+                    {
+                        Thread.sleep(100);
+                    }   // 1000 milliseconds is one second.
+                    catch(InterruptedException ex)
+                    {
+                        Thread.currentThread().interrupt();
+                    }
                 }
                 buildDisplayErrorList(ts.getDisplayErrorList(), "Basic Test Errors => ");
-                isComTestRunning = false;
-                System.out.println("isCommTestRunning => " + isComTestRunning);
+                ux.setCommTestRunning(false);
             }
             if (e.getActionCommand().equals("RESET"))//mode 0
             {

@@ -51,7 +51,8 @@ public class UserExperience extends JComponent implements ActionListener
     private float fontWidth;
     private float fontHeight;
     private Timer paintTicker = new Timer(100, this);
-    private Color pressedButtonColor = new Color(142, 195, 222,128);
+    private Color pressedButtonColor = Color.BLUE;
+    private Color defaultButtonColor = Color.YELLOW;
     private boolean isScreenTestRunning;
     private String codeCat;
 
@@ -66,7 +67,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         allButton.setBounds(leftMargin, buttonRow1, buttonWidth, 34); // ALL Button
         allButton.setHorizontalAlignment(SwingConstants.CENTER);
-        allButton.setBackground(Color.GRAY);
+        allButton.setBackground(defaultButtonColor);
         allButton.setBorderPainted(false);
         allButton.setOpaque(true);
         allButton.addActionListener(main);
@@ -74,7 +75,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         commButton.setBounds(middleMargin, buttonRow1 + rowPitch, buttonWidth, 34); // COMM button
         commButton.setHorizontalAlignment(SwingConstants.CENTER);
-        commButton.setBackground(Color.GRAY);
+        commButton.setBackground(defaultButtonColor);
         commButton.setBorderPainted(false);
         commButton.setOpaque(true);
         commButton.addActionListener(main);
@@ -85,7 +86,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         printButton.setBounds(middleMargin, buttonRow1 + 5 * rowPitch, buttonWidth, 58); // PRINT button
         printButton.setHorizontalAlignment(SwingConstants.CENTER);
-        printButton.setBackground(Color.GRAY);
+        printButton.setBackground(defaultButtonColor);
         printButton.setBorderPainted(false);
         printButton.setOpaque(true);
         printButton.addActionListener(main);
@@ -93,7 +94,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         resetButton.setBounds(leftMargin, buttonRow1 + 5 * rowPitch, buttonWidth, 58); // RESET button
         resetButton.setHorizontalAlignment(SwingConstants.CENTER);
-        resetButton.setBackground(Color.GRAY);
+        resetButton.setBackground(defaultButtonColor);
         resetButton.setBorderPainted(false);
         resetButton.setOpaque(true);
         resetButton.addActionListener(main);
@@ -101,7 +102,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         runButton.setBounds(rightMargin, buttonRow1 + 5 * rowPitch, buttonWidth, 58); // RUN button
         runButton.setHorizontalAlignment(SwingConstants.CENTER);
-        runButton.setBackground(Color.GRAY);
+        runButton.setBackground(defaultButtonColor);
         runButton.setBorderPainted(false);
         runButton.setOpaque(true);
         runButton.addActionListener(main);
@@ -109,7 +110,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         screenButton.setBounds(leftMargin, buttonRow1 + 2 * rowPitch, buttonWidth, 34); // SCREEN button
         screenButton.setHorizontalAlignment(SwingConstants.CENTER);
-        screenButton.setBackground(Color.GRAY);
+        screenButton.setBackground(defaultButtonColor);
         screenButton.setBorderPainted(false);
         screenButton.setOpaque(true);
         screenButton.addActionListener(main);
@@ -117,7 +118,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         sensorsButton.setBounds(leftMargin, buttonRow1 + 3 * rowPitch, buttonWidth, 34); // SENSORS button
         sensorsButton.setHorizontalAlignment(SwingConstants.CENTER);
-        sensorsButton.setBackground(Color.GRAY);
+        sensorsButton.setBackground(defaultButtonColor);
         sensorsButton.setBorderPainted(false);
         sensorsButton.setOpaque(true);
         sensorsButton.addActionListener(main);
@@ -125,7 +126,7 @@ public class UserExperience extends JComponent implements ActionListener
 
         teeButton.setBounds(leftMargin, buttonRow1 + 4 * rowPitch, buttonWidth, 34); // TEE button
         teeButton.setHorizontalAlignment(SwingConstants.CENTER);
-        teeButton.setBackground(Color.GRAY);
+        teeButton.setBackground(defaultButtonColor);
         teeButton.setBorderPainted(false);
         teeButton.setOpaque(true);
         teeButton.addActionListener(main);
@@ -159,33 +160,31 @@ public class UserExperience extends JComponent implements ActionListener
         {
             commButton.setOpaque(true);
             commButton.setBackground(pressedButtonColor);
-        }
-        if(!isCommTestRunning)
-        {
-            commButton.setOpaque(true);
-            commButton.setBackground(Color.WHITE);
-        }
+        }else{commButton.setBackground(defaultButtonColor);}
         if (isAllTestRunning)
         {
             allButton.setOpaque(true);
             allButton.setBackground(pressedButtonColor);
-        }
+        }else {allButton.setBackground(defaultButtonColor);}
         if (isTeeTestRunning)
         {
             teeButton.setOpaque(true);
             teeButton.setBackground(pressedButtonColor);
+        }else{
+            teeButton.setBackground(defaultButtonColor);
             errorCodeDisplayField.setText(codeCat);
         }
         if (isSensorsTestRunning)
         {
             sensorsButton.setOpaque(true);
             sensorsButton.setBackground(pressedButtonColor);
-        }
+        }else{sensorsButton.setBackground(defaultButtonColor);}
         if (isScreenTestRunning)
         {
             screenButton.setOpaque(true);
             screenButton.setBackground(pressedButtonColor);
-        }
+        }else{screenButton.setBackground(defaultButtonColor);}
+
         for (int i = 0; i < sensorBubbleArray.length; i++)
         {
             g2.draw(sensorBubbleArray[i]);
@@ -224,22 +223,7 @@ public class UserExperience extends JComponent implements ActionListener
             g2.drawString(s, (int) (leftMargin + (emitterBubblePitch/2) + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
         }
     }
-    public JTextField getErrorCodeDisplayField()
-    {
-        return errorCodeDisplayField;
-    }
-    public void setPass(boolean pass)
-    {
-        isPass = pass;
-    }
-    public void setErrEmitter(int errEmitter)
-    {
-        this.errEmitter = errEmitter;
-    }
-    public void setCommTestRunning(boolean isCommTestRunning)
-    {
-        this.isCommTestRunning = isCommTestRunning;
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent actionEvent)
@@ -270,6 +254,22 @@ public class UserExperience extends JComponent implements ActionListener
     public void setCodeCat(String codeCat)
     {
         this.codeCat = codeCat;
+    }
+    public JTextField getErrorCodeDisplayField()
+    {
+        return errorCodeDisplayField;
+    }
+    public void setPass(boolean pass)
+    {
+        isPass = pass;
+    }
+    public void setErrEmitter(int errEmitter)
+    {
+        this.errEmitter = errEmitter;
+    }
+    public void setCommTestRunning(boolean isCommTestRunning)
+    {
+        this.isCommTestRunning = isCommTestRunning;
     }
 }
 
