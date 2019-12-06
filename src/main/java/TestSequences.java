@@ -464,35 +464,42 @@ public class TestSequences
          // reset errors at end of t14, bit bang the emitter fire sequence
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut Error
+            errLpClkOut = true;   // LpClkOut Error
+            displayErrorList[1] = true;
         }
         if (pin32.isLow())
         {
-            displayErrorList[2] = true;// ModeOut Error
+            errModeOut = true;    // ModeOut Error
+            displayErrorList[2] = true;
         }
         if (pin29.isLow())
         {
-            displayErrorList[3] = true;// ClkOut Error
+            errClkOut = true;     // ClkOut Error
+            displayErrorList[3] = true;
         }
         pin35.low();  // ModeIn t15
         if (pin32.isHigh())
         {
-            displayErrorList[2] = true;// ModeOut Error
+            errModeOut = true;   // ModeOut Error
+            displayErrorList[2] = true;
         }
         pin35.high(); // ModeIn t16
         if (pin32.isLow())
         {
-            displayErrorList[2] = true;// ModeOut Error
+            errModeOut = true;    // ModeOut Error
+            displayErrorList[2] = true;
         }
         pin36.low();  // ClkIn t17
         if (pin29.isHigh())
         {
-            displayErrorList[3] = true;// ClkOut Error
+            errClkOut = true;    // ClkOut Error
+            displayErrorList[3] = true;
         }
         pin36.high(); // ClkIn t18
         if (pin29.isLow())
         {
-            displayErrorList[3] = true;// ClkOut Error
+            errClkOut = true;     // ClkOut Error
+            displayErrorList[3] = true;
         }
     }
     public void setErrTestByteHigh(int errTestByteHigh)

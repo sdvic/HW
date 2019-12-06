@@ -25,6 +25,7 @@ public class UserExperience extends JComponent implements ActionListener
     private int buttonRow1 = screenHeight/10;
     private int buttonRow2 = screenHeight/5;
     private int buttonWidth = 150;
+    int buttonHeight = 34;
     private JButton allButton = new JButton("ALL");
     private JButton teeButton = new JButton("TEE");
     private JButton screenButton = new JButton("SCREEN");
@@ -41,7 +42,6 @@ public class UserExperience extends JComponent implements ActionListener
     private Ellipse2D.Double[] sensorBubbleArray = new Ellipse2D.Double[16];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
-    private boolean isPass;
     private boolean isCommTestRunning;
     private boolean isAllTestRunning;
     private boolean isTeeTestRunning;
@@ -55,7 +55,6 @@ public class UserExperience extends JComponent implements ActionListener
     private Color defaultButtonColor = Color.YELLOW;
     private boolean isScreenTestRunning;
     private String codeCat;
-
     public UserExperience(String version, Main main)
     {
         this.main = main;
@@ -65,7 +64,7 @@ public class UserExperience extends JComponent implements ActionListener
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.setVisible(true);
 
-        allButton.setBounds(leftMargin, buttonRow1, buttonWidth, 34); // ALL Button
+        allButton.setBounds(leftMargin, buttonRow1, buttonWidth, buttonHeight); // ALL Button
         allButton.setHorizontalAlignment(SwingConstants.CENTER);
         allButton.setBackground(defaultButtonColor);
         allButton.setBorderPainted(false);
@@ -73,7 +72,7 @@ public class UserExperience extends JComponent implements ActionListener
         allButton.addActionListener(main);
         display.add(allButton);
 
-        commButton.setBounds(middleMargin, buttonRow1 + rowPitch, buttonWidth, 34); // COMM button
+        commButton.setBounds(middleMargin, buttonRow1 + rowPitch, buttonWidth, buttonHeight); // COMM button
         commButton.setHorizontalAlignment(SwingConstants.CENTER);
         commButton.setBackground(defaultButtonColor);
         commButton.setBorderPainted(false);
@@ -84,7 +83,7 @@ public class UserExperience extends JComponent implements ActionListener
         errorCodeDisplayField.setBounds(leftMargin, 500, screenWidth - (screenWidth/5), 100);
         display.add(errorCodeDisplayField);
 
-        printButton.setBounds(middleMargin, buttonRow1 + 5 * rowPitch, buttonWidth, 58); // PRINT button
+        printButton.setBounds(middleMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // PRINT button
         printButton.setHorizontalAlignment(SwingConstants.CENTER);
         printButton.setBackground(defaultButtonColor);
         printButton.setBorderPainted(false);
@@ -92,7 +91,7 @@ public class UserExperience extends JComponent implements ActionListener
         printButton.addActionListener(main);
         display.add(printButton);
 
-        resetButton.setBounds(leftMargin, buttonRow1 + 5 * rowPitch, buttonWidth, 58); // RESET button
+        resetButton.setBounds(leftMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // RESET button
         resetButton.setHorizontalAlignment(SwingConstants.CENTER);
         resetButton.setBackground(defaultButtonColor);
         resetButton.setBorderPainted(false);
@@ -100,7 +99,7 @@ public class UserExperience extends JComponent implements ActionListener
         resetButton.addActionListener(main);
         display.add(resetButton);
 
-        runButton.setBounds(rightMargin, buttonRow1 + 5 * rowPitch, buttonWidth, 58); // RUN button
+        runButton.setBounds(rightMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // RUN button
         runButton.setHorizontalAlignment(SwingConstants.CENTER);
         runButton.setBackground(defaultButtonColor);
         runButton.setBorderPainted(false);
@@ -108,7 +107,7 @@ public class UserExperience extends JComponent implements ActionListener
         runButton.addActionListener(main);
         display.add(runButton);
 
-        screenButton.setBounds(leftMargin, buttonRow1 + 2 * rowPitch, buttonWidth, 34); // SCREEN button
+        screenButton.setBounds(leftMargin, buttonRow1 + 2 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
         screenButton.setHorizontalAlignment(SwingConstants.CENTER);
         screenButton.setBackground(defaultButtonColor);
         screenButton.setBorderPainted(false);
@@ -116,7 +115,7 @@ public class UserExperience extends JComponent implements ActionListener
         screenButton.addActionListener(main);
         display.add(screenButton);
 
-        sensorsButton.setBounds(leftMargin, buttonRow1 + 3 * rowPitch, buttonWidth, 34); // SENSORS button
+        sensorsButton.setBounds(leftMargin, buttonRow1 + 3 * rowPitch, buttonWidth, buttonHeight); // SENSORS button
         sensorsButton.setHorizontalAlignment(SwingConstants.CENTER);
         sensorsButton.setBackground(defaultButtonColor);
         sensorsButton.setBorderPainted(false);
@@ -124,7 +123,7 @@ public class UserExperience extends JComponent implements ActionListener
         sensorsButton.addActionListener(main);
         display.add(sensorsButton);
 
-        teeButton.setBounds(leftMargin, buttonRow1 + 4 * rowPitch, buttonWidth, 34); // TEE button
+        teeButton.setBounds(leftMargin, buttonRow1 + 4 * rowPitch, buttonWidth, buttonHeight); // TEE button
         teeButton.setHorizontalAlignment(SwingConstants.CENTER);
         teeButton.setBackground(defaultButtonColor);
         teeButton.setBorderPainted(false);
@@ -187,12 +186,15 @@ public class UserExperience extends JComponent implements ActionListener
 
         for (int i = 0; i < sensorBubbleArray.length; i++)
         {
+            g2.setColor(Color.YELLOW);
+            g2.fill(sensorBubbleArray[i]);
+            g2.setColor(Color.BLACK);
             g2.draw(sensorBubbleArray[i]);
             s = "" + (i + 1);
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
             fontWidth = (float) bounds.getWidth();
             fontHeight = (float)(1.2 * bounds.getHeight());
-            if (fontWidth > 10)
+            if (fontWidth > 10)//for two digit bubble
             {
                 fontWidth = fontWidth /4;
             }
@@ -218,8 +220,8 @@ public class UserExperience extends JComponent implements ActionListener
             g2.draw(emitterBubbleArray[i]);
             s = (i + 1) + "";
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-             fontWidth = (float) bounds.getWidth();
-             fontHeight = (float)(1.2 * bounds.getHeight());
+            fontWidth = (float) bounds.getWidth();
+            fontHeight = (float)(1.2 * bounds.getHeight());
             g2.drawString(s, (int) (leftMargin + (emitterBubblePitch/2) + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
         }
     }
@@ -258,10 +260,6 @@ public class UserExperience extends JComponent implements ActionListener
     public JTextField getErrorCodeDisplayField()
     {
         return errorCodeDisplayField;
-    }
-    public void setPass(boolean pass)
-    {
-        isPass = pass;
     }
     public void setErrEmitter(int errEmitter)
     {
