@@ -53,6 +53,7 @@ public class UserExperience extends JComponent implements ActionListener
     private Timer paintTicker = new Timer(100, this);
     private Color pressedButtonColor = new Color(142, 195, 222,128);
     private boolean isScreenTestRunning;
+    private String codeCat;
 
     public UserExperience(String version, Main main)
     {
@@ -159,6 +160,11 @@ public class UserExperience extends JComponent implements ActionListener
             commButton.setOpaque(true);
             commButton.setBackground(pressedButtonColor);
         }
+        if(!isCommTestRunning)
+        {
+            commButton.setOpaque(true);
+            commButton.setBackground(Color.WHITE);
+        }
         if (isAllTestRunning)
         {
             allButton.setOpaque(true);
@@ -168,6 +174,7 @@ public class UserExperience extends JComponent implements ActionListener
         {
             teeButton.setOpaque(true);
             teeButton.setBackground(pressedButtonColor);
+            errorCodeDisplayField.setText(codeCat);
         }
         if (isSensorsTestRunning)
         {
@@ -258,6 +265,11 @@ public class UserExperience extends JComponent implements ActionListener
     public void setSensorsTestRunning(boolean sensorsTestRunning)
     {
         isSensorsTestRunning = sensorsTestRunning;
+    }
+
+    public void setCodeCat(String codeCat)
+    {
+        this.codeCat = codeCat;
     }
 }
 

@@ -35,8 +35,8 @@ public class Main implements ActionListener
     }
     public Main()
     {
-       ux = new UserExperience("ver 503.01",this);
-       ts = new TestSequences();
+       ux = new UserExperience("ver 503.02",this);
+       ts = new TestSequences(main);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -45,7 +45,7 @@ public class Main implements ActionListener
             {
                 isAllTestRunning = true;
                 ux.setAllTestRunning(true);
-                ts.resetErrors();
+                resetErrors();
                 testScreen(); // run first because to resetErrors() in test.
                 testTee();
                 testSensors();
@@ -58,7 +58,7 @@ public class Main implements ActionListener
             {
                 isTeeTestRunning = true;
                 ux.setTeeTestRunning(true);
-                ts.resetErrors();
+                resetErrors();
                 testTee();
                 ts.setErrFail(false);
                 errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
@@ -68,7 +68,7 @@ public class Main implements ActionListener
             {
                 isScreenTestRunning = true;
                 ux.setScreenTestRunning(true);
-                ts.resetErrors();
+                resetErrors();
                 testScreen();
                 ts.setErrFail(false);
                 errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
@@ -78,7 +78,7 @@ public class Main implements ActionListener
             {
                 isSensorTestRunning= true;
                 ux.setSensorsTestRunning(true);
-                ts.resetErrors();
+                resetErrors();
                 testSensors();
                 errFail = false;
                 //errFail = errDataOut | errSin;
@@ -87,16 +87,19 @@ public class Main implements ActionListener
             if (e.getActionCommand().equals("COMM"))//mode 5
             {
                 isComTestRunning = true;
+                System.out.println("isCommTestRunning => " + isComTestRunning);
                 ux.setCommTestRunning(true);
                 testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
                 for (int i = 0; i < 200; i++)
                 {
-                    ts.resetErrors();
+                    resetErrors();
                     testBasic();
                     try { Thread.sleep(100); }   // 1000 milliseconds is one second.
                     catch(InterruptedException ex) { Thread.currentThread().interrupt(); }
                 }
                 buildDisplayErrorList(ts.getDisplayErrorList(), "Basic Test Errors => ");
+                isComTestRunning = false;
+                System.out.println("isCommTestRunning => " + isComTestRunning);
             }
             if (e.getActionCommand().equals("RESET"))//mode 0
             {
@@ -110,7 +113,6 @@ public class Main implements ActionListener
         }
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
-        ts.resetErrors();
         for (int i = 1; i < 5; i++)
         {
             ts.resetSequence();        // t1-t2
@@ -128,7 +130,6 @@ public class Main implements ActionListener
     }
     private void testSensors()// Test each individual IR photodiode for correct operation...mode 4
     {
-        ts.resetErrors();
         for (int i = 0; i < 8; i++) // walking 1 test pattern
         {
             ts.resetSequence();      // t1-t2
@@ -157,7 +158,6 @@ public class Main implements ActionListener
     }
     private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin...mode 5
     {
-        ts.resetErrors();
         ts.loadTestWord(testByte);
         // Test in tee frame mode with on-board emitter
         ts.resetSequence();
@@ -180,6 +180,23 @@ public class Main implements ActionListener
         // End of testing
         ts.resetSequence();
      }
+    // Reset all errors and set all indicators to default state before running tests
+    public void resetErrors() {
+        for (int i = 0; i < ts.getDisplayErrorList().length; i++)
+        {
+            ts.setDisplayErrorList(i, false);
+        }
+        /************************************************
+         * displayErrorList[0] => errDataOut
+         * displayErrorList[1] => errLpClkOut
+         * displayErrorList[2] => errModeOut
+         * displayErrorList[3] => errClkOut
+         * displayErrorList[4] => errEripple
+         * displayErrorList[5] => errRclk
+         * displayErrorList[6] => errShiftLoad
+         * displayErrorList[7] => errSin
+         ************************************************/
+    }
     public String buildDisplayErrorList(boolean[] errorList, String testSource)
     {
         codeCat = testSource;
