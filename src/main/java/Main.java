@@ -9,11 +9,6 @@ public class Main implements ActionListener
      *      copyright 2019 Vic Wintriss                                                     */
     /****************************************************************************************/
     //public TestSequences ts = new TestSequences();
-    private boolean isAllTestRunning;
-    private boolean isComTestRunning;
-    private boolean isTeeTestRunning;
-    private boolean isSensorTestRunning;
-    private boolean isScreenTestRunning;
     private boolean errFail = false;
     private int testByte;
     private String codeCat;
@@ -25,7 +20,7 @@ public class Main implements ActionListener
 
     public Main()
     {
-        ux = new UserExperience("ver 503.07", this);
+        ux = new UserExperience("ver 503.37", this);
         ts = new TestSequences(main);
     }
 
@@ -44,50 +39,46 @@ public class Main implements ActionListener
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
         {
-            isAllTestRunning = true;
             ux.setAllTestRunning(true);
             resetErrors();
             testScreen(); // run first because to resetErrors() in test.
             testTee();
             testSensors();
-            ts.setErrTestByteLow(1);  // byte used for testing sensors errors, bottom 8 bits   ### REMOVE ###
-            ts.setErrTestByteHigh(4); // byte used for testing sensors errors, top 8 bits   ### REMOVE ###
-            ts.setErrEmitter(2);    // byte used for testing emitter errors  ### REMOVE ###
-            ts.setErrFail(true);     // bit indicating FAIL   ### REMOVE ###
+            buildDisplayErrorList(ts.getDisplayErrorList(), "All Test Errors =>  ");
+            ux.setAllTestRunning(false);
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
-            isTeeTestRunning = true;
             ux.setTeeTestRunning(true);
             resetErrors();
             testTee();
             ts.setErrFail(false);
             errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-            buildDisplayErrorList(ts.getDisplayErrorList(), "Screen Test Errors =>  ");
+            buildDisplayErrorList(ts.getDisplayErrorList(), "Tee Test Errors =>  ");
+            ux.setTeeTestRunning(false);
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
-            isScreenTestRunning = true;
             ux.setScreenTestRunning(true);
             resetErrors();
             testScreen();
             ts.setErrFail(false);
             errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
             buildDisplayErrorList(ts.getDisplayErrorList(), "Screen Test Errors =>  ");
+            ux.setScreenTestRunning(false);
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
-            isSensorTestRunning = true;
             ux.setSensorsTestRunning(true);
             resetErrors();
             testSensors();
             errFail = false;
             //errFail = errDataOut | errSin;
             buildDisplayErrorList(ts.getDisplayErrorList(), "Sensor Test Errors =>  ");
+            ux.setSensorsTestRunning(false);
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
-            isComTestRunning = true;
             ux.setCommTestRunning(true);
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
             for (int i = 0; i < 200; i++)
@@ -103,8 +94,9 @@ public class Main implements ActionListener
                     Thread.currentThread().interrupt();
                 }
             }
-            buildDisplayErrorList(ts.getDisplayErrorList(), "Basic Test Errors => ");
-            isComTestRunning = false;
+            buildDisplayErrorList(ts.getDisplayErrorList(), "COMM Test Errors => ");
+            ux.setCommTestRunning(false);
+
         }
         if (e.getActionCommand().equals("RESET"))//mode 0
         {
