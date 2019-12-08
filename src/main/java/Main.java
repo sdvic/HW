@@ -14,14 +14,13 @@ public class Main implements ActionListener
     private String codeCat;
     private int errEmitter;
     private Timer ticker = new Timer(100, this);
-    private Main main;
     private UserExperience ux;
     private TestSequences ts;
 
     public Main()
     {
-        ux = new UserExperience("ver 503.37", this);
-        ts = new TestSequences(main);
+        ux = new UserExperience("ver 503.47", this);
+        ts = new TestSequences(this);
     }
 
     public static void main(String[] args)
