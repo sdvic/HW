@@ -258,7 +258,7 @@ public class TestSequences
     }
     void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
     {
-        int data = 0; // Photo diode test pattern data masked for each LED position
+        int data; // Photo diode test pattern data masked for each LED position
         boolean state; // Pin state
         if (sIn == false)
         {
