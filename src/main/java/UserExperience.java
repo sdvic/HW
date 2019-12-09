@@ -36,6 +36,7 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton runButton = new JButton("RUN");
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
+    private JButton basicButton = new JButton("BASIC");
     private JTextField errorCodeDisplayField = new JTextField();
     private JFrame display;
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
@@ -46,6 +47,7 @@ public class UserExperience extends JComponent implements ActionListener
     private int errEmitter = 2;      // byte used for emitter errors
     private boolean isCommTestRunning;
     private boolean isAllTestRunning;
+    private boolean isBasicTestRunning;
     private boolean isTeeTestRunning;
     private boolean isSensorsTestRunning;
     private BasicStroke bubbleStroke = new BasicStroke(4.0f);
@@ -83,6 +85,18 @@ public class UserExperience extends JComponent implements ActionListener
         allButton.setFocusPainted(false);
         allButton.addActionListener(main);
         display.add(allButton);
+
+        basicButton.setBounds(middleMargin, buttonRow2, buttonWidth, buttonHeight); // ALL Button
+        basicButton.setHorizontalAlignment(SwingConstants.CENTER);
+        basicButton.setBackground(defaultButtonBackgroundColor);
+        basicButton.setForeground(defaultButtonForegroundColor);
+        basicButton.setBorder(new BevelBorder(BevelBorder.RAISED));
+        basicButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        basicButton.setBorderPainted(true);
+        basicButton.setOpaque(true);
+        basicButton.setFocusPainted(false);
+        basicButton.addActionListener(main);
+        display.add(basicButton);
 
         commButton.setBounds(middleMargin, buttonRow2 + rowPitch, buttonWidth, buttonHeight); // COMM button
         commButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -222,6 +236,11 @@ public class UserExperience extends JComponent implements ActionListener
             screenButton.setOpaque(true);
             screenButton.setBackground(pressedButtonColor);
         }else{screenButton.setBackground(defaultButtonBackgroundColor);}
+        if (isBasicTestRunning)
+        {
+            basicButton.setOpaque(true);
+            basicButton.setBackground(pressedButtonColor);
+        }else{basicButton.setBackground(defaultButtonBackgroundColor);}
         errorCodeDisplayField.setText(codeCat);
     }
     private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
@@ -240,19 +259,19 @@ public class UserExperience extends JComponent implements ActionListener
             fontHeight = (float)(1.2 * bounds.getHeight());
             g2.setColor(Color.WHITE);
             g2.drawString(s, (int) ((leftMargin + emitterBubblePitch) + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
-//            errBit = 1;
-//            errBit = errBit << i;
-//            errBit = errEmitter & errBit; // current error masked
-//            if (errBit == 0)//Pass
-//            {
-//                g2.setColor(Color.GREEN); // Pass green
-//                g2.fill(emitterBubbleArray[i]);
-//            }
-//            if (errBit == 1)//Fail
-//            {
-//                g2.setColor(Color.RED); // Failed red
-//                g2.fill(emitterBubbleArray[i]);
-//            }
+            errBit = 1;
+            errBit = errBit << i;
+            errBit = errEmitter & errBit; // current error masked
+            if (errBit == 0)//Pass
+            {
+                g2.setColor(Color.GREEN); // Pass green
+                g2.draw(emitterBubbleArray[i]);
+            }
+            if (errBit == 1)//Fail
+            {
+                g2.setColor(Color.RED); // Failed red
+                g2.draw(emitterBubbleArray[i]);
+            }
         }
     }
     private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
@@ -298,10 +317,7 @@ public class UserExperience extends JComponent implements ActionListener
     {
         isSensorsTestRunning = sensorsTestRunning;
     }
-    public void setCodeCat(String codeCat)
-    {
-        this.codeCat = codeCat;
-    }
+    public void setCodeCat(String codeCat) { this.codeCat = codeCat; }
     public JTextField getErrorCodeDisplayField()
     {
         return errorCodeDisplayField;
@@ -314,6 +330,7 @@ public class UserExperience extends JComponent implements ActionListener
     {
         this.isCommTestRunning = isCommTestRunning;
     }
+    public void setBasicTestRunning(boolean isBasicTestRunning) { this.isBasicTestRunning = isBasicTestRunning; }
 }
 
 

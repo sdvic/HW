@@ -8,7 +8,6 @@ public class Main implements ActionListener
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
     /****************************************************************************************/
-    //public TestSequences ts = new TestSequences();
     private boolean errFail = false;
     private int testByte;
     private String codeCat;
@@ -16,7 +15,16 @@ public class Main implements ActionListener
     private Timer ticker = new Timer(100, this);
     private UserExperience ux;
     private TestSequences ts;
-
+    /************************************************
+     * displayErrorList[0] => errDataOut
+     * displayErrorList[1] => errLpClkOut
+     * displayErrorList[2] => errModeOut
+     * displayErrorList[3] => errClkOut
+     * displayErrorList[4] => errEripple
+     * displayErrorList[5] => errRclk
+     * displayErrorList[6] => errShiftLoad
+     * displayErrorList[7] => errSin
+     ************************************************/
     public Main()
     {
         ux = new UserExperience("ver 504.01", this);
@@ -45,6 +53,31 @@ public class Main implements ActionListener
             testSensors();
             buildDisplayErrorList(ts.getDisplayErrorList(), "     All Test Errors =>  ");
             ux.setAllTestRunning(false);
+        }
+        if(e.getActionCommand().equals("BASIC"))
+        {
+            ux.setBasicTestRunning(true);
+            ts.loadTestWord(testByte);
+            // Test in tee frame mode with on-board emitter
+            ts.resetSequence();
+            ts.teeSequence();
+            ts.emitterSelSequence();
+            ts.emitterFireSequence(0);
+            ts.teeShiftOutSequence(false);
+            // Test in tee frame mode with next board emitter
+            ts.resetSequence();
+            ts.teeSequence();
+            ts.emitterDeselSequence();
+            ts.emitterFireSequence(1);
+            ts.teeShiftOutSequence(true);
+            // Test the screen frame connections
+            ts.resetSequence();
+            ts.screenSequence();
+            ts.emitterSelSequence();
+            ts.emitterFireSequence(2);
+            ts.screenShiftOutSequence();
+            // End of testing
+            ts.resetSequence();
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
@@ -87,7 +120,7 @@ public class Main implements ActionListener
                 try
                 {
                     Thread.sleep(100);
-                }   // 1000 milliseconds is one second.
+                }
                 catch (InterruptedException ex)
                 {
                     Thread.currentThread().interrupt();
@@ -193,16 +226,6 @@ public class Main implements ActionListener
         {
             ts.setDisplayErrorList(i, false);
         }
-        /************************************************
-         * displayErrorList[0] => errDataOut
-         * displayErrorList[1] => errLpClkOut
-         * displayErrorList[2] => errModeOut
-         * displayErrorList[3] => errClkOut
-         * displayErrorList[4] => errEripple
-         * displayErrorList[5] => errRclk
-         * displayErrorList[6] => errShiftLoad
-         * displayErrorList[7] => errSin
-         ************************************************/
     }
 
     public String buildDisplayErrorList(boolean[] errorList, String testSource)

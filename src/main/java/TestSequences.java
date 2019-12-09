@@ -506,62 +506,50 @@ public class TestSequences
     {
         this.errTestByteHigh = errTestByteHigh;
     }
-
     public void setErrTestByteLow(int errTestByteLow)
     {
         this.errTestByteLow = errTestByteLow;
     }
-
     public void setErrFail(boolean errFail)
     {
         this.errFail = errFail;
     }
-
     public void setErrEmitter(int errEmitter)
     {
         this.errEmitter = errEmitter;
     }
-
     public void setErrDataOut(boolean errDataOut)
     {
         this.errDataOut = errDataOut;
     }
-
     public void setErrLpClkOut(boolean errLpClkOut)
     {
         this.errLpClkOut = errLpClkOut;
     }
-
     public void setErrModeOut(boolean errModeOut)
     {
         this.errModeOut = errModeOut;
     }
-
     public void setErrClkOut(boolean errClkOut)
     {
         this.errClkOut = errClkOut;
     }
-
     public void setErrEripple(boolean errEripple)
     {
         this.errEripple = errEripple;
     }
-
     public void setErrRclk(boolean errRclk)
     {
         this.errRclk = errRclk;
     }
-
     public void setErrShiftLoad(boolean errShiftLoad)
     {
         this.errShiftLoad = errShiftLoad;
     }
-
     public void setErrSin(boolean errSin)
     {
         this.errSin = errSin;
     }
-
     public boolean getErrLpClkOut()
     {
        return errLpClkOut;
@@ -578,16 +566,11 @@ public class TestSequences
     {
         return errShiftLoad;
     }
-    public int getErrEmitter()
-    {
-        return errEmitter;
-    }
-
+    public int getErrEmitter() { return errEmitter; }
     public boolean[] getDisplayErrorList()
     {
         return displayErrorList;
     }
-
     public void setDisplayErrorList(int i, boolean trueFalse)
     {
         displayErrorList[i] = trueFalse;
