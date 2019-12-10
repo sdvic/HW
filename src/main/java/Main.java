@@ -27,7 +27,7 @@ public class Main implements ActionListener
      ************************************************/
     public Main()
     {
-        ux = new UserExperience("ver 504.01", this);
+        ux = new UserExperience("ver 504.07", this);
         ts = new TestSequences(this);
     }
 
@@ -53,6 +53,7 @@ public class Main implements ActionListener
             testSensors();
             buildDisplayErrorList(ts.getDisplayErrorList(), "     All Test Errors =>  ");
             ux.setAllTestRunning(false);
+            resetErrors();
         }
         if(e.getActionCommand().equals("BASIC"))
         {
@@ -78,6 +79,9 @@ public class Main implements ActionListener
             ts.screenShiftOutSequence();
             // End of testing
             ts.resetSequence();
+            buildDisplayErrorList(ts.getDisplayErrorList(), "     Basic Test Errors =>  ");
+            ux.setBasicTestRunning(false);
+            resetErrors();
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
@@ -88,6 +92,7 @@ public class Main implements ActionListener
             errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
             buildDisplayErrorList(ts.getDisplayErrorList(), "     Tee Test Errors =>  ");
             ux.setTeeTestRunning(false);
+            resetErrors();
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
@@ -98,6 +103,7 @@ public class Main implements ActionListener
             errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
             buildDisplayErrorList(ts.getDisplayErrorList(), "     Screen Test Errors =>  ");
             ux.setScreenTestRunning(false);
+            resetErrors();
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
@@ -105,9 +111,9 @@ public class Main implements ActionListener
             resetErrors();
             testSensors();
             errFail = false;
-            //errFail = errDataOut | errSin;
             buildDisplayErrorList(ts.getDisplayErrorList(), "     Sensor Test Errors =>  ");
             ux.setSensorsTestRunning(false);
+            resetErrors();
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
@@ -128,7 +134,7 @@ public class Main implements ActionListener
             }
             buildDisplayErrorList(ts.getDisplayErrorList(), "     COMM Test Errors => ");
             ux.setCommTestRunning(false);
-
+            resetErrors();
         }
         if (e.getActionCommand().equals("RESET"))//mode 0
         {
