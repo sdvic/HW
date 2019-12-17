@@ -7,6 +7,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import static java.awt.Frame.MAXIMIZED_BOTH;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class UserExperience extends JComponent implements ActionListener
@@ -37,7 +38,7 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
     private JButton basicButton = new JButton("BASIC");
-    private JTextField errorCodeDisplayField = new JTextField();
+    private JTextArea errorCodeDisplayField = new JTextArea();
     private JFrame display;
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 22);
@@ -61,6 +62,7 @@ public class UserExperience extends JComponent implements ActionListener
     private boolean isScreenTestRunning;
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
+    private boolean[] emitterErrorList;
 
     public UserExperience(String version, Main main)
     {
@@ -69,6 +71,7 @@ public class UserExperience extends JComponent implements ActionListener
         display.setType(Window.Type.UTILITY);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         display.setSize(screenSize.width, screenSize.height);
+        display.setExtendedState(MAXIMIZED_BOTH);
         display.setUndecorated(true); // Remove title bar
         display.add(this);//Adds Graphics
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -262,18 +265,19 @@ public class UserExperience extends JComponent implements ActionListener
             errBit = 1;
             errBit = errBit << i;
             errBit = errEmitter & errBit; // current error masked
-            if (errBit == 0)//Pass
-            {
-                g2.setColor(Color.GREEN); // Pass green
-                g2.draw(emitterBubbleArray[i]);
-            }
-            if (errBit == 1)//Fail
-            {
-                g2.setColor(Color.RED); // Failed red
-                g2.draw(emitterBubbleArray[i]);
-            }
+           // colorEmitterBubbles(g2, i);
         }
     }
+
+//    private void colorEmitterBubbles(Graphics2D g2, int i)
+//    {
+//        if (emitterErrorList[i]) //emitter has error
+//        {
+//            g2.setColor(Color.RED);
+//            g2.draw(emitterBubbleArray[i]);
+//        }
+//    }
+
     private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
     {
         String s;
@@ -318,7 +322,7 @@ public class UserExperience extends JComponent implements ActionListener
         isSensorsTestRunning = sensorsTestRunning;
     }
     public void setCodeCat(String codeCat) { this.codeCat = codeCat; }
-    public JTextField getErrorCodeDisplayField()
+    public JTextArea getErrorCodeDisplayField()
     {
         return errorCodeDisplayField;
     }
@@ -331,6 +335,10 @@ public class UserExperience extends JComponent implements ActionListener
         this.isCommTestRunning = isCommTestRunning;
     }
     public void setBasicTestRunning(boolean isBasicTestRunning) { this.isBasicTestRunning = isBasicTestRunning; }
+    public void setEmitterErrorList(boolean[] emitterErrorList)
+    {
+        this.emitterErrorList = emitterErrorList;
+    }
 }
 
 

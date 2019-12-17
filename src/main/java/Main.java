@@ -8,7 +8,6 @@ public class Main implements ActionListener
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
     /****************************************************************************************/
-    private boolean errFail = false;
     private int testByte;
     private String codeCat;
     private int errEmitter;
@@ -25,35 +24,28 @@ public class Main implements ActionListener
      * displayErrorList[6] => errShiftLoad
      * displayErrorList[7] => errSin
      ************************************************/
-    public Main()
-    {
-        ux = new UserExperience("ver 504.07", this);
-        ts = new TestSequences(this);
-    }
+
 
     public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new Main();
-            }
-        });
+        SwingUtilities.invokeLater(() -> new Main());
     }
-
+    public Main()
+    {
+        ux = new UserExperience("ver 504.30", this);
+        ts = new TestSequences(this);
+    }
     public void actionPerformed(ActionEvent e)
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
         {
             ux.setAllTestRunning(true);
-            resetErrors();
+            clearErrorLists();
             testScreen(); // run first because to resetErrors() in test.
             testTee();
             testSensors();
-            buildDisplayErrorList(ts.getDisplayErrorList(), "     All Test Errors =>  ");
+            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     All Test Errors =>  ");
             ux.setAllTestRunning(false);
-            resetErrors();
         }
         if(e.getActionCommand().equals("BASIC"))
         {
@@ -79,41 +71,32 @@ public class Main implements ActionListener
             ts.screenShiftOutSequence();
             // End of testing
             ts.resetSequence();
-            buildDisplayErrorList(ts.getDisplayErrorList(), "     Basic Test Errors =>  ");
+            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Basic Test Errors =>  ");
             ux.setBasicTestRunning(false);
-            resetErrors();
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
             ux.setTeeTestRunning(true);
-            resetErrors();
+            clearErrorLists();
             testTee();
-            ts.setErrFail(false);
-            errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-            buildDisplayErrorList(ts.getDisplayErrorList(), "     Tee Test Errors =>  ");
+            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Tee Test Errors =>  ");
             ux.setTeeTestRunning(false);
-            resetErrors();
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
             ux.setScreenTestRunning(true);
-            resetErrors();
+            clearErrorLists();
             testScreen();
-            ts.setErrFail(false);
-            errFail = ts.getErrLpClkOut() | ts.getErrRipple() | ts.getErrRclk() | ts.getErrShiftLoad();
-            buildDisplayErrorList(ts.getDisplayErrorList(), "     Screen Test Errors =>  ");
+            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Screen Test Errors =>  ");
             ux.setScreenTestRunning(false);
-            resetErrors();
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
             ux.setSensorsTestRunning(true);
-            resetErrors();
+            clearErrorLists();
             testSensors();
-            errFail = false;
-            buildDisplayErrorList(ts.getDisplayErrorList(), "     Sensor Test Errors =>  ");
+            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Sensor Test Errors =>  ");
             ux.setSensorsTestRunning(false);
-            resetErrors();
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
@@ -121,7 +104,7 @@ public class Main implements ActionListener
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
             for (int i = 0; i < 200; i++)
             {
-                resetErrors();
+                clearErrorLists();
                 testBasic();
                 try
                 {
@@ -132,13 +115,13 @@ public class Main implements ActionListener
                     Thread.currentThread().interrupt();
                 }
             }
-            buildDisplayErrorList(ts.getDisplayErrorList(), "     COMM Test Errors => ");
+            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     COMM Test Errors => ");
             ux.setCommTestRunning(false);
-            resetErrors();
         }
-        if (e.getActionCommand().equals("RESET"))//mode 0
+        if (e.getActionCommand().equals("RESET"))
         {
-            System.out.println("RESET button pressed");//action 1
+            clearErrorLists();
+            codeCat = "";
         }
         if (e.getActionCommand().equals("PRINT"))
         {
@@ -150,6 +133,7 @@ public class Main implements ActionListener
         }
         ux.setCodeCat(codeCat);
         ux.setErrEmitter(errEmitter);
+        ux.setEmitterErrorList(ts.getEmitterErrorList());
     }
 
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
@@ -226,22 +210,36 @@ public class Main implements ActionListener
     }
 
     // Reset all errors and set all indicators to default state before running tests
-    public void resetErrors()
+    public void clearErrorLists()
     {
-        for (int i = 0; i < ts.getDisplayErrorList().length; i++)
+        for (int i = 0; i < ts.getErrorList().length; i++)
         {
             ts.setDisplayErrorList(i, false);
         }
+        for (int j = 0; j < ts.getEmitterErrorList().length; j++)
+        {
+            ts.setEmitterErrorList(j, false);
+        }
     }
 
-    public String buildDisplayErrorList(boolean[] errorList, String testSource)
+    public String buildErrorCodeDisplayFieldString(boolean[] errorList, String testSource)
     {
         codeCat = testSource;
+
         for (int i = 0; i < errorList.length; i++)
         {
             if (errorList[i])
             {
                 codeCat += (i + ", ");
+            }
+        }
+        codeCat += "\n\tEmitter Error # ";
+        boolean[] emitterErrorList = ts.getEmitterErrorList();
+        for (int j = 0; j < emitterErrorList.length; j++)
+        {
+            if (emitterErrorList[j])
+            {
+                codeCat += (j + ", ");
             }
         }
         return codeCat;

@@ -45,7 +45,9 @@ public class TestSequences
     // Variables used for testing
     private int testByte = 0;        // byte used for testing sensors, top and bottom 8 bits
     private Main main;
-    private boolean[] displayErrorList = {true, false, true, false, true, false, true, false, true};
+    private boolean[] ErrorList = new boolean[8];
+    private boolean[] emitterErrorList = new boolean[5];
+
     public TestSequences(Main main)
     {
         this.main = main;
@@ -64,19 +66,19 @@ public class TestSequences
         pin36.high(); // ClkIn t3
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut
+            ErrorList[1] = true;// LpClkOut
         }
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple
+            ErrorList[4] = true;// Eripple
         }
         if (pin16.isLow())
         {
-            displayErrorList[5] = true; // Rclk
+            ErrorList[5] = true; // Rclk
         }
         if (pin08.isLow())
         {
-            displayErrorList[6] = true;// ShiftLoad
+            ErrorList[6] = true;// ShiftLoad
         }
         pin35.high(); // ModeIn t4
         pin36.low();  // ClkIn t5
@@ -90,19 +92,19 @@ public class TestSequences
         pin36.high(); // ClkIn
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut
+            ErrorList[1] = true;// LpClkOut
         }
         if (pin15.isLow())
         {
-           displayErrorList[4] = true; // Eripple
+           ErrorList[4] = true; // Eripple
         }
         if (pin16.isLow())
         {
-           displayErrorList[5] = true;// Rclk
+           ErrorList[5] = true;// Rclk
         }
         if (pin08.isLow())
         {
-            displayErrorList[6] = true;// ShiftLoad
+            ErrorList[6] = true;// ShiftLoad
         }
         pin35.high(); // ModeIn
         pin36.low();  // ClkIn
@@ -115,47 +117,47 @@ public class TestSequences
         pin35.low();  // ModeIn t9
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut Error
+            ErrorList[1] = true;// LpClkOut Error
         }
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         if (pin16.isLow())
         {
-            displayErrorList[5] = true; // Rclk Error
+            ErrorList[5] = true; // Rclk Error
         }
         if (pin08.isLow())
         {
-            displayErrorList[6] = true;// ShiftLoad Error
+            ErrorList[6] = true;// ShiftLoad Error
         }
         pin35.high(); // ModeIn t10
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut Error
+            ErrorList[1] = true;// LpClkOut Error
         }
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         if (pin16.isLow())
         {
-            displayErrorList[5] = true;// Rclk Error
+            ErrorList[5] = true;// Rclk Error
         }
         if (pin08.isHigh())
         {
-            displayErrorList[6] = true;// ShiftLoad Error
+            ErrorList[6] = true;// ShiftLoad Error
         }
         pin36.low();   //ClkIn t11
         if (pin15.isLow())
         {
-            displayErrorList[4] = true; // Eripple Error
+            ErrorList[4] = true; // Eripple Error
         }
         pin36.high(); // ClkIn t12
         pin36.high(); // ClkIn t13
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         pin36.high(); // ClkIn t14
     }
@@ -164,96 +166,105 @@ public class TestSequences
        pin35.low();  // ModeIn t9
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut Error
+            ErrorList[1] = true;// LpClkOut Error
         }
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         if (pin16.isLow())
         {
-            displayErrorList[5] = true;// Rclk Error
+            ErrorList[5] = true;// Rclk Error
         }
         if (pin08.isLow())
         {
-            displayErrorList[6] = true;// ShiftLoad Error
+            ErrorList[6] = true;// ShiftLoad Error
         }
         pin35.high();  //ModeIn t10
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut Error
+            ErrorList[1] = true;// LpClkOut Error
         }
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         if (pin16.isLow())
         {
-            displayErrorList[5] = true;// Rclk Error
+            ErrorList[5] = true;// Rclk Error
         }
         if (pin08.isHigh())
         {
-            displayErrorList[6] = true;// ShiftLoad Error
+            ErrorList[6] = true;// ShiftLoad Error
         }
         pin36.low();   //ClkIn t11
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         pin36.high(); // ClkIn t12
         pin36.low();  // ClkIn t13
         if (pin15.isHigh())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
         }
         pin36.high(); // ClkIn t14
     }
     void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
     {
         selectEmitter(emitter);
-        pin35.low();  // ModeIn t15
+        pin35.low();  // ModeIn t15 ", eelIndex => " + eelIndex
         if (pin40.isLow())
         {
-            displayErrorList[1] = true;// LpClkOut Error
+            ErrorList[1] = true;// LpClkOut Error
+            getEmitterErrorList()[emitter] = true;
         }
         if (pin15.isLow())
         {
-            displayErrorList[4] = true;// Eripple Error
+            ErrorList[4] = true;// Eripple Error
+            getEmitterErrorList()[emitter] = true;
         }
         if (pin16.isLow())
         {
-            displayErrorList[5] = true; // Rclk Error
+            ErrorList[5] = true; // Rclk Error
+            getEmitterErrorList()[emitter] = true;
         }
         if (pin08.isHigh())
         {
-            displayErrorList[6] = true;// ShiftLoad Error
+            ErrorList[6] = true;// ShiftLoad Error
+            getEmitterErrorList()[emitter] = true;
         }
         pin35.high(); // ModeIn t16
         if (pin07.isHigh())
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
+            getEmitterErrorList()[emitter] = true;
         }
         pin11.high(); // LedOn t17
         pin36.low();  // ClkIn
         if (pin16.isHigh())
         {
             errRclk = true;       // Rclk Error
-            displayErrorList[5] = true;
+            ErrorList[5] = true;
+            getEmitterErrorList()[emitter] = true;
         }
         if (pin07.isLow())
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
+            getEmitterErrorList()[emitter] = true;
         }
         pin36.high(); // ClkIn t18
         pin11.low();  // LedOn
         if (pin16.isLow())
         {
             errRclk = true;        // Rclk Error
-            displayErrorList[5] = true;
+            ErrorList[5] = true;
+            getEmitterErrorList()[emitter] = true;
         }
         if (pin07.isHigh())
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
+            getEmitterErrorList()[emitter] = true;
         }
     }
     void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
@@ -272,22 +283,22 @@ public class TestSequences
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         if (pin15.isLow())
         {
             errEripple = true;    // Eripple Error
-            displayErrorList[4] = true;
+            ErrorList[4] = true;
         }
         if (pin16.isLow())
         {
             errRclk = true;        // Rclk Error
-            displayErrorList[5] = true;
+            ErrorList[5] = true;
         }
         if (pin08.isHigh())
         {
             errShiftLoad = true; // ShiftLoad Error
-            displayErrorList[6] = true;
+            ErrorList[6] = true;
         }
         pin35.high(); // ModeIn t20
         if (pin07.isHigh())
@@ -300,20 +311,20 @@ public class TestSequences
             if (pin40.isHigh())
             {
                 errLpClkOut = true;  // LpClkOut Error
-                displayErrorList[1] = true;
+                ErrorList[1] = true;
             }
             pin36.high(); // ClkIn
             if (pin40.isLow())
             {
                 errLpClkOut = true;   // LpClkOut Error
-                displayErrorList[1] = true;
+                ErrorList[1] = true;
             }
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
             if (state != (data != 0))
             {
                 errDataOut = true;   // DataOut Error
-                displayErrorList[0] = true;
+                ErrorList[0] = true;
             }
         }
         for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, high byte
@@ -322,39 +333,39 @@ public class TestSequences
             if (pin40.isHigh())
             {
                 errLpClkOut = true;  // LpClkOut Error
-                displayErrorList[1] = true;
+                ErrorList[1] = true;
             }
             pin36.high(); // ClkIn
             if (pin40.isLow())
             {
                 errLpClkOut = true;   // LpClkOut Error
-                displayErrorList[1] = true;
+                ErrorList[1] = true;
             }
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
             if (state != (data != 0))
             {
                 errDataOut = true;   // DataOut Error
-                displayErrorList[0] = true;
+                ErrorList[0] = true;
             }
         }
         pin36.low();  // ClkIn t55  // shift out Sin data
         if (pin40.isHigh())
         {
             errLpClkOut = true;  // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         pin36.high(); // ClkIn t56
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         state = pin38.getState().isHigh();
         if (state != sIn)
         {
             errSin = true;   // Sin Error
-            displayErrorList[7] = true;
+            ErrorList[7] = true;
         }
     }
     void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
@@ -363,59 +374,59 @@ public class TestSequences
         if (pin32.isHigh())
         {
             errModeOut = true;   // ModeOut Error
-            displayErrorList[2] = true;
+            ErrorList[2] = true;
         }
         pin35.high(); // ModeIn t20
         if (pin32.isLow())
         {
             errModeOut = true;    // ModeOut Error
-            displayErrorList[2] = true;
+            ErrorList[2] = true;
         }
         pin31.low();  // DataIn t21
         pin33.low();  // LpClkIn
         if (pin38.isHigh())
         {
             errLpClkOut = true;  // DataOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         if (pin40.isHigh())
         {
             errLpClkOut = true;  // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         pin33.high(); // ClkIn t22
         if (pin38.isHigh())
         {
             errLpClkOut = true;  // DataOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         pin31.high(); // DataIn t23
         pin33.low();  // LpClkIn
         if (pin38.isLow())
         {
             errLpClkOut = true;   // DataOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         if (pin40.isHigh())
         {
             errLpClkOut = true;  // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         pin33.high(); // ClkIn t25
         if (pin38.isLow())
         {
             errLpClkOut = true;   // DataOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
     }
     //  Selects one of four emitter positions for testing
@@ -465,41 +476,41 @@ public class TestSequences
         if (pin40.isLow())
         {
             errLpClkOut = true;   // LpClkOut Error
-            displayErrorList[1] = true;
+            ErrorList[1] = true;
         }
         if (pin32.isLow())
         {
             errModeOut = true;    // ModeOut Error
-            displayErrorList[2] = true;
+            ErrorList[2] = true;
         }
         if (pin29.isLow())
         {
             errClkOut = true;     // ClkOut Error
-            displayErrorList[3] = true;
+            ErrorList[3] = true;
         }
         pin35.low();  // ModeIn t15
         if (pin32.isHigh())
         {
             errModeOut = true;   // ModeOut Error
-            displayErrorList[2] = true;
+            ErrorList[2] = true;
         }
         pin35.high(); // ModeIn t16
         if (pin32.isLow())
         {
             errModeOut = true;    // ModeOut Error
-            displayErrorList[2] = true;
+            ErrorList[2] = true;
         }
         pin36.low();  // ClkIn t17
         if (pin29.isHigh())
         {
             errClkOut = true;    // ClkOut Error
-            displayErrorList[3] = true;
+            ErrorList[3] = true;
         }
         pin36.high(); // ClkIn t18
         if (pin29.isLow())
         {
             errClkOut = true;     // ClkOut Error
-            displayErrorList[3] = true;
+            ErrorList[3] = true;
         }
     }
     public void setErrTestByteHigh(int errTestByteHigh)
@@ -567,12 +578,22 @@ public class TestSequences
         return errShiftLoad;
     }
     public int getErrEmitter() { return errEmitter; }
-    public boolean[] getDisplayErrorList()
+    public boolean[] getErrorList()
     {
-        return displayErrorList;
+        return ErrorList;
     }
     public void setDisplayErrorList(int i, boolean trueFalse)
     {
-        displayErrorList[i] = trueFalse;
+        ErrorList[i] = trueFalse;
+    }
+
+    public boolean[] getEmitterErrorList()
+    {
+        return emitterErrorList;
+    }
+
+    public void setEmitterErrorList(int j, boolean truefalse)
+    {
+        emitterErrorList[j] = truefalse;
     }
 }
