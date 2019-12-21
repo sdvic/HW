@@ -32,7 +32,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-        ux = new UserExperience("ver 504.30", this);
+        ux = new UserExperience("ver 505.0", this);
         ts = new TestSequences(this);
     }
     public void actionPerformed(ActionEvent e)

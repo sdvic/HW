@@ -13,7 +13,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 public class UserExperience extends JComponent implements ActionListener
 {
     private Main main;
-   // private TestSequences ts;
+    private Bubble bubble = new Bubble(0,0,Color.BLACK);
     private Dimension screenSize;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
@@ -42,7 +42,7 @@ public class UserExperience extends JComponent implements ActionListener
     private JFrame display;
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 22);
-    private Ellipse2D.Double[] emitterBubbleArray = new Ellipse2D.Double[4];
+    private Bubble[] emitterBubbleList;
     private Ellipse2D.Double[] sensorBubbleArray = new Ellipse2D.Double[16];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
@@ -63,6 +63,32 @@ public class UserExperience extends JComponent implements ActionListener
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
     private boolean[] emitterErrorList;
+
+    class Bubble
+    {
+        int bubbleDiameter = 30;
+        int bubbleXpos;
+        int bubbleYpos;
+        private Color backgroundColor;
+        Ellipse2D.Double circle;
+
+        public Bubble(int bubbleXpos, int bubbleYpos, Color defaultButtonBackgroundColor)
+        {
+            this.bubbleXpos = bubbleXpos;
+            circle = new Ellipse2D.Double(bubbleXpos, bubbleYpos, bubbleDiameter, bubbleDiameter);
+            this.setBackgroundColor(defaultButtonBackgroundColor);
+        }
+
+        public Color getBackgroundColor()
+        {
+            return backgroundColor;
+        }
+
+        public void setBackgroundColor(Color backgroundColor)
+        {
+            this.backgroundColor = backgroundColor;
+        }
+    }
 
     public UserExperience(String version, Main main)
     {
@@ -200,6 +226,12 @@ public class UserExperience extends JComponent implements ActionListener
         display.setVisible(true);
 
         paintTicker.start();
+        emitterBubbleList = new Bubble[4];
+
+        for (int i = 0; i < emitterBubbleList.length; i++)//Setup 4 emitter indicators
+        {
+            emitterBubbleList[i] = new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultButtonBackgroundColor);
+        }
     }
    public void paint(Graphics g)
     {
@@ -249,34 +281,21 @@ public class UserExperience extends JComponent implements ActionListener
     private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
     {
         String s;
-        for (int i = 0; i < emitterBubbleArray.length; i++)//Load 4 emitter indicators
+        for (int i = 0; i < emitterBubbleList.length; i++)//Load 4 emitter indicators
         {
-            emitterBubbleArray[i] = new Ellipse2D.Double(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, bubbleDiameter, bubbleDiameter);
             g2.setColor(Color.BLACK);
-            g2.fill(emitterBubbleArray[i]);
+            Bubble buba = emitterBubbleList[i];
+            g2.fill(buba.circle);
             g2.setColor(Color.ORANGE);
-            g2.draw(emitterBubbleArray[i]);
+            g2.draw(buba.circle);
             s = "" + (i + 1);
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
             fontWidth = (float) bounds.getWidth();
             fontHeight = (float)(1.2 * bounds.getHeight());
             g2.setColor(Color.WHITE);
             g2.drawString(s, (int) ((leftMargin + emitterBubblePitch) + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
-            errBit = 1;
-            errBit = errBit << i;
-            errBit = errEmitter & errBit; // current error masked
-           // colorEmitterBubbles(g2, i);
         }
     }
-
-//    private void colorEmitterBubbles(Graphics2D g2, int i)
-//    {
-//        if (emitterErrorList[i]) //emitter has error
-//        {
-//            g2.setColor(Color.RED);
-//            g2.draw(emitterBubbleArray[i]);
-//        }
-//    }
 
     private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
     {
