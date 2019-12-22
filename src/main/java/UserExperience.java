@@ -64,6 +64,8 @@ public class UserExperience extends JComponent implements ActionListener
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
     private boolean[] emitterErrorList;
 
+
+
     class Bubble
     {
         int bubbleDiameter = 30;
@@ -71,19 +73,16 @@ public class UserExperience extends JComponent implements ActionListener
         int bubbleYpos;
         private Color backgroundColor;
         Ellipse2D.Double circle;
-
-        public Bubble(int bubbleXpos, int bubbleYpos, Color defaultButtonBackgroundColor)
+        public Bubble(int bubbleXpos, int bubbleYpos, Color backgroundColor)
         {
             this.bubbleXpos = bubbleXpos;
             circle = new Ellipse2D.Double(bubbleXpos, bubbleYpos, bubbleDiameter, bubbleDiameter);
-            this.setBackgroundColor(defaultButtonBackgroundColor);
+            this.setBackgroundColor(backgroundColor);
         }
-
         public Color getBackgroundColor()
         {
             return backgroundColor;
         }
-
         public void setBackgroundColor(Color backgroundColor)
         {
             this.backgroundColor = backgroundColor;
@@ -226,11 +225,11 @@ public class UserExperience extends JComponent implements ActionListener
         display.setVisible(true);
 
         paintTicker.start();
-        emitterBubbleList = new Bubble[4];
+        setEmitterBubbleList(new Bubble[5]);
 
-        for (int i = 0; i < emitterBubbleList.length; i++)//Setup 4 emitter indicators
+        for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4? emitter indicators
         {
-            emitterBubbleList[i] = new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultButtonBackgroundColor);
+            getEmitterBubbleList()[i] = new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultButtonBackgroundColor);
         }
     }
    public void paint(Graphics g)
@@ -281,10 +280,10 @@ public class UserExperience extends JComponent implements ActionListener
     private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
     {
         String s;
-        for (int i = 0; i < emitterBubbleList.length; i++)//Load 4 emitter indicators
+        for (int i = 0; i < getEmitterBubbleList().length; i++)//Load 4 emitter indicators
         {
-            g2.setColor(Color.BLACK);
-            Bubble buba = emitterBubbleList[i];
+            g2.setColor(getEmitterBubbleList()[i].getBackgroundColor());
+            Bubble buba = getEmitterBubbleList()[i];
             g2.fill(buba.circle);
             g2.setColor(Color.ORANGE);
             g2.draw(buba.circle);
@@ -357,6 +356,15 @@ public class UserExperience extends JComponent implements ActionListener
     public void setEmitterErrorList(boolean[] emitterErrorList)
     {
         this.emitterErrorList = emitterErrorList;
+    }
+    public Bubble[] getEmitterBubbleList()
+    {
+        return emitterBubbleList;
+    }
+
+    public void setEmitterBubbleList(Bubble[] emitterBubbleList)
+    {
+        this.emitterBubbleList = emitterBubbleList;
     }
 }
 

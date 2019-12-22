@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.awt.Color.RED;
+
 public class Main implements ActionListener
 {
     /****************************************************************************************
@@ -32,7 +34,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-        ux = new UserExperience("ver 505.0", this);
+        ux = new UserExperience("ver 505.1", this);
         ts = new TestSequences(this);
     }
     public void actionPerformed(ActionEvent e)
@@ -45,7 +47,9 @@ public class Main implements ActionListener
             testTee();
             testSensors();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     All Test Errors =>  ");
+            checkForEmitterErrors();
             ux.setAllTestRunning(false);
+
         }
         if(e.getActionCommand().equals("BASIC"))
         {
@@ -72,6 +76,7 @@ public class Main implements ActionListener
             // End of testing
             ts.resetSequence();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Basic Test Errors =>  ");
+            checkForEmitterErrors();
             ux.setBasicTestRunning(false);
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
@@ -80,6 +85,7 @@ public class Main implements ActionListener
             clearErrorLists();
             testTee();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Tee Test Errors =>  ");
+            checkForEmitterErrors();
             ux.setTeeTestRunning(false);
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
@@ -88,6 +94,7 @@ public class Main implements ActionListener
             clearErrorLists();
             testScreen();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Screen Test Errors =>  ");
+            checkForEmitterErrors();
             ux.setScreenTestRunning(false);
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
@@ -96,6 +103,7 @@ public class Main implements ActionListener
             clearErrorLists();
             testSensors();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Sensor Test Errors =>  ");
+            checkForEmitterErrors();
             ux.setSensorsTestRunning(false);
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
@@ -106,16 +114,11 @@ public class Main implements ActionListener
             {
                 clearErrorLists();
                 testBasic();
-                try
-                {
-                    Thread.sleep(100);
-                }
-                catch (InterruptedException ex)
-                {
-                    Thread.currentThread().interrupt();
-                }
+                try {Thread.sleep(100);}
+                catch (InterruptedException ex) {Thread.currentThread().interrupt();}
             }
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     COMM Test Errors => ");
+            checkForEmitterErrors();
             ux.setCommTestRunning(false);
         }
         if (e.getActionCommand().equals("RESET"))
@@ -134,6 +137,18 @@ public class Main implements ActionListener
         ux.setCodeCat(codeCat);
         ux.setErrEmitter(errEmitter);
         ux.setEmitterErrorList(ts.getEmitterErrorList());
+    }
+
+    private void checkForEmitterErrors()
+    {
+        for (int i = 0; i < ts.getEmitterErrorList().length; i++)
+        {
+            UserExperience.Bubble errorBubble = ux.getEmitterBubbleList()[i];
+            if (ts.getEmitterErrorList()[i] == true)
+            {
+                errorBubble.setBackgroundColor(RED);
+            }
+        }
     }
 
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
