@@ -1,8 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static java.awt.Color.RED;
+import static java.awt.Color.*;
 
 public class Main implements ActionListener
 {
@@ -34,7 +35,7 @@ public class Main implements ActionListener
     }
     public Main()
     {
-        ux = new UserExperience("ver 505.1", this);
+        ux = new UserExperience("ver 505.2", this);
         ts = new TestSequences(this);
     }
     public void actionPerformed(ActionEvent e)
@@ -148,6 +149,10 @@ public class Main implements ActionListener
             {
                 errorBubble.setBackgroundColor(RED);
             }
+            else
+            {
+                errorBubble.setBackgroundColor(GREEN);
+            }
         }
     }
 
@@ -234,6 +239,11 @@ public class Main implements ActionListener
         for (int j = 0; j < ts.getEmitterErrorList().length; j++)
         {
             ts.setEmitterErrorList(j, false);
+        }
+        for (int k = 0; k < ux.getEmitterBubbleList().length; k++)
+        {
+            UserExperience.Bubble bubba = ux.getEmitterBubbleList()[k];
+            bubba.setBackgroundColor(BLACK);
         }
     }
 
