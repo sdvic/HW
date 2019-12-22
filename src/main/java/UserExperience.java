@@ -295,7 +295,6 @@ public class UserExperience extends JComponent implements ActionListener
             g2.drawString(s, (int) ((leftMargin + emitterBubblePitch) + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
         }
     }
-
     private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
     {
         String s;
@@ -361,11 +360,7 @@ public class UserExperience extends JComponent implements ActionListener
     {
         return emitterBubbleList;
     }
-
-    public void setEmitterBubbleList(Bubble[] emitterBubbleList)
-    {
-        this.emitterBubbleList = emitterBubbleList;
-    }
+    public void setEmitterBubbleList(Bubble[] emitterBubbleList) {this.emitterBubbleList = emitterBubbleList; }
 }
 
 
