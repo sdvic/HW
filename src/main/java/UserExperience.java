@@ -114,7 +114,7 @@ public class UserExperience extends JComponent implements ActionListener
         allButton.addActionListener(main);
         display.add(allButton);
 
-        basicButton.setBounds(middleMargin, buttonRow2, buttonWidth, buttonHeight); // ALL Button
+        basicButton.setBounds(leftMargin, buttonRow1 + 2 * 3 * rowPitch, buttonWidth, buttonHeight); // ALL Button
         basicButton.setHorizontalAlignment(SwingConstants.CENTER);
         basicButton.setBackground(defaultButtonBackgroundColor);
         basicButton.setForeground(defaultButtonForegroundColor);
@@ -182,7 +182,7 @@ public class UserExperience extends JComponent implements ActionListener
         runButton.addActionListener(main);
         display.add(runButton);
 
-        screenButton.setBounds(leftMargin, buttonRow1 + 2 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
+        screenButton.setBounds(leftMargin, buttonRow1 + 2 * 5 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
         screenButton.setHorizontalAlignment(SwingConstants.CENTER);
         screenButton.setBackground(defaultButtonBackgroundColor);
         screenButton.setForeground(defaultButtonForegroundColor);

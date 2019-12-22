@@ -43,7 +43,6 @@ public class Main implements ActionListener
         if (e.getActionCommand().equals("ALL"))//mode 1
         {
             ux.setAllTestRunning(true);
-            clearErrorLists();
             testScreen(); // run first because to resetErrors() in test.
             testTee();
             testSensors();
@@ -83,7 +82,6 @@ public class Main implements ActionListener
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
             ux.setTeeTestRunning(true);
-            clearErrorLists();
             testTee();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Tee Test Errors =>  ");
             checkForEmitterErrors();
@@ -92,7 +90,6 @@ public class Main implements ActionListener
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
             ux.setScreenTestRunning(true);
-            clearErrorLists();
             testScreen();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Screen Test Errors =>  ");
             checkForEmitterErrors();
@@ -101,7 +98,6 @@ public class Main implements ActionListener
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
             ux.setSensorsTestRunning(true);
-            clearErrorLists();
             testSensors();
             buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Sensor Test Errors =>  ");
             checkForEmitterErrors();
@@ -113,7 +109,6 @@ public class Main implements ActionListener
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
             for (int i = 0; i < 200; i++)
             {
-                clearErrorLists();
                 testBasic();
                 try {Thread.sleep(100);}
                 catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -136,7 +131,6 @@ public class Main implements ActionListener
             System.out.println("RUN button pressed");// action 2
         }
         ux.setCodeCat(codeCat);
-        ux.setErrEmitter(errEmitter);
         ux.setEmitterErrorList(ts.getEmitterErrorList());
     }
 
