@@ -47,6 +47,7 @@ public class TestSequences
     private Main main;
     private boolean[] ErrorList = new boolean[8];
     private boolean[] emitterErrorList = new boolean[5];
+    private boolean[] sensorErrorList = new boolean[16];
 
     public TestSequences(Main main)
     {
@@ -217,28 +218,28 @@ public class TestSequences
         if (pin40.isLow())
         {
             ErrorList[1] = true;// LpClkOut Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         if (pin15.isLow())
         {
             ErrorList[4] = true;// Eripple Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter]  = true;
         }
         if (pin16.isLow())
         {
             ErrorList[5] = true; // Rclk Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         if (pin08.isHigh())
         {
             ErrorList[6] = true;// ShiftLoad Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         pin35.high(); // ModeIn t16
         if (pin07.isHigh())
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         pin11.high(); // LedOn t17
         pin36.low();  // ClkIn
@@ -246,12 +247,12 @@ public class TestSequences
         {
             errRclk = true;       // Rclk Error
             ErrorList[5] = true;
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         if (pin07.isLow())
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         pin36.high(); // ClkIn t18
         pin11.low();  // LedOn
@@ -259,12 +260,12 @@ public class TestSequences
         {
             errRclk = true;        // Rclk Error
             ErrorList[5] = true;
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
         if (pin07.isHigh())
         {
             errEmitter = errEmitter | emitter;   // Emitter Error
-            getEmitterErrorList()[emitter] = true;
+            emitterErrorList[emitter] = true;
         }
     }
     void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
@@ -312,12 +313,14 @@ public class TestSequences
             {
                 errLpClkOut = true;  // LpClkOut Error
                 ErrorList[1] = true;
+                getSensorErrorList()[i] = true;
             }
             pin36.high(); // ClkIn
             if (pin40.isLow())
             {
                 errLpClkOut = true;   // LpClkOut Error
                 ErrorList[1] = true;
+                getSensorErrorList()[i] = true;
             }
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
@@ -325,6 +328,7 @@ public class TestSequences
             {
                 errDataOut = true;   // DataOut Error
                 ErrorList[0] = true;
+                getSensorErrorList()[i] = true;
             }
         }
         for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, high byte
@@ -334,12 +338,14 @@ public class TestSequences
             {
                 errLpClkOut = true;  // LpClkOut Error
                 ErrorList[1] = true;
+                getSensorErrorList()[i + 8] = true;
             }
             pin36.high(); // ClkIn
             if (pin40.isLow())
             {
                 errLpClkOut = true;   // LpClkOut Error
                 ErrorList[1] = true;
+                getSensorErrorList()[i + 8] = true;
             }
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
@@ -347,6 +353,7 @@ public class TestSequences
             {
                 errDataOut = true;   // DataOut Error
                 ErrorList[0] = true;
+                getSensorErrorList()[i + 8] = true;
             }
         }
         pin36.low();  // ClkIn t55  // shift out Sin data
@@ -582,18 +589,27 @@ public class TestSequences
     {
         return ErrorList;
     }
-    public void setDisplayErrorList(int i, boolean trueFalse)
+    public void setDisplayErrorList(int x, boolean trueFalse)
     {
-        ErrorList[i] = trueFalse;
+        ErrorList[x] = trueFalse;
+    }
+    public boolean[] getEmitterErrorList() {return emitterErrorList;}
+    public void setEmitterErrorList(int y, boolean truefalse)
+    {
+        emitterErrorList[y] = truefalse;
     }
 
-    public boolean[] getEmitterErrorList()
+    public boolean[] getSensorErrorList()
     {
-        return emitterErrorList;
+        return sensorErrorList;
     }
 
-    public void setEmitterErrorList(int j, boolean truefalse)
+    public void setSensorErrorList(boolean[] sensorErrorList)
     {
-        emitterErrorList[j] = truefalse;
+        this.sensorErrorList = sensorErrorList;
+    }
+
+    public void setSensorErrorList(int l, boolean b)
+    {
     }
 }

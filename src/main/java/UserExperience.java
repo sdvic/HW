@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import static java.awt.Toolkit.getDefaultToolkit;
 
-public class UserExperience extends JComponent implements ActionListener
+public class UserExperience extends JComponent
 {
     private Main main;
     private Bubble bubble = new Bubble(0,0,Color.BLACK);
@@ -43,6 +43,7 @@ public class UserExperience extends JComponent implements ActionListener
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 22);
     private Bubble[] emitterBubbleList;
+    private Bubble[] sensorBubbleList;
     private Ellipse2D.Double[] sensorBubbleArray = new Ellipse2D.Double[16];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
@@ -55,7 +56,6 @@ public class UserExperience extends JComponent implements ActionListener
     private int bubbleDiameter = 30;
     private float fontWidth;
     private float fontHeight;
-    private Timer paintTicker = new Timer(100, this);
     private Color pressedButtonColor = Color.BLUE;
     private Color defaultButtonBackgroundColor = Color.BLACK;
     private Color defaultButtonForegroundColor = Color.WHITE;
@@ -63,31 +63,9 @@ public class UserExperience extends JComponent implements ActionListener
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
     private boolean[] emitterErrorList;
+    private boolean[] sensorErrorList;
 
 
-
-    class Bubble
-    {
-        int bubbleDiameter = 30;
-        int bubbleXpos;
-        int bubbleYpos;
-        private Color backgroundColor;
-        Ellipse2D.Double circle;
-        public Bubble(int bubbleXpos, int bubbleYpos, Color backgroundColor)
-        {
-            this.bubbleXpos = bubbleXpos;
-            circle = new Ellipse2D.Double(bubbleXpos, bubbleYpos, bubbleDiameter, bubbleDiameter);
-            this.setBackgroundColor(backgroundColor);
-        }
-        public Color getBackgroundColor()
-        {
-            return backgroundColor;
-        }
-        public void setBackgroundColor(Color backgroundColor)
-        {
-            this.backgroundColor = backgroundColor;
-        }
-    }
 
     public UserExperience(String version, Main main)
     {
@@ -224,7 +202,6 @@ public class UserExperience extends JComponent implements ActionListener
         display.getContentPane().setBackground(Color.BLACK);
         display.setVisible(true);
 
-        paintTicker.start();
         setEmitterBubbleList(new Bubble[5]);
 
         for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4? emitter indicators
@@ -317,10 +294,27 @@ public class UserExperience extends JComponent implements ActionListener
             g2.drawString(s, (int) (leftMargin + (sensorBubblePitch * i) + fontWidth), sensorRowYpos + 2 * fontHeight);
         }
     }
-    @Override
-    public void actionPerformed(ActionEvent actionEvent)
+    class Bubble
     {
-        repaint();
+        int bubbleDiameter = 30;
+        int bubbleXpos;
+        int bubbleYpos;
+        private Color backgroundColor;
+        Ellipse2D.Double circle;
+        public Bubble(int bubbleXpos, int bubbleYpos, Color backgroundColor)
+        {
+            this.bubbleXpos = bubbleXpos;
+            circle = new Ellipse2D.Double(bubbleXpos, bubbleYpos, bubbleDiameter, bubbleDiameter);
+            this.setBackgroundColor(backgroundColor);
+        }
+        public Color getBackgroundColor()
+        {
+            return backgroundColor;
+        }
+        public void setBackgroundColor(Color backgroundColor)
+        {
+            this.backgroundColor = backgroundColor;
+        }
     }
     public void setAllTestRunning(boolean allTestRunning)
     {
@@ -361,6 +355,25 @@ public class UserExperience extends JComponent implements ActionListener
         return emitterBubbleList;
     }
     public void setEmitterBubbleList(Bubble[] emitterBubbleList) {this.emitterBubbleList = emitterBubbleList; }
+    public Bubble[] getSensorBubbleList()
+    {
+        return sensorBubbleList;
+    }
+
+    public void setSensorBubbleList(Bubble[] sensorBubbleList)
+    {
+        this.sensorBubbleList = sensorBubbleList;
+    }
+
+    public boolean[] getSensorErrorList()
+    {
+        return sensorErrorList;
+    }
+
+    public void setSensorErrorList(boolean[] sensorErrorList)
+    {
+        this.sensorErrorList = sensorErrorList;
+    }
 }
 
 
