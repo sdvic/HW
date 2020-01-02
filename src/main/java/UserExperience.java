@@ -9,26 +9,20 @@ import java.awt.geom.Rectangle2D;
 
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import static java.awt.Toolkit.getDefaultToolkit;
-
-public class UserExperience extends JComponent
+public class UserExperience extends JComponent implements ActionListener
 {
     private Main main;
-    private Bubble bubble = new Bubble(0,0,Color.BLACK);
     private Dimension screenSize;
-    private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
-    private int leftMargin = screenWidth/10;
+    private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int middleMargin = screenWidth/2;
     private int rightMargin = 2 * screenWidth/3;
-    private int sensorBubblePitch = screenWidth/18;
-    private int emitterBubblePitch = screenWidth/6;
     private int rowPitch = screenHeight/20;
-    private int emitterRowYpos = screenHeight/10;
-    private int sensorRowYpos = screenHeight/120;
     private int buttonRow1 = screenHeight/10;
     private int buttonRow2 = screenHeight/5;
     private int buttonWidth = 150;
     private int buttonHeight = 34;
+    private int leftMargin = 100;
     private JButton allButton = new JButton("ALL");
     private JButton teeButton = new JButton("TEE");
     private JButton screenButton = new JButton("SCREEN");
@@ -42,8 +36,8 @@ public class UserExperience extends JComponent
     private JFrame display;
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 22);
-    private Bubble[] emitterBubbleList;
-    private Bubble[] sensorBubbleList;
+    private boolean[] emitterErrorList;
+    private boolean[] sensorErrorList;
     private Ellipse2D.Double[] sensorBubbleArray = new Ellipse2D.Double[16];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
@@ -56,20 +50,18 @@ public class UserExperience extends JComponent
     private int bubbleDiameter = 30;
     private float fontWidth;
     private float fontHeight;
-    private Color pressedButtonColor = Color.BLUE;
-    private Color defaultButtonBackgroundColor = Color.BLACK;
-    private Color defaultButtonForegroundColor = Color.WHITE;
+    private Color pressedButtonColor = Color.YELLOW;
+    private Color defaultButtonBackgroundColor = Color.LIGHT_GRAY;
+    private Color defaultButtonForegroundColor = Color.DARK_GRAY;
     private boolean isScreenTestRunning;
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
-    private boolean[] emitterErrorList;
-    private boolean[] sensorErrorList;
-
-
+    private Timer paintTicker = new Timer(1000, this);
 
     public UserExperience(String version, Main main)
     {
-        this.main = main;//Set up dashboard
+        paintTicker.start();
+        this.main = main;
         display = new JFrame(version);
         display.setType(Window.Type.UTILITY);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -201,13 +193,6 @@ public class UserExperience extends JComponent
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.getContentPane().setBackground(Color.BLACK);
         display.setVisible(true);
-
-        setEmitterBubbleList(new Bubble[5]);
-
-        for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4? emitter indicators
-        {
-            getEmitterBubbleList()[i] = new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultButtonBackgroundColor);
-        }
     }
    public void paint(Graphics g)
     {
@@ -218,8 +203,7 @@ public class UserExperience extends JComponent
         g2.draw(errorFieldBorder);
         g2.setFont(buttonFont);
         FontRenderContext frc = g2.getFontRenderContext();
-        drawSensorBubbles(g2, frc);
-        drawEmitterBubbles(g2, frc);
+
         if (isCommTestRunning)
         {
             commButton.setOpaque(true);
@@ -253,35 +237,38 @@ public class UserExperience extends JComponent
             basicButton.setBackground(pressedButtonColor);
         }else{basicButton.setBackground(defaultButtonBackgroundColor);}
         errorCodeDisplayField.setText(codeCat);
+        drawSensorBubbles(g2, frc);
+        drawEmitterBubbles(g2, frc);
     }
     private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
     {
         String s;
-        for (int i = 0; i < getEmitterBubbleList().length; i++)//Load 4 emitter indicators
+        for (int i = 0; i < main.getEmitterBubbleList().length; i++)//Load 4 emitter indicators
         {
-            g2.setColor(getEmitterBubbleList()[i].getBackgroundColor());
-            Bubble buba = getEmitterBubbleList()[i];
-            g2.fill(buba.circle);
+            Bubble bubba = main.getEmitterBubbleList()[i];
+            g2.setColor(bubba.getBackgroundColor());
+            g2.fill(bubba.circle);
             g2.setColor(Color.ORANGE);
-            g2.draw(buba.circle);
+            g2.draw(bubba.circle);
             s = "" + (i + 1);
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
             fontWidth = (float) bounds.getWidth();
             fontHeight = (float)(1.2 * bounds.getHeight());
             g2.setColor(Color.WHITE);
-            g2.drawString(s, (int) ((leftMargin + emitterBubblePitch) + (emitterBubblePitch * i) + fontWidth), emitterRowYpos + fontHeight);
+            g2.drawString(s, (int) ((leftMargin + main.emitterBubblePitch) + (main.emitterBubblePitch * i) + fontWidth), screenHeight/30 + fontHeight);
         }
     }
     private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
     {
-        String s;
-        for (int i = 0; i < sensorBubbleArray.length; i++)// Load 16 sensor indicators into bubble array
+        String s = "";
+        for (int i = 0; i < main.sensorBubbleList.length; i++)// Load 16 sensor indicators into bubble array
         {
-            sensorBubbleArray[i] = new Ellipse2D.Double((leftMargin + sensorBubblePitch * i), sensorRowYpos + fontHeight, bubbleDiameter, bubbleDiameter);
-            g2.setColor(Color.BLACK);
-            g2.fill(sensorBubbleArray[i]);
+            Bubble bubba = main.sensorBubbleList[i];
+            //System.out.println(".backgroundColor[" + i + "] => : " + bubba.backgroundColor);
+            g2.setColor(bubba.backgroundColor);
+            g2.fill(bubba.circle);
             g2.setColor(Color.ORANGE);
-            g2.draw(sensorBubbleArray[i]);
+            g2.draw(bubba.circle);
             s = "" + (i + 1);
             Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
             fontWidth = (float) bounds.getWidth();
@@ -291,31 +278,18 @@ public class UserExperience extends JComponent
                 fontWidth = fontWidth /4;
             }
             g2.setColor(Color.WHITE);
-            g2.drawString(s, (int) (leftMargin + (sensorBubblePitch * i) + fontWidth), sensorRowYpos + 2 * fontHeight);
+            g2.drawString(s, (int) (leftMargin + (main.sensorBubblePitch * i) + fontWidth), main.sensorRowYpos * 4 * fontHeight);
+
         }
     }
-    class Bubble
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent)
     {
-        int bubbleDiameter = 30;
-        int bubbleXpos;
-        int bubbleYpos;
-        private Color backgroundColor;
-        Ellipse2D.Double circle;
-        public Bubble(int bubbleXpos, int bubbleYpos, Color backgroundColor)
-        {
-            this.bubbleXpos = bubbleXpos;
-            circle = new Ellipse2D.Double(bubbleXpos, bubbleYpos, bubbleDiameter, bubbleDiameter);
-            this.setBackgroundColor(backgroundColor);
-        }
-        public Color getBackgroundColor()
-        {
-            return backgroundColor;
-        }
-        public void setBackgroundColor(Color backgroundColor)
-        {
-            this.backgroundColor = backgroundColor;
-        }
+        repaint();
     }
+
+
     public void setAllTestRunning(boolean allTestRunning)
     {
         isAllTestRunning = allTestRunning;
@@ -350,26 +324,10 @@ public class UserExperience extends JComponent
     {
         this.emitterErrorList = emitterErrorList;
     }
-    public Bubble[] getEmitterBubbleList()
-    {
-        return emitterBubbleList;
-    }
-    public void setEmitterBubbleList(Bubble[] emitterBubbleList) {this.emitterBubbleList = emitterBubbleList; }
-    public Bubble[] getSensorBubbleList()
-    {
-        return sensorBubbleList;
-    }
-
-    public void setSensorBubbleList(Bubble[] sensorBubbleList)
-    {
-        this.sensorBubbleList = sensorBubbleList;
-    }
-
     public boolean[] getSensorErrorList()
     {
         return sensorErrorList;
     }
-
     public void setSensorErrorList(boolean[] sensorErrorList)
     {
         this.sensorErrorList = sensorErrorList;

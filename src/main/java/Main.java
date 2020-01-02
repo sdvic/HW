@@ -4,18 +4,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static java.awt.Color.*;
+import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main implements ActionListener
 {
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
-    /****************************************************************************************/
+     /****************************************************************************************/
     private int testByte;
     private String codeCat;
     private int errEmitter;
-    private UserExperience ux;
-    private TestSequences ts;
+    private UserExperience ux = new UserExperience("ver 506.01", this);
+    private TestSequences ts = new TestSequences(this);
+    private Bubble bubble = new Bubble(0, 0, Color.BLACK);
+    Bubble[] sensorBubbleList = new Bubble[16];
+    private Bubble[] emitterBubbleList = new Bubble[5];
+    private int screenHeight = getDefaultToolkit().getScreenSize().height;
+    private int screenWidth = getDefaultToolkit().getScreenSize().width;
+    private int emitterRowYpos = screenHeight / 10;
+    int sensorRowYpos = screenHeight / 80;
+    private int leftMargin = screenWidth / 10;
+    int sensorBubblePitch = screenWidth / 20;
+    int emitterBubblePitch = screenWidth / 10;
+    private Color defaultBackgroundColor = Color.BLACK;
+    private Main main;
+
     /************************************************
      * displayErrorList[0] => errDataOut
      * displayErrorList[1] => errLpClkOut
@@ -27,16 +41,24 @@ public class Main implements ActionListener
      * displayErrorList[7] => errSin
      ************************************************/
 
-
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(() -> new Main());
     }
+
     public Main()
     {
-        ux = new UserExperience("ver 505.11", this);
-        ts = new TestSequences(this);
+        main = this;
+        for (int i = 0; i < getSensorBubbleList().length; i++)//Setup 16 sensor indicators
+        {
+            getSensorBubbleList()[i] = new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, BLACK);
+        }
+        for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4? emitter indicators
+        {
+            getEmitterBubbleList()[i] = new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultBackgroundColor);
+        }
     }
+
     public void actionPerformed(ActionEvent e)
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
@@ -45,15 +67,12 @@ public class Main implements ActionListener
             testScreen(); // run first because to resetErrors() in test.
             testTee();
             testSensors();
-            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     All Test Errors =>  ");
-            checkForEmitterErrors();
-            checkForSensorErrors();
+            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     All Test Errors =>  ");
             ux.setAllTestRunning(false);
         }
-        if(e.getActionCommand().equals("BASIC"))
-        {
+        if (e.getActionCommand().equals("BASIC")) {
             ux.setBasicTestRunning(true);
-            ts.loadTestWord(testByte);
+            ts.loadTestWordSequence(testByte);
             // Test in tee frame mode with on-board emitter
             ts.resetSequence();
             ts.teeSequence();
@@ -74,107 +93,62 @@ public class Main implements ActionListener
             ts.screenShiftOutSequence();
             // End of testing
             ts.resetSequence();
-            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Basic Test Errors =>  ");
-            checkForEmitterErrors();
-            checkForSensorErrors();
+            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Basic Test Errors =>  ");
             ux.setBasicTestRunning(false);
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
             ux.setTeeTestRunning(true);
             testTee();
-            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Tee Test Errors =>  ");
-            checkForEmitterErrors();
-            checkForSensorErrors();
+            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Tee Test Errors =>  ");
             ux.setTeeTestRunning(false);
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
             ux.setScreenTestRunning(true);
             testScreen();
-            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Screen Test Errors =>  ");
-            checkForEmitterErrors();
-            checkForSensorErrors();
+            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Screen Test Errors =>  ");
             ux.setScreenTestRunning(false);
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
             ux.setSensorsTestRunning(true);
             testSensors();
-            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     Sensor Test Errors =>  ");
-            checkForEmitterErrors();
-            checkForSensorErrors();
+            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Sensor Test Errors =>  ");
             ux.setSensorsTestRunning(false);
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
             ux.setCommTestRunning(true);
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
-            for (int i = 0; i < 200; i++)
-            {
+            for (int i = 0; i < 200; i++) {
                 testBasic();
-                try {Thread.sleep(100);}
-                catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+                try {
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
-            buildErrorCodeDisplayFieldString(ts.getErrorList(), "     COMM Test Errors => ");
-            checkForEmitterErrors();
-            checkForSensorErrors();
+            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     COMM Test Errors => ");
             ux.setCommTestRunning(false);
         }
-        if (e.getActionCommand().equals("RESET"))
-        {
+        if (e.getActionCommand().equals("RESET")) {
             clearErrorLists();
             codeCat = "";
         }
-        if (e.getActionCommand().equals("PRINT"))
-        {
+        if (e.getActionCommand().equals("PRINT")) {
             System.out.println("PRINT button pressed");// action 2
         }
-        if (e.getActionCommand().equals("RUN"))
-        {
+        if (e.getActionCommand().equals("RUN")) {
             System.out.println("RUN button pressed");// action 2
         }
         ux.setCodeCat(codeCat);
-        ux.setEmitterErrorList(ts.getEmitterErrorList());
-        ux.setSensorErrorList(ts.getSensorErrorList());
-        ux.repaint();
-    }
-
-    private void checkForEmitterErrors()
-    {
-        for (int i = 0; i < ts.getEmitterErrorList().length; i++)
-        {
-            UserExperience.Bubble errorBubble = ux.getEmitterBubbleList()[i];
-            if (ts.getEmitterErrorList()[i] == true)
-            {
-                errorBubble.setBackgroundColor(RED);
-            }
-            else
-            {
-                errorBubble.setBackgroundColor(GREEN);
-            }
-        }
-    }
-    private void checkForSensorErrors()
-    {
-//        for (int i = 0; i < ts.getSensorErrorList().length; i++)
-//        {
-//            UserExperience.Bubble sensorBubble = ux.getSensorBubbleList()[i];
-//            if (ts.getSensorErrorList()[i] == true)
-//            {
-//                sensorBubble.setBackgroundColor(RED);
-//            }
-//            else
-//            {
-//                sensorBubble.setBackgroundColor(GREEN);
-//            }
-//        }
     }
 
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
-        for (int i = 1; i < 5; i++)
-        {
+        for (int i = 1; i < 5; i++) {
             ts.resetSequence();        // t1-t2
             ts.teeSequence();          // t3-t8
             ts.emitterSelSequence();   // t9-t14
@@ -199,7 +173,7 @@ public class Main implements ActionListener
             ts.emitterSelSequence(); // t9-t14
             testByte = 128;
             testByte = testByte >> i;
-            ts.loadTestWord(testByte);
+            ts.loadTestWordSequence(testByte);
             ts.emitterFireSequence(0);          // t15-t18
             ts.teeShiftOutSequence(false); // t19-t54
             ts.resetSequence();                // t55-t56
@@ -212,7 +186,7 @@ public class Main implements ActionListener
             testByte = 128;
             testByte = testByte >> i;
             testByte = ~testByte;
-            ts.loadTestWord(testByte);
+            ts.loadTestWordSequence(testByte);
             ts.emitterFireSequence(0);          // t15-t18
             ts.teeShiftOutSequence(false); // t19-t54
             ts.resetSequence();                // t55-t56
@@ -221,7 +195,7 @@ public class Main implements ActionListener
 
     private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin...mode 5
     {
-        ts.loadTestWord(testByte);
+        ts.loadTestWordSequence(testByte);
         // Test in tee frame mode with on-board emitter
         ts.resetSequence();
         ts.teeSequence();
@@ -247,22 +221,18 @@ public class Main implements ActionListener
     // Reset all errors and set all indicators to default state before running tests
     public void clearErrorLists()
     {
-        for (int i = 0; i < ts.getErrorList().length; i++)
-        {
+        for (int i = 0; i < ts.getIndependentErrorList().length; i++) {
             ts.setDisplayErrorList(i, false);
         }
-        for (int j = 0; j < ts.getEmitterErrorList().length; j++)
-        {
-            ts.setEmitterErrorList(j, false);
-        }
-        for (int l = 0; l < ts.getSensorErrorList().length; l++)
-        {
-            ts.setSensorErrorList(l, false);
-        }
-        for (int k = 0; k < ux.getEmitterBubbleList().length; k++)
-        {
-            UserExperience.Bubble bubba = ux.getEmitterBubbleList()[k];
+        for (int i = 0; i < getEmitterBubbleList().length; i++) {
+            Bubble bubba = getEmitterBubbleList()[i];
             bubba.setBackgroundColor(BLACK);
+            getEmitterBubbleList()[i] = bubba;
+        }
+        for (int i = 0; i < getSensorBubbleList().length; i++) {
+            Bubble bubba = getSensorBubbleList()[i];
+            bubba.setBackgroundColor(BLACK);
+            setBubble(getSensorBubbleList(), i, bubba);
         }
     }
 
@@ -270,24 +240,34 @@ public class Main implements ActionListener
     {
         codeCat = testSource;
 
-        for (int i = 0; i < errorList.length; i++)
-        {
-            if (errorList[i])
-            {
+        for (int i = 0; i < errorList.length; i++) {
+            if (errorList[i]) {
                 codeCat += (i + ", ");
             }
         }
         codeCat += "\n\tEmitter Error # ";
-        boolean[] emitterErrorList = ts.getEmitterErrorList();
-        for (int j = 0; j < emitterErrorList.length; j++)
-        {
-            if (emitterErrorList[j])
-            {
+        for (int j = 0; j < getEmitterBubbleList().length; j++) {
+            if (getEmitterBubbleList()[j].backgroundColor.equals(RED)) {
                 codeCat += (j + ", ");
             }
         }
         return codeCat;
     }
+
+    public Bubble[] getEmitterBubbleList()
+    {
+        return emitterBubbleList;
+    }
+    public void setBubble(Bubble[] bubbleList, int bubbleNumber, Bubble bubble)
+    {
+        bubbleList[bubbleNumber] = bubble;
+    }
+    public void setEmitterBubbleList(Bubble[] emitterBubbleList)
+    {
+        this.emitterBubbleList = emitterBubbleList;
+    }
+    public Bubble[] getSensorBubbleList(){return sensorBubbleList;}
+    public void setSensorBubbleList(Bubble[] sensorBubbleList){this.sensorBubbleList = sensorBubbleList; }
 }
 
 
