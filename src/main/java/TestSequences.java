@@ -1,9 +1,6 @@
 import com.pi4j.io.gpio.*;
-
 import java.awt.*;
-
 import static java.awt.Color.RED;
-import static java.awt.Color.YELLOW;
 
 public class TestSequences
 {
@@ -48,9 +45,7 @@ public class TestSequences
     {
         this.main = main;
     }
-
-    //    // Set CPLD state machine to the RESET state
-    public void resetSequence()
+    public void resetSequence()// Set CPLD state machine to the RESET state
     {
         pin35.low();  // ModeIn t1
         pin36.low();  // ClkIn t2
@@ -59,46 +54,26 @@ public class TestSequences
         pin10.low();  // Sin
         pin11.low();  // LedOn
     }
-
-    // Set CPLD state machine to the tee frame state. Test signals
-    public void teeSequence()
+    public void teeSequence()    // Set CPLD state machine to the tee frame state. Test signals
     {
         pin36.high(); // ClkIn t3
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut
-        }
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple
-        }
-        if (pin16.isLow()) {
-            independentErrorList[5] = true; // Rclk
-        }
-        if (pin08.isLow()) {
-            independentErrorList[6] = true;// ShiftLoad
-        }
+        if (pin40.isLow()) {independentErrorList[1] = true;} // LpClkOut
+        if (pin15.isLow()) { independentErrorList[4] = true;}// Eripple
+        if (pin16.isLow()) { independentErrorList[5] = true;} // Rclk
+        if (pin08.isLow()) { independentErrorList[6] = true;} // ShiftLoad
         pin35.high(); // ModeIn t4
         pin36.low();  // ClkIn t5
         pin36.high(); // ClkIn t6
         pin36.high(); // ClkIn t7
         pin36.high(); // ClkIn t8
     }
-
-    // Set CPLD state machine to the screen frame state. Test signals
-    void screenSequence()
+    void screenSequence() // Set CPLD state machine to the screen frame state. Test signals
     {
         pin36.high(); // ClkIn
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut
-        }
-        if (pin15.isLow()) {
-            independentErrorList[4] = true; // Eripple
-        }
-        if (pin16.isLow()) {
-            independentErrorList[5] = true;// Rclk
-        }
-        if (pin08.isLow()) {
-            independentErrorList[6] = true;// ShiftLoad
-        }
+        if (pin40.isLow()) {independentErrorList[1] = true;}// LpClkOut
+        if (pin15.isLow()) {independentErrorList[4] = true;} // Eripple
+        if (pin16.isLow()) {independentErrorList[5] = true;}// Rclk
+        if (pin08.isLow()) {independentErrorList[6] = true;}// ShiftLoad
         pin35.high(); // ModeIn
         pin36.low();  // ClkIn
         pin36.high(); // ClkIn
@@ -109,80 +84,39 @@ public class TestSequences
     void emitterSelSequence() // Set CPLD state machine to select on-board emitter. Test signals
     {
         pin35.low();  // ModeIn t9
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut Error
-        }
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
-        if (pin16.isLow()) {
-            independentErrorList[5] = true; // Rclk Error
-        }
-        if (pin08.isLow()) {
-            independentErrorList[6] = true;// ShiftLoad Error
-        }
+        if (pin40.isLow()) {independentErrorList[1] = true;}// LpClkOut Error
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
+        if (pin16.isLow()) {independentErrorList[5] = true;} // Rclk Error
+        if (pin08.isLow()) {independentErrorList[6] = true;}// ShiftLoad Error
         pin35.high(); // ModeIn t10
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut Error
-        }
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
-        if (pin16.isLow()) {
-            independentErrorList[5] = true;// Rclk Error
-        }
-        if (pin08.isHigh()) {
-            independentErrorList[6] = true;// ShiftLoad Error
-        }
+        if (pin40.isLow()) {independentErrorList[1] = true;}// LpClkOut Error
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
+        if (pin16.isLow()) {independentErrorList[5] = true;}// Rclk Error
+        if (pin08.isHigh()) {independentErrorList[6] = true;}// ShiftLoad Error
         pin36.low();   //ClkIn t11
-        if (pin15.isLow()) {
-            independentErrorList[4] = true; // Eripple Error
-        }
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
         pin36.high(); // ClkIn t12
         pin36.high(); // ClkIn t13
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
         pin36.high(); // ClkIn t14
     }
-
     void emitterDeselSequence()// Set CPLD state machine to select next board emitter. Test signals
     {
         pin35.low();  // ModeIn t9
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut Error
-        }
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
-        if (pin16.isLow()) {
-            independentErrorList[5] = true;// Rclk Error
-        }
-        if (pin08.isLow()) {
-            independentErrorList[6] = true;// ShiftLoad Error
-        }
+        if (pin40.isLow()) {independentErrorList[1] = true;}// LpClkOut Error
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
+        if (pin16.isLow()) {independentErrorList[5] = true;}// Rclk Error
+        if (pin08.isLow()) {independentErrorList[6] = true;}// ShiftLoad Error
         pin35.high();  //ModeIn t10
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut Error
-        }
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
-        if (pin16.isLow()) {
-            independentErrorList[5] = true;// Rclk Error
-        }
-        if (pin08.isHigh()) {
-            independentErrorList[6] = true;// ShiftLoad Error
-        }
+        if (pin40.isLow()) {independentErrorList[1] = true;}// LpClkOut Error
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
+        if (pin16.isLow()) {independentErrorList[5] = true;}// Rclk Error
+        if (pin08.isHigh()) {independentErrorList[6] = true;}// ShiftLoad Error
         pin36.low();   //ClkIn t11
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
+        if (pin15.isLow()) {independentErrorList[4] = true;}// Eripple Error
         pin36.high(); // ClkIn t12
         pin36.low();  // ClkIn t13
-        if (pin15.isHigh()) {
-            independentErrorList[4] = true;// Eripple Error
-        }
+        if (pin15.isHigh()) {independentErrorList[4] = true;}// Eripple Error
         pin36.high(); // ClkIn t14
     }
 
@@ -191,50 +125,40 @@ public class TestSequences
         selectEmitterSequence(emitter);
         bubba = main.getEmitterBubbleList()[emitter];
         pin35.low();  // ModeIn t15 ", eelIndex => " + eelIndex
-        if (pin40.isLow()) {
-            independentErrorList[1] = true;// LpClkOut Error
+        if (pin40.isLow()) {// LpClkOut Error
             bubba.backgroundColor = RED;
-        }
-            else {bubba.backgroundColor = Color.GREEN;}
-        if (pin15.isLow()) {
-            independentErrorList[4] = true;// Eripple Error
+        }else {bubba.backgroundColor = Color.GREEN;}
+        if (pin15.isLow()) {// Eripple Error
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
-
-        if (pin16.isLow()) {
-            independentErrorList[5] = true; // Rclk Error
+        if (pin16.isLow()) {// Rclk Error
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
-        if (pin08.isHigh()) {
-            independentErrorList[6] = true;// ShiftLoad Error
+        if (pin08.isHigh()) {// ShiftLoad Error
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
         pin35.high(); // ModeIn t16
-        if (pin07.isHigh()) {
-            errEmitter = errEmitter | emitter;   // Emitter Error
+        if (pin07.isHigh()) {// Emitter Error
+            errEmitter = errEmitter | emitter;
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
         pin11.high(); // LedOn t17
         pin36.low();  // ClkIn
-        if (pin16.isHigh()) {
-            errRclk = true;       // Rclk Error
-            independentErrorList[5] = true;
+        if (pin16.isHigh()) {// Rclk Error
+            errRclk = true;
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
-        if (pin07.isLow()) {
-            errEmitter = errEmitter | emitter;   // Emitter Error
+        if (pin07.isLow()) {// Emitter Error
+            errEmitter = errEmitter | emitter;
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
         pin36.high(); // ClkIn t18
         pin11.low();  // LedOn
-        if (pin16.isLow()) {
-            errRclk = true;        // Rclk Error
-            independentErrorList[5] = true;
+        if (pin16.isLow()) {// Rclk Error
+            errRclk = true;
             bubba.backgroundColor = RED;}
         else {bubba.backgroundColor = Color.GREEN;}
-        if (pin07.isHigh()) {
-            errEmitter = errEmitter | emitter;   // Emitter Error
-                   }
+        if (pin07.isHigh()) {errEmitter = errEmitter | emitter;}   // Emitter Error
         main.setBubble(main.getEmitterBubbleList(), emitter, bubba);
     }
 
@@ -243,54 +167,52 @@ public class TestSequences
         bubba = null;
         int data; // Photo diode test pattern data masked for each LED position
         boolean state; // Pin state
-        if (sIn == false) {
-            pin10.low();   // Sin
-        }
-        else {
-            pin10.high(); // Sin
-        }
+        if (sIn == false) {pin10.low();}   // Sin
+        else {pin10.high();} // Sin
         pin35.low();   // ModeIn t19
-        if (pin40.isLow()) {
-            errLpClkOut = true;   // LpClkOut Error
+        if (pin40.isLow()) // LpClkOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
-        if (pin15.isLow()) {
-            errEripple = true;    // Eripple Error
+        if (pin15.isLow()) // Eripple Error
+            {
+            errEripple = true;
             independentErrorList[4] = true;
-        }
-        if (pin16.isLow()) {
-            errRclk = true;        // Rclk Error
+            }
+        if (pin16.isLow()) // Rclk Error
+        {
+            errRclk = true;
             independentErrorList[5] = true;
         }
-        if (pin08.isHigh()) {
-            errShiftLoad = true; // ShiftLoad Error
+        if (pin08.isHigh()) // ShiftLoad Error
+        {
+            errShiftLoad = true;
             independentErrorList[6] = true;
         }
         pin35.high(); // ModeIn t20
-        if (pin07.isHigh()) {
-            errEmitter = 0;   // Emitter Error
-        }
+        if (pin07.isHigh()) { errEmitter = 0;}  // Emitter Error
         for (int i = 0; i < 8; i++) // t21-t36// shift out photo diode data from the sensor board CPLD shift register, low byte
         {
             bubba = main.getSensorBubbleList()[i];
             pin36.low();  // ClkIn
-            if (pin40.isHigh()) {
-                errLpClkOut = true;  // LpClkOut Error
-                independentErrorList[1] = true;
-                bubba.backgroundColor = RED;}
-            else {bubba.backgroundColor = Color.GREEN;}
-            pin36.high(); // ClkIn
-            if (pin40.isLow()) {
-                errLpClkOut = true;   // LpClkOut Error
-                independentErrorList[1] = true;
+            if (pin40.isHigh()) // LpClkOut Error
+            {
+                errLpClkOut = true;
                 bubba.backgroundColor = RED;
             }
             else {bubba.backgroundColor = Color.GREEN;}
-        data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
+            pin36.high(); // ClkIn
+            if (pin40.isLow()) // LpClkOut Error
+            {
+                errLpClkOut = true;
+                bubba.backgroundColor = RED;
+            }
+            else {bubba.backgroundColor = Color.GREEN;}
+            data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
             if (state != (data != 0)) {
                 errDataOut = true;   // DataOut Error
-                independentErrorList[0] = true;
                 bubba.backgroundColor = RED;
             }
             else {bubba.backgroundColor = Color.GREEN;}
@@ -300,111 +222,107 @@ public class TestSequences
         {
             bubba = main.getSensorBubbleList()[i + 8];
             pin36.low();  // ClkIn
-            if (pin40.isHigh()) {
-                errLpClkOut = true;  // LpClkOut Error
-                independentErrorList[1] = true;
+            if (pin40.isHigh()) // LpClkOut Error
+            {
+                errLpClkOut = true;
                 bubba.backgroundColor = RED;
-            }
-            else {
-                bubba.backgroundColor = Color.GREEN;
-            }
+            }else {bubba.backgroundColor = Color.GREEN;}
             pin36.high(); // ClkIn
-            if (pin40.isLow()) {
-                errLpClkOut = true;   // LpClkOut Error
-                independentErrorList[1] = true;
+            if (pin40.isLow()) // LpClkOut Error
+            {
+                errLpClkOut = true;
                 bubba.backgroundColor = RED;
             }
-            else {
-                bubba.backgroundColor = Color.GREEN;
-            }
+            else {bubba.backgroundColor = Color.GREEN;}
             data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
             state = pin38.getState().isHigh();
-            if (state != (data != 0)) {
-                errDataOut = true;   // DataOut Error
-                independentErrorList[0] = true;
+            if (state != (data != 0)) // DataOut Error
+            {
+                errDataOut = true;
                 bubba.backgroundColor = RED;
             }
-            else {
-                bubba.backgroundColor = Color.GREEN;
-            }
+            else {bubba.backgroundColor = Color.GREEN;}
             pin36.low();  // ClkIn t55  // shift out Sin data
-            if (pin40.isHigh()) {
-                errLpClkOut = true;  // LpClkOut Error
-                independentErrorList[1] = true;
+            if (pin40.isHigh()) // LpClkOut Error
+            {
+                errLpClkOut = true;
                 bubba.backgroundColor = RED;
-            }
-            else {
-                bubba.backgroundColor = Color.GREEN;
-            }
+            }else { bubba.backgroundColor = Color.GREEN; }
             pin36.high(); // ClkIn t56
-            if (pin40.isLow()) {
-                errLpClkOut = true;   // LpClkOut Error
-                independentErrorList[1] = true;
+            if (pin40.isLow()) // LpClkOut Error
+            {
+                errLpClkOut = true;
                 bubba.backgroundColor = RED;
             }
-            else {
-                bubba.backgroundColor = Color.GREEN;
-            }
+            else {bubba.backgroundColor = Color.GREEN;}
             state = pin38.getState().isHigh();
-            if (state != sIn) {
-                errSin = true;   // Sin Error
-                independentErrorList[7] = true;
+            if (state != sIn) // Sin Error
+            {
+                errSin = true;
                 bubba.backgroundColor = RED;
-            }
-            else {
-                bubba.backgroundColor = Color.GREEN;
-            }
+            }else {bubba.backgroundColor = Color.GREEN;}
+            main.setBubble(main.getSensorBubbleList(), i + 8, bubba);
         }
     }
 
     void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
     {
         pin35.low();  // ModeIn t19 // test the screen frame connector
-        if (pin32.isHigh()) {
-            errModeOut = true;   // ModeOut Error
+        if (pin32.isHigh()) // ModeOut Error
+        {
+            errModeOut = true;
             independentErrorList[2] = true;
         }
         pin35.high(); // ModeIn t20
-        if (pin32.isLow()) {
-            errModeOut = true;    // ModeOut Error
+        if (pin32.isLow())  // ModeOut Error
+        {
+            errModeOut = true;
             independentErrorList[2] = true;
         }
         pin31.low();  // DataIn t21
         pin33.low();  // LpClkIn
-        if (pin38.isHigh()) {
-            errLpClkOut = true;  // DataOut Error
+        if (pin38.isHigh())
+        {// DataOut Error
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
-        if (pin40.isHigh()) {
-            errLpClkOut = true;  // LpClkOut Error
+        if (pin40.isHigh()) // LpClkOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
         pin33.high(); // ClkIn t22
-        if (pin38.isHigh()) {
-            errLpClkOut = true;  // DataOut Error
+        if (pin38.isHigh()) // DataOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
-        if (pin40.isLow()) {
-            errLpClkOut = true;   // LpClkOut Error
+        if (pin40.isLow()) // LpClkOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
         pin31.high(); // DataIn t23
         pin33.low();  // LpClkIn
-        if (pin38.isLow()) {
-            errLpClkOut = true;   // DataOut Error
+        if (pin38.isLow()) // DataOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
-        if (pin40.isHigh()) {
-            errLpClkOut = true;  // LpClkOut Error
+        if (pin40.isHigh()) // LpClkOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
         pin33.high(); // ClkIn t25
-        if (pin38.isLow()) {
-            errLpClkOut = true;   // DataOut Error
+        if (pin38.isLow()) // DataOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
-        if (pin40.isLow()) {
-            errLpClkOut = true;   // LpClkOut Error
+        if (pin40.isLow()) // LpClkOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
     }
@@ -457,55 +375,50 @@ public class TestSequences
         screenSequence();     // t3-t8
         emitterSelSequence(); // t9-t14
         // reset errors at end of t14, bit bang the emitter fire sequence
-        if (pin40.isLow()) {
-            errLpClkOut = true;   // LpClkOut Error
+        if (pin40.isLow())  // LpClkOut Error
+        {
+            errLpClkOut = true;
             independentErrorList[1] = true;
         }
-        if (pin32.isLow()) {
-            errModeOut = true;    // ModeOut Error
+        if (pin32.isLow()) // ModeOut Error
+        {
+            errModeOut = true;
             independentErrorList[2] = true;
         }
-        if (pin29.isLow()) {
-            errClkOut = true;     // ClkOut Error
+        if (pin29.isLow())  // ClkOut Error
+        {
+            errClkOut = true;
             independentErrorList[3] = true;
         }
         pin35.low();  // ModeIn t15
-        if (pin32.isHigh()) {
-            errModeOut = true;   // ModeOut Error
+        if (pin32.isHigh()) // ModeOut Error
+        {
+            errModeOut = true;
             independentErrorList[2] = true;
         }
         pin35.high(); // ModeIn t16
-        if (pin32.isLow()) {
-            errModeOut = true;    // ModeOut Error
+        if (pin32.isLow()) // ModeOut Error
+        {
+            errModeOut = true;
             independentErrorList[2] = true;
         }
         pin36.low();  // ClkIn t17
-        if (pin29.isHigh()) {
-            errClkOut = true;    // ClkOut Error
+        if (pin29.isHigh())  // ClkOut Error
+        {
+            errClkOut = true;
             independentErrorList[3] = true;
         }
         pin36.high(); // ClkIn t18
-        if (pin29.isLow()) {
-            errClkOut = true;     // ClkOut Error
+        if (pin29.isLow()) // ClkOut Error
+        {
+            errClkOut = true;
             independentErrorList[3] = true;
         }
     }
 
-    public void setErrTestByteHigh(int errTestByteHigh)
-    {
-        this.errTestByteHigh = errTestByteHigh;
-    }
-
-    public void setErrTestByteLow(int errTestByteLow)
-    {
-        this.errTestByteLow = errTestByteLow;
-    }
-
-    public void setErrFail(boolean errFail)
-    {
-        this.errFail = errFail;
-    }
-
+    public void setErrTestByteHigh(int errTestByteHigh) { this.errTestByteHigh = errTestByteHigh; }
+    public void setErrTestByteLow(int errTestByteLow){this.errTestByteLow = errTestByteLow;}
+    public void setErrFail(boolean errFail){this.errFail = errFail;}
     public void setErrEmitter(int errEmitter)
     {
         this.errEmitter = errEmitter;

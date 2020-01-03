@@ -7,7 +7,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main implements ActionListener
 {
-    private UserExperience ux = new UserExperience("ver 507.00", this);
+    private UserExperience ux = new UserExperience("ver 508.00", this);
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
