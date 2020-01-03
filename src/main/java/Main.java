@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import static java.awt.Color.*;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main implements ActionListener
 {
+    private UserExperience ux = new UserExperience("ver 507.00", this);
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
@@ -15,7 +15,6 @@ public class Main implements ActionListener
     private int testByte;
     private String codeCat;
     private int errEmitter;
-    private UserExperience ux = new UserExperience("ver 506.01", this);
     private TestSequences ts = new TestSequences(this);
     private Bubble bubble = new Bubble(0, 0, Color.BLACK);
     Bubble[] sensorBubbleList = new Bubble[16];
@@ -27,7 +26,7 @@ public class Main implements ActionListener
     private int leftMargin = screenWidth / 10;
     int sensorBubblePitch = screenWidth / 20;
     int emitterBubblePitch = screenWidth / 10;
-    private Color defaultBackgroundColor = Color.BLACK;
+    private Color defaultBubbleBackgroundColor = Color.BLACK;
     private Main main;
 
     /************************************************
@@ -51,11 +50,11 @@ public class Main implements ActionListener
         main = this;
         for (int i = 0; i < getSensorBubbleList().length; i++)//Setup 16 sensor indicators
         {
-            getSensorBubbleList()[i] = new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, BLACK);
+            setBubble(sensorBubbleList, i, new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, BLACK));
         }
         for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4? emitter indicators
         {
-            getEmitterBubbleList()[i] = new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultBackgroundColor);
+            setBubble(emitterBubbleList, i, new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, defaultBubbleBackgroundColor));
         }
     }
 
@@ -63,15 +62,15 @@ public class Main implements ActionListener
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
         {
-            ux.setAllTestRunning(true);
+            ux.getAllButton().setBackground(ux.getPressedButtonColor());
             testScreen(); // run first because to resetErrors() in test.
             testTee();
             testSensors();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     All Test Errors =>  ");
-            ux.setAllTestRunning(false);
+            ux.getAllButton().setBackground(ux.getDefaultButtonForegroundColor());
         }
         if (e.getActionCommand().equals("BASIC")) {
-            ux.setBasicTestRunning(true);
+            ux.getBasicButton().setBackground(ux.getPressedButtonColor());
             ts.loadTestWordSequence(testByte);
             // Test in tee frame mode with on-board emitter
             ts.resetSequence();
@@ -94,32 +93,32 @@ public class Main implements ActionListener
             // End of testing
             ts.resetSequence();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Basic Test Errors =>  ");
-            ux.setBasicTestRunning(false);
+            ux.getBasicButton().setBackground(ux.getDefaultButtonForegroundColor());
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
-            ux.setTeeTestRunning(true);
+            ux.getTeeButton().setBackground(ux.getPressedButtonColor());
             testTee();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Tee Test Errors =>  ");
-            ux.setTeeTestRunning(false);
+            ux.getTeeButton().setBackground(ux.getDefaultButtonForegroundColor());
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
-            ux.setScreenTestRunning(true);
+            ux.getScreenButton().setBackground(ux.getPressedButtonColor());
             testScreen();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Screen Test Errors =>  ");
-            ux.setScreenTestRunning(false);
+            ux.getScreenButton().setBackground(ux.getDefaultButtonForegroundColor());
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
-            ux.setSensorsTestRunning(true);
+            ux.getSensorsButton().setBackground(ux.getPressedButtonColor());
             testSensors();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Sensor Test Errors =>  ");
-            ux.setSensorsTestRunning(false);
+            ux.getSensorsButton().setBackground(ux.getDefaultButtonForegroundColor());
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
-            ux.setCommTestRunning(true);
+            ux.getCommButton().setBackground(ux.getPressedButtonColor());
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
             for (int i = 0; i < 200; i++) {
                 testBasic();
@@ -131,7 +130,7 @@ public class Main implements ActionListener
                 }
             }
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     COMM Test Errors => ");
-            ux.setCommTestRunning(false);
+            ux.getCommButton().setBackground(ux.getDefaultButtonForegroundColor());
         }
         if (e.getActionCommand().equals("RESET")) {
             clearErrorLists();
@@ -234,6 +233,12 @@ public class Main implements ActionListener
             bubba.setBackgroundColor(BLACK);
             setBubble(getSensorBubbleList(), i, bubba);
         }
+        ux.setButtonColor(ux.getSensorsButton(), ux.getDefaultButtonBackgroundColor());
+        ux.setButtonColor(ux.getTeeButton(), ux.getDefaultButtonBackgroundColor());
+        ux.setButtonColor(ux.getScreenButton(), ux.getDefaultButtonBackgroundColor());
+        ux.setButtonColor(ux.getCommButton(), ux.getDefaultButtonBackgroundColor());
+        ux.setButtonColor(ux.getBasicButton(), ux.getDefaultButtonBackgroundColor());
+        ux.setButtonColor(ux.getAllButton(), ux.getDefaultButtonBackgroundColor());
     }
 
     public String buildErrorCodeDisplayFieldString(boolean[] errorList, String testSource)
@@ -254,10 +259,8 @@ public class Main implements ActionListener
         return codeCat;
     }
 
-    public Bubble[] getEmitterBubbleList()
-    {
-        return emitterBubbleList;
-    }
+    public Bubble[] getEmitterBubbleList() {return emitterBubbleList;}
+    public Bubble getBubble(Bubble[] bubbleList, int bubbleNumber) {return bubbleList[bubbleNumber];}
     public void setBubble(Bubble[] bubbleList, int bubbleNumber, Bubble bubble)
     {
         bubbleList[bubbleNumber] = bubble;

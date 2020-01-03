@@ -28,10 +28,10 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton screenButton = new JButton("SCREEN");
     private JButton sensorsButton = new JButton("SENSORS");
     private JButton commButton = new JButton("COMM");
+    private JButton basicButton = new JButton("BASIC");
     private JButton runButton = new JButton("RUN");
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
-    private JButton basicButton = new JButton("BASIC");
     private JTextArea errorCodeDisplayField = new JTextArea();
     private JFrame display;
     private Font buttonFont = new Font("Bank Gothic", Font.BOLD, 15);
@@ -50,7 +50,7 @@ public class UserExperience extends JComponent implements ActionListener
     private int bubbleDiameter = 30;
     private float fontWidth;
     private float fontHeight;
-    private Color pressedButtonColor = Color.YELLOW;
+    private Color pressedButtonColor = Color.GREEN;
     private Color defaultButtonBackgroundColor = Color.LIGHT_GRAY;
     private Color defaultButtonForegroundColor = Color.DARK_GRAY;
     private boolean isScreenTestRunning;
@@ -72,41 +72,41 @@ public class UserExperience extends JComponent implements ActionListener
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.setVisible(true);
 
-        allButton.setBounds(leftMargin, buttonRow2, buttonWidth, buttonHeight); // ALL Button
-        allButton.setHorizontalAlignment(SwingConstants.CENTER);
-        allButton.setBackground(defaultButtonBackgroundColor);
-        allButton.setForeground(defaultButtonForegroundColor);
-        allButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        allButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        allButton.setBorderPainted(true);
-        allButton.setOpaque(true);
-        allButton.setFocusPainted(false);
-        allButton.addActionListener(main);
-        display.add(allButton);
+        getAllButton().setBounds(leftMargin, buttonRow2, buttonWidth, buttonHeight); // ALL Button
+        getAllButton().setHorizontalAlignment(SwingConstants.CENTER);
+        getAllButton().setBackground(getDefaultButtonBackgroundColor());
+        getAllButton().setForeground(getDefaultButtonForegroundColor());
+        getAllButton().setBorder(new BevelBorder(BevelBorder.RAISED));
+        getAllButton().setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        getAllButton().setBorderPainted(true);
+        getAllButton().setOpaque(true);
+        getAllButton().setFocusPainted(false);
+        getAllButton().addActionListener(main);
+        display.add(getAllButton());
 
-        basicButton.setBounds(leftMargin, buttonRow1 + 2 * 3 * rowPitch, buttonWidth, buttonHeight); // ALL Button
-        basicButton.setHorizontalAlignment(SwingConstants.CENTER);
-        basicButton.setBackground(defaultButtonBackgroundColor);
-        basicButton.setForeground(defaultButtonForegroundColor);
-        basicButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        basicButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        basicButton.setBorderPainted(true);
-        basicButton.setOpaque(true);
-        basicButton.setFocusPainted(false);
-        basicButton.addActionListener(main);
-        display.add(basicButton);
+        getBasicButton().setBounds(leftMargin, buttonRow1 + 2 * 3 * rowPitch, buttonWidth, buttonHeight); // ALL Button
+        getBasicButton().setHorizontalAlignment(SwingConstants.CENTER);
+        getBasicButton().setBackground(getDefaultButtonBackgroundColor());
+        getBasicButton().setForeground(getDefaultButtonForegroundColor());
+        getBasicButton().setBorder(new BevelBorder(BevelBorder.RAISED));
+        getBasicButton().setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        getBasicButton().setBorderPainted(true);
+        getBasicButton().setOpaque(true);
+        getBasicButton().setFocusPainted(false);
+        getBasicButton().addActionListener(main);
+        display.add(getBasicButton());
 
-        commButton.setBounds(middleMargin, buttonRow2 + rowPitch, buttonWidth, buttonHeight); // COMM button
-        commButton.setHorizontalAlignment(SwingConstants.CENTER);
-        commButton.setBackground(defaultButtonBackgroundColor);
-        commButton.setForeground(defaultButtonForegroundColor);
-        commButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        commButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        commButton.setBorderPainted(true);
-        commButton.setOpaque(true);
-        commButton.setFocusPainted(false);
-        commButton.addActionListener(main);
-        display.add(commButton);
+        getCommButton().setBounds(middleMargin, buttonRow2 + rowPitch, buttonWidth, buttonHeight); // COMM button
+        getCommButton().setHorizontalAlignment(SwingConstants.CENTER);
+        getCommButton().setBackground(getDefaultButtonBackgroundColor());
+        getCommButton().setForeground(getDefaultButtonForegroundColor());
+        getCommButton().setBorder(new BevelBorder(BevelBorder.RAISED));
+        getCommButton().setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        getCommButton().setBorderPainted(true);
+        getCommButton().setOpaque(true);
+        getCommButton().setFocusPainted(false);
+        getCommButton().addActionListener(main);
+        display.add(getCommButton());
 
         errorCodeDisplayField.setBounds(leftMargin, 500, screenWidth - (screenWidth/5), 100);
         errorFieldBorder.setRect(leftMargin, 500, 4 * screenWidth/5, 100);
@@ -118,8 +118,8 @@ public class UserExperience extends JComponent implements ActionListener
 
         printButton.setBounds(middleMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // PRINT button
         printButton.setHorizontalAlignment(SwingConstants.CENTER);
-        printButton.setBackground(defaultButtonBackgroundColor);
-        printButton.setForeground(defaultButtonForegroundColor);
+        printButton.setBackground(getDefaultButtonBackgroundColor());
+        printButton.setForeground(getDefaultButtonForegroundColor());
         printButton.setBorder(new BevelBorder(BevelBorder.RAISED));
         printButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
         printButton.setBorderPainted(true);
@@ -130,8 +130,8 @@ public class UserExperience extends JComponent implements ActionListener
 
         resetButton.setBounds(leftMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // RESET button
         resetButton.setHorizontalAlignment(SwingConstants.CENTER);
-        resetButton.setBackground(defaultButtonBackgroundColor);
-        resetButton.setForeground(defaultButtonForegroundColor);
+        resetButton.setBackground(getDefaultButtonBackgroundColor());
+        resetButton.setForeground(getDefaultButtonForegroundColor());
         resetButton.setBorder(new BevelBorder(BevelBorder.RAISED));
         resetButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
         resetButton.setBorderPainted(true);
@@ -142,8 +142,8 @@ public class UserExperience extends JComponent implements ActionListener
 
         runButton.setBounds(rightMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // RUN button
         runButton.setHorizontalAlignment(SwingConstants.CENTER);
-        runButton.setBackground(defaultButtonBackgroundColor);
-        runButton.setForeground(defaultButtonForegroundColor);
+        runButton.setBackground(getDefaultButtonBackgroundColor());
+        runButton.setForeground(getDefaultButtonForegroundColor());
         runButton.setBorder(new BevelBorder(BevelBorder.RAISED));
         runButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
         runButton.setBorderPainted(true);
@@ -152,41 +152,41 @@ public class UserExperience extends JComponent implements ActionListener
         runButton.addActionListener(main);
         display.add(runButton);
 
-        screenButton.setBounds(leftMargin, buttonRow1 + 2 * 5 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
-        screenButton.setHorizontalAlignment(SwingConstants.CENTER);
-        screenButton.setBackground(defaultButtonBackgroundColor);
-        screenButton.setForeground(defaultButtonForegroundColor);
-        screenButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        screenButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        screenButton.setBorderPainted(true);
-        screenButton.setOpaque(true);
-        screenButton.setFocusPainted(false);
-        screenButton.addActionListener(main);
-        display.add(screenButton);
+        getScreenButton().setBounds(leftMargin, buttonRow1 + 2 * 5 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
+        getScreenButton().setHorizontalAlignment(SwingConstants.CENTER);
+        getScreenButton().setBackground(getDefaultButtonBackgroundColor());
+        getScreenButton().setForeground(getDefaultButtonForegroundColor());
+        getScreenButton().setBorder(new BevelBorder(BevelBorder.RAISED));
+        getScreenButton().setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        getScreenButton().setBorderPainted(true);
+        getScreenButton().setOpaque(true);
+        getScreenButton().setFocusPainted(false);
+        getScreenButton().addActionListener(main);
+        display.add(getScreenButton());
 
-        sensorsButton.setBounds(leftMargin, buttonRow1 + 3 * rowPitch, buttonWidth, buttonHeight); // SENSORS button
-        sensorsButton.setHorizontalAlignment(SwingConstants.CENTER);
-        sensorsButton.setBackground(defaultButtonBackgroundColor);
-        sensorsButton.setForeground(defaultButtonForegroundColor);
-        sensorsButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        sensorsButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        sensorsButton.setBorderPainted(true);
-        sensorsButton.setOpaque(true);
-        sensorsButton.setFocusPainted(false);
-        sensorsButton.addActionListener(main);
-        display.add(sensorsButton);
+        getSensorsButton().setBounds(leftMargin, buttonRow1 + 3 * rowPitch, buttonWidth, buttonHeight); // SENSORS button
+        getSensorsButton().setHorizontalAlignment(SwingConstants.CENTER);
+        getSensorsButton().setBackground(getDefaultButtonBackgroundColor());
+        getSensorsButton().setForeground(getDefaultButtonForegroundColor());
+        getSensorsButton().setBorder(new BevelBorder(BevelBorder.RAISED));
+        getSensorsButton().setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        getSensorsButton().setBorderPainted(true);
+        getSensorsButton().setOpaque(true);
+        getSensorsButton().setFocusPainted(false);
+        getSensorsButton().addActionListener(main);
+        display.add(getSensorsButton());
 
-        teeButton.setBounds(leftMargin, buttonRow1 + 4 * rowPitch, buttonWidth, buttonHeight); // TEE button
-        teeButton.setHorizontalAlignment(SwingConstants.CENTER);
-        teeButton.setBackground(defaultButtonBackgroundColor);
-        teeButton.setForeground(defaultButtonForegroundColor);
-        teeButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        teeButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        teeButton.setBorderPainted(true);
-        teeButton.setOpaque(true);
-        teeButton.setFocusPainted(false);
-        teeButton.addActionListener(main);
-        display.add(teeButton);
+        getTeeButton().setBounds(leftMargin, buttonRow1 + 4 * rowPitch, buttonWidth, buttonHeight); // TEE button
+        getTeeButton().setHorizontalAlignment(SwingConstants.CENTER);
+        getTeeButton().setBackground(getDefaultButtonBackgroundColor());
+        getTeeButton().setForeground(getDefaultButtonForegroundColor());
+        getTeeButton().setBorder(new BevelBorder(BevelBorder.RAISED));
+        getTeeButton().setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+        getTeeButton().setBorderPainted(true);
+        getTeeButton().setOpaque(true);
+        getTeeButton().setFocusPainted(false);
+        getTeeButton().addActionListener(main);
+        display.add(getTeeButton());
 
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);
@@ -203,39 +203,6 @@ public class UserExperience extends JComponent implements ActionListener
         g2.draw(errorFieldBorder);
         g2.setFont(buttonFont);
         FontRenderContext frc = g2.getFontRenderContext();
-
-        if (isCommTestRunning)
-        {
-            commButton.setOpaque(true);
-            commButton.setBackground(pressedButtonColor);
-        }else{commButton.setBackground(defaultButtonBackgroundColor);}
-        if (isAllTestRunning)
-        {
-            allButton.setOpaque(true);
-            allButton.setBackground(pressedButtonColor);
-        }else {allButton.setBackground(defaultButtonBackgroundColor);}
-        if (isTeeTestRunning)
-        {
-            teeButton.setOpaque(true);
-            teeButton.setBackground(pressedButtonColor);
-        }else{
-            teeButton.setBackground(defaultButtonBackgroundColor);
-        }
-        if (isSensorsTestRunning)
-        {
-            sensorsButton.setOpaque(true);
-            sensorsButton.setBackground(pressedButtonColor);
-        }else{sensorsButton.setBackground(defaultButtonBackgroundColor);}
-        if (isScreenTestRunning)
-        {
-            screenButton.setOpaque(true);
-            screenButton.setBackground(pressedButtonColor);
-        }else{screenButton.setBackground(defaultButtonBackgroundColor);}
-        if (isBasicTestRunning)
-        {
-            basicButton.setOpaque(true);
-            basicButton.setBackground(pressedButtonColor);
-        }else{basicButton.setBackground(defaultButtonBackgroundColor);}
         errorCodeDisplayField.setText(codeCat);
         drawSensorBubbles(g2, frc);
         drawEmitterBubbles(g2, frc);
@@ -255,7 +222,7 @@ public class UserExperience extends JComponent implements ActionListener
             fontWidth = (float) bounds.getWidth();
             fontHeight = (float)(1.2 * bounds.getHeight());
             g2.setColor(Color.WHITE);
-            g2.drawString(s, (int) ((leftMargin + main.emitterBubblePitch) + (main.emitterBubblePitch * i) + fontWidth), screenHeight/30 + fontHeight);
+            g2.drawString(s, (int) ((leftMargin + main.emitterBubblePitch) + (main.emitterBubblePitch * i) + fontWidth), (int)bubba.circle.y + fontHeight);
         }
     }
     private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
@@ -264,7 +231,6 @@ public class UserExperience extends JComponent implements ActionListener
         for (int i = 0; i < main.sensorBubbleList.length; i++)// Load 16 sensor indicators into bubble array
         {
             Bubble bubba = main.sensorBubbleList[i];
-            //System.out.println(".backgroundColor[" + i + "] => : " + bubba.backgroundColor);
             g2.setColor(bubba.backgroundColor);
             g2.fill(bubba.circle);
             g2.setColor(Color.ORANGE);
@@ -278,7 +244,9 @@ public class UserExperience extends JComponent implements ActionListener
                 fontWidth = fontWidth /4;
             }
             g2.setColor(Color.WHITE);
-            g2.drawString(s, (int) (leftMargin + (main.sensorBubblePitch * i) + fontWidth), main.sensorRowYpos * 4 * fontHeight);
+            g2.drawString(s, (int) ((leftMargin  + (main.sensorBubblePitch * i) + fontWidth)), (int)bubba.circle.y + fontHeight);
+
+            //g2.drawString(s, (int) (leftMargin + (main.sensorBubblePitch * i) + fontWidth), main.sensorRowYpos * 4 * fontHeight);
 
         }
     }
@@ -331,6 +299,100 @@ public class UserExperience extends JComponent implements ActionListener
     public void setSensorErrorList(boolean[] sensorErrorList)
     {
         this.sensorErrorList = sensorErrorList;
+    }
+
+    public JButton getSensorsButton()
+    {
+        return sensorsButton;
+    }
+
+    public void setSensorsButton(JButton sensorsButton)
+    {
+        this.sensorsButton = sensorsButton;
+    }
+
+    public Color getDefaultButtonForegroundColor()
+    {
+        return defaultButtonForegroundColor;
+    }
+
+    public void setDefaultButtonForegroundColor(Color defaultButtonForegroundColor)
+    {
+        this.defaultButtonForegroundColor = defaultButtonForegroundColor;
+    }
+
+    public Color getPressedButtonColor()
+    {
+        return pressedButtonColor;
+    }
+
+    public void setPressedButtonColor(Color pressedButtonColor)
+    {
+        this.pressedButtonColor = pressedButtonColor;
+    }
+    public void setButtonColor(JButton button, Color buttonColor)
+    {
+        button.setBackground(buttonColor);
+    }
+
+    public Color getDefaultButtonBackgroundColor()
+    {
+        return defaultButtonBackgroundColor;
+    }
+
+    public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor)
+    {
+        this.defaultButtonBackgroundColor = defaultButtonBackgroundColor;
+    }
+
+    public JButton getAllButton()
+    {
+        return allButton;
+    }
+
+    public void setAllButton(JButton allButton)
+    {
+        this.allButton = allButton;
+    }
+
+    public JButton getTeeButton()
+    {
+        return teeButton;
+    }
+
+    public void setTeeButton(JButton teeButton)
+    {
+        this.teeButton = teeButton;
+    }
+
+    public JButton getScreenButton()
+    {
+        return screenButton;
+    }
+
+    public void setScreenButton(JButton screenButton)
+    {
+        this.screenButton = screenButton;
+    }
+
+    public JButton getCommButton()
+    {
+        return commButton;
+    }
+
+    public void setCommButton(JButton commButton)
+    {
+        this.commButton = commButton;
+    }
+
+    public JButton getBasicButton()
+    {
+        return basicButton;
+    }
+
+    public void setBasicButton(JButton basicButton)
+    {
+        this.basicButton = basicButton;
     }
 }
 
