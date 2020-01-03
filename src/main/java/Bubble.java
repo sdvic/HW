@@ -5,11 +5,11 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 class Bubble
 {
-    int bubbleDiameter = 30;
+    private int screenWidth = getDefaultToolkit().getScreenSize().width;
+    int bubbleDiameter = screenWidth/30;
     int bubbleXpos;
     int bubbleYpos;
     Color backgroundColor;
-    private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int sensorBubblePitch = screenWidth/18;
     private int emitterBubblePitch = screenWidth/6;
     Ellipse2D.Double circle;

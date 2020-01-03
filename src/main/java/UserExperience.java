@@ -12,7 +12,6 @@ import static java.awt.Toolkit.getDefaultToolkit;
 public class UserExperience extends JComponent implements ActionListener
 {
     private Main main;
-    private Dimension screenSize;
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int middleMargin = screenWidth/2;
@@ -20,9 +19,9 @@ public class UserExperience extends JComponent implements ActionListener
     private int rowPitch = screenHeight/20;
     private int buttonRow1 = screenHeight/10;
     private int buttonRow2 = screenHeight/5;
-    private int buttonWidth = 150;
-    private int buttonHeight = 34;
-    private int leftMargin = 100;
+    private int buttonWidth = screenWidth/8;
+    private int buttonHeight = screenHeight/20;
+    private int leftMargin = screenWidth/10;
     private JButton allButton = new JButton("ALL");
     private JButton teeButton = new JButton("TEE");
     private JButton screenButton = new JButton("SCREEN");
@@ -38,22 +37,14 @@ public class UserExperience extends JComponent implements ActionListener
     private Font passFailFont = new Font("Bank Gothic", Font.BOLD, 22);
     private boolean[] emitterErrorList;
     private boolean[] sensorErrorList;
-    private Ellipse2D.Double[] sensorBubbleArray = new Ellipse2D.Double[16];
     private int errBit; // Error bit position
     private int errEmitter = 2;      // byte used for emitter errors
-    private boolean isCommTestRunning;
-    private boolean isAllTestRunning;
-    private boolean isBasicTestRunning;
-    private boolean isTeeTestRunning;
-    private boolean isSensorsTestRunning;
     private BasicStroke bubbleStroke = new BasicStroke(4.0f);
-    private int bubbleDiameter = 30;
     private float fontWidth;
     private float fontHeight;
     private Color pressedButtonColor = Color.GREEN;
-    private Color defaultButtonBackgroundColor = Color.LIGHT_GRAY;
-    private Color defaultButtonForegroundColor = Color.DARK_GRAY;
-    private boolean isScreenTestRunning;
+    private Color defaultButtonBackgroundColor = Color.BLACK;
+    private Color defaultButtonForegroundColor = Color.WHITE;
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
     private Timer paintTicker = new Timer(1000, this);
@@ -64,8 +55,7 @@ public class UserExperience extends JComponent implements ActionListener
         this.main = main;
         display = new JFrame(version);
         display.setType(Window.Type.UTILITY);
-        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        display.setSize(screenSize.width, screenSize.height);
+        display.setSize(screenWidth, screenHeight);
         display.setExtendedState(MAXIMIZED_BOTH);
         display.setUndecorated(true); // Remove title bar
         display.add(this);//Adds Graphics
@@ -96,7 +86,7 @@ public class UserExperience extends JComponent implements ActionListener
         getBasicButton().addActionListener(main);
         display.add(getBasicButton());
 
-        getCommButton().setBounds(middleMargin, buttonRow2 + rowPitch, buttonWidth, buttonHeight); // COMM button
+        getCommButton().setBounds(middleMargin, buttonRow2, buttonWidth, buttonHeight); // COMM button
         getCommButton().setHorizontalAlignment(SwingConstants.CENTER);
         getCommButton().setBackground(getDefaultButtonBackgroundColor());
         getCommButton().setForeground(getDefaultButtonForegroundColor());
@@ -116,7 +106,7 @@ public class UserExperience extends JComponent implements ActionListener
         errorCodeDisplayField.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
         display.add(errorCodeDisplayField);
 
-        printButton.setBounds(middleMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // PRINT button
+        printButton.setBounds(middleMargin, buttonRow1 + 2 * 5 * rowPitch, buttonWidth, buttonHeight); // PRINT button
         printButton.setHorizontalAlignment(SwingConstants.CENTER);
         printButton.setBackground(getDefaultButtonBackgroundColor());
         printButton.setForeground(getDefaultButtonForegroundColor());
@@ -128,7 +118,7 @@ public class UserExperience extends JComponent implements ActionListener
         printButton.addActionListener(main);
         display.add(printButton);
 
-        resetButton.setBounds(leftMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // RESET button
+        resetButton.setBounds(leftMargin, buttonRow1 + 2 * 5 * rowPitch, buttonWidth, buttonHeight); // RESET button
         resetButton.setHorizontalAlignment(SwingConstants.CENTER);
         resetButton.setBackground(getDefaultButtonBackgroundColor());
         resetButton.setForeground(getDefaultButtonForegroundColor());
@@ -140,19 +130,7 @@ public class UserExperience extends JComponent implements ActionListener
         resetButton.addActionListener(main);
         display.add(resetButton);
 
-        runButton.setBounds(rightMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // RUN button
-        runButton.setHorizontalAlignment(SwingConstants.CENTER);
-        runButton.setBackground(getDefaultButtonBackgroundColor());
-        runButton.setForeground(getDefaultButtonForegroundColor());
-        runButton.setBorder(new BevelBorder(BevelBorder.RAISED));
-        runButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
-        runButton.setBorderPainted(true);
-        runButton.setOpaque(true);
-        runButton.setFocusPainted(false);
-        runButton.addActionListener(main);
-        display.add(runButton);
-
-        getScreenButton().setBounds(leftMargin, buttonRow1 + 2 * 5 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
+        getScreenButton().setBounds(leftMargin, buttonRow1 + 5 * rowPitch, buttonWidth, buttonHeight); // SCREEN button
         getScreenButton().setHorizontalAlignment(SwingConstants.CENTER);
         getScreenButton().setBackground(getDefaultButtonBackgroundColor());
         getScreenButton().setForeground(getDefaultButtonForegroundColor());
@@ -245,154 +223,48 @@ public class UserExperience extends JComponent implements ActionListener
             }
             g2.setColor(Color.WHITE);
             g2.drawString(s, (int) ((leftMargin  + (main.sensorBubblePitch * i) + fontWidth)), (int)bubba.circle.y + fontHeight);
-
-            //g2.drawString(s, (int) (leftMargin + (main.sensorBubblePitch * i) + fontWidth), main.sensorRowYpos * 4 * fontHeight);
-
         }
     }
-
     @Override
-    public void actionPerformed(ActionEvent actionEvent)
-    {
-        repaint();
-    }
-
-
-    public void setAllTestRunning(boolean allTestRunning)
-    {
-        isAllTestRunning = allTestRunning;
-    }
-    public void setTeeTestRunning(boolean teeTestRunning)
-    {
-        isTeeTestRunning = teeTestRunning;
-    }
-    public void setScreenTestRunning(boolean iScreenTestRunning)
-    {
-        this.isScreenTestRunning = iScreenTestRunning;
-    }
-    public void setSensorsTestRunning(boolean sensorsTestRunning)
-    {
-        isSensorsTestRunning = sensorsTestRunning;
-    }
+    public void actionPerformed(ActionEvent actionEvent) {repaint(); }
     public void setCodeCat(String codeCat) { this.codeCat = codeCat; }
-    public JTextArea getErrorCodeDisplayField()
-    {
-        return errorCodeDisplayField;
-    }
-    public void setErrEmitter(int errEmitter)
-    {
-        this.errEmitter = errEmitter;
-    }
-    public void setCommTestRunning(boolean isCommTestRunning)
-    {
-        this.isCommTestRunning = isCommTestRunning;
-    }
-    public void setBasicTestRunning(boolean isBasicTestRunning) { this.isBasicTestRunning = isBasicTestRunning; }
-    public void setEmitterErrorList(boolean[] emitterErrorList)
-    {
-        this.emitterErrorList = emitterErrorList;
-    }
-    public boolean[] getSensorErrorList()
-    {
-        return sensorErrorList;
-    }
-    public void setSensorErrorList(boolean[] sensorErrorList)
-    {
-        this.sensorErrorList = sensorErrorList;
-    }
-
     public JButton getSensorsButton()
     {
         return sensorsButton;
     }
-
-    public void setSensorsButton(JButton sensorsButton)
-    {
-        this.sensorsButton = sensorsButton;
-    }
-
-    public Color getDefaultButtonForegroundColor()
-    {
-        return defaultButtonForegroundColor;
-    }
-
-    public void setDefaultButtonForegroundColor(Color defaultButtonForegroundColor)
-    {
-        this.defaultButtonForegroundColor = defaultButtonForegroundColor;
-    }
-
+    public Color getDefaultButtonForegroundColor() { return defaultButtonForegroundColor; }
+    {this.defaultButtonForegroundColor = defaultButtonForegroundColor;}
     public Color getPressedButtonColor()
     {
         return pressedButtonColor;
-    }
-
-    public void setPressedButtonColor(Color pressedButtonColor)
-    {
-        this.pressedButtonColor = pressedButtonColor;
     }
     public void setButtonColor(JButton button, Color buttonColor)
     {
         button.setBackground(buttonColor);
     }
-
     public Color getDefaultButtonBackgroundColor()
     {
         return defaultButtonBackgroundColor;
     }
-
-    public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor)
-    {
-        this.defaultButtonBackgroundColor = defaultButtonBackgroundColor;
-    }
-
     public JButton getAllButton()
     {
         return allButton;
     }
-
-    public void setAllButton(JButton allButton)
-    {
-        this.allButton = allButton;
-    }
-
     public JButton getTeeButton()
     {
         return teeButton;
     }
-
-    public void setTeeButton(JButton teeButton)
-    {
-        this.teeButton = teeButton;
-    }
-
     public JButton getScreenButton()
     {
         return screenButton;
     }
-
-    public void setScreenButton(JButton screenButton)
-    {
-        this.screenButton = screenButton;
-    }
-
     public JButton getCommButton()
     {
         return commButton;
     }
-
-    public void setCommButton(JButton commButton)
-    {
-        this.commButton = commButton;
-    }
-
     public JButton getBasicButton()
     {
         return basicButton;
-    }
-
-    public void setBasicButton(JButton basicButton)
-    {
-        this.basicButton = basicButton;
     }
 }
 
