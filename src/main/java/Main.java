@@ -7,7 +7,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main implements ActionListener
 {
-    private UserExperience ux = new UserExperience("ver 508.00", this);
+    private UserExperience ux = new UserExperience("ver 509.00", this);
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
@@ -60,6 +60,7 @@ public class Main implements ActionListener
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
         {
+            clearErrorLists();
             ux.getAllButton().setBackground(ux.getPressedButtonColor());
             testScreen(); // run first because to resetErrors() in test.
             testTee();
@@ -67,7 +68,9 @@ public class Main implements ActionListener
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     All Test Errors =>  ");
             ux.getAllButton().setBackground(ux.getDefaultButtonBackgroundColor());
         }
-        if (e.getActionCommand().equals("BASIC")) {
+        if (e.getActionCommand().equals("BASIC"))
+        {
+            clearErrorLists();
             ux.getBasicButton().setBackground(ux.getPressedButtonColor());
             ts.loadTestWordSequence(testByte);
             // Test in tee frame mode with on-board emitter
@@ -95,6 +98,7 @@ public class Main implements ActionListener
         }
         if (e.getActionCommand().equals("TEE"))//mode 2
         {
+            clearErrorLists();
             ux.getTeeButton().setBackground(ux.getPressedButtonColor());
             testTee();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Tee Test Errors =>  ");
@@ -102,6 +106,7 @@ public class Main implements ActionListener
         }
         if (e.getActionCommand().equals("SCREEN"))//mode 3
         {
+            clearErrorLists();
             ux.getScreenButton().setBackground(ux.getPressedButtonColor());
             testScreen();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Screen Test Errors =>  ");
@@ -109,6 +114,7 @@ public class Main implements ActionListener
         }
         if (e.getActionCommand().equals("SENSORS"))//mode 4
         {
+            clearErrorLists();
             ux.getSensorsButton().setBackground(ux.getPressedButtonColor());
             testSensors();
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Sensor Test Errors =>  ");
@@ -116,6 +122,7 @@ public class Main implements ActionListener
         }
         if (e.getActionCommand().equals("COMM"))//mode 5
         {
+            clearErrorLists();
             ux.getCommButton().setBackground(ux.getPressedButtonColor());
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
             for (int i = 0; i < 200; i++)
