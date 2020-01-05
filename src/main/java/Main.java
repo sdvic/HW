@@ -7,14 +7,13 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main implements ActionListener
 {
-    private UserExperience ux = new UserExperience("ver 509.01", this);
+
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
      /****************************************************************************************/
     private int testByte;
     private String codeCat;
-    private TestSequences ts = new TestSequences(this);
     private Bubble bubble = new Bubble(0, 0, Color.BLACK);
     Bubble[] sensorBubbleList = new Bubble[16];
     private Bubble[] emitterBubbleList = new Bubble[5];
@@ -25,7 +24,10 @@ public class Main implements ActionListener
     private int leftMargin = screenWidth / 10;
     int sensorBubblePitch = screenWidth / 20;
     int emitterBubblePitch = screenWidth / 10;
+    private int commTestProgress;
     private Main main;
+    private UserExperience ux;
+    private TestSequences ts;
 
     /************************************************
      * displayErrorList[0] => errDataOut
@@ -46,6 +48,8 @@ public class Main implements ActionListener
     public Main()
     {
         main = this;
+        ux = new UserExperience("ver 509.01", this);
+        ts = new TestSequences(this);
         for (int i = 0; i < getSensorBubbleList().length; i++)//Setup 16 sensor indicators
         {
             setBubble(sensorBubbleList, i, new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, BLACK));
@@ -125,13 +129,20 @@ public class Main implements ActionListener
             clearErrorLists();
             ux.getCommButton().setBackground(ux.getPressedButtonColor());
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
-            for (int i = 0; i < 200; i++)
+            for (commTestProgress = 0; commTestProgress < 200; commTestProgress++)
                 {
-                testBasic();
-                try {Thread.sleep(100);
+                    ux.getCommTestProgressBar().setValue(commTestProgress);
+                    testBasic();
+                    try
+                    {
+                        Thread.sleep(100);
+                    }
+                    catch (InterruptedException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                    System.out.println(commTestProgress);
                 }
-                catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-            }
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     COMM Test Errors => ");
             ux.getCommButton().setBackground(ux.getDefaultButtonBackgroundColor());
         }
@@ -258,10 +269,17 @@ public class Main implements ActionListener
         }
         return codeCat;
     }
-
     public Bubble[] getEmitterBubbleList() {return emitterBubbleList;}
     public void setBubble(Bubble[] bubbleList, int bubbleNumber, Bubble bubble) { bubbleList[bubbleNumber] = bubble; }
     public Bubble[] getSensorBubbleList(){return sensorBubbleList;}
+    public int getCommTestProgress()
+    {
+        return commTestProgress;
+    }
+    public void setCommTestProgress(int commTestProgress)
+    {
+        this.commTestProgress = commTestProgress;
+    }
 }
 
 

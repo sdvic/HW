@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import static java.awt.Frame.MAXIMIZED_BOTH;
@@ -48,7 +47,7 @@ public class UserExperience extends JComponent implements ActionListener
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
     private Timer paintTicker = new Timer(1000, this);
-
+    private JProgressBar commTestProgressBar = new JProgressBar();
     public UserExperience(String version, Main main)
     {
         paintTicker.start();
@@ -166,6 +165,12 @@ public class UserExperience extends JComponent implements ActionListener
         getTeeButton().addActionListener(main);
         display.add(getTeeButton());
 
+        commTestProgressBar.setMinimum(0);
+        commTestProgressBar.setMaximum(100);
+        commTestProgressBar.setStringPainted(true);
+        commTestProgressBar.setBounds(middleMargin, buttonRow2 + 40, buttonWidth, buttonHeight/2);
+        display.add(commTestProgressBar);
+
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -184,6 +189,8 @@ public class UserExperience extends JComponent implements ActionListener
         errorCodeDisplayField.setText(codeCat);
         drawSensorBubbles(g2, frc);
         drawEmitterBubbles(g2, frc);
+        System.out.println(main.getCommTestProgress());
+        commTestProgressBar.setValue(main.getCommTestProgress());
     }
     private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
     {
@@ -265,6 +272,16 @@ public class UserExperience extends JComponent implements ActionListener
     public JButton getBasicButton()
     {
         return basicButton;
+    }
+
+    public JProgressBar getCommTestProgressBar()
+    {
+        return commTestProgressBar;
+    }
+
+    public void setCommTestProgressBar(JProgressBar commTestProgressBar)
+    {
+        this.commTestProgressBar = commTestProgressBar;
     }
 }
 
