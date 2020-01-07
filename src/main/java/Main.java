@@ -28,6 +28,10 @@ public class Main implements ActionListener
     private Main main;
     private UserExperience ux;
     private TestSequences ts;
+    private Timer commTestTicker;
+    private JProgressBar commTestProgressBar = new JProgressBar();
+    private JButton commButton;
+    private Color defaultButtonBackgroundColor;
 
     /************************************************
      * displayErrorList[0] => errDataOut
@@ -44,12 +48,14 @@ public class Main implements ActionListener
     {
         SwingUtilities.invokeLater(() -> new Main());
     }
-
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 509.01", this);
+        ux = new UserExperience("ver 510.00", this);
         ts = new TestSequences(this);
+        commTestTicker = new Timer(100, ts);
+        commButton = ux.getCommButton();
+        defaultButtonBackgroundColor = ux.getDefaultButtonBackgroundColor();
         for (int i = 0; i < getSensorBubbleList().length; i++)//Setup 16 sensor indicators
         {
             setBubble(sensorBubbleList, i, new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, BLACK));
@@ -59,7 +65,6 @@ public class Main implements ActionListener
             setBubble(emitterBubbleList, i, new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, ux.getDefaultButtonBackgroundColor()));
         }
     }
-
     public void actionPerformed(ActionEvent e)
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
@@ -129,22 +134,8 @@ public class Main implements ActionListener
             clearErrorLists();
             ux.getCommButton().setBackground(ux.getPressedButtonColor());
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
-            for (commTestProgress = 0; commTestProgress < 200; commTestProgress++)
-                {
-                    ux.getCommTestProgressBar().setValue(commTestProgress);
-                    testBasic();
-                    try
-                    {
-                        Thread.sleep(100);
-                    }
-                    catch (InterruptedException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                    System.out.println(commTestProgress);
-                }
-            buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     COMM Test Errors => ");
-            ux.getCommButton().setBackground(ux.getDefaultButtonBackgroundColor());
+
+            commTestTicker.start();
         }
         if (e.getActionCommand().equals("RESET")) {
             clearErrorLists();
@@ -203,29 +194,25 @@ public class Main implements ActionListener
         }
     }
 
-    private void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin...mode 5
+    void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin...mode 5
     {
         ts.loadTestWordSequence(testByte);
-        // Test in tee frame mode with on-board emitter
-        ts.resetSequence();
+        ts.resetSequence();// Test in tee frame mode with on-board emitter
         ts.teeSequence();
         ts.emitterSelSequence();
         ts.emitterFireSequence(0);
         ts.teeShiftOutSequence(false);
-        // Test in tee frame mode with next board emitter
-        ts.resetSequence();
+        ts.resetSequence();// Test in tee frame mode with next board emitter
         ts.teeSequence();
         ts.emitterDeselSequence();
         ts.emitterFireSequence(1);
         ts.teeShiftOutSequence(true);
-        // Test the screen frame connections
-        ts.resetSequence();
+        ts.resetSequence(); // Test the screen frame connections
         ts.screenSequence();
         ts.emitterSelSequence();
         ts.emitterFireSequence(2);
         ts.screenShiftOutSequence();
-        // End of testing
-        ts.resetSequence();
+        ts.resetSequence(); // End of testing
     }
 
     // Reset all errors and set all indicators to default state before running tests
@@ -250,6 +237,7 @@ public class Main implements ActionListener
         ux.setButtonColor(ux.getCommButton(), ux.getDefaultButtonBackgroundColor());
         ux.setButtonColor(ux.getBasicButton(), ux.getDefaultButtonBackgroundColor());
         ux.setButtonColor(ux.getAllButton(), ux.getDefaultButtonBackgroundColor());
+        commTestProgressBar.setValue(0);
     }
 
     public String buildErrorCodeDisplayFieldString(boolean[] errorList, String testSource)
@@ -279,6 +267,46 @@ public class Main implements ActionListener
     public void setCommTestProgress(int commTestProgress)
     {
         this.commTestProgress = commTestProgress;
+    }
+
+    public JProgressBar getCommTestProgressBar()
+    {
+        return commTestProgressBar;
+    }
+
+    public void setCommTestProgressBar(JProgressBar commTestProgressBar)
+    {
+        this.commTestProgressBar = commTestProgressBar;
+    }
+
+    public Timer getCommTestTicker()
+    {
+        return commTestTicker;
+    }
+
+    public void setCommTestTicker(Timer commTestTicker)
+    {
+        this.commTestTicker = commTestTicker;
+    }
+
+    public JButton getCommButton()
+    {
+        return commButton;
+    }
+
+    public void setCommButton(JButton commButton)
+    {
+        this.commButton = commButton;
+    }
+
+    public Color getDefaultButtonBackgroundColor()
+    {
+        return defaultButtonBackgroundColor;
+    }
+
+    public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor)
+    {
+        this.defaultButtonBackgroundColor = defaultButtonBackgroundColor;
     }
 }
 

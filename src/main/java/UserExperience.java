@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
-
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import static java.awt.Toolkit.getDefaultToolkit;
 public class UserExperience extends JComponent implements ActionListener
@@ -41,13 +40,13 @@ public class UserExperience extends JComponent implements ActionListener
     private BasicStroke bubbleStroke = new BasicStroke(4.0f);
     private float fontWidth;
     private float fontHeight;
-    private Color pressedButtonColor = Color.GREEN;
+    private Color pressedButtonColor = new Color(93, 173, 226);
     private Color defaultButtonBackgroundColor = Color.BLACK;
     private Color defaultButtonForegroundColor = Color.WHITE;
     private String codeCat;
     private Rectangle2D.Double errorFieldBorder = new Rectangle2D.Double();
     private Timer paintTicker = new Timer(1000, this);
-    private JProgressBar commTestProgressBar = new JProgressBar();
+
     public UserExperience(String version, Main main)
     {
         paintTicker.start();
@@ -165,11 +164,11 @@ public class UserExperience extends JComponent implements ActionListener
         getTeeButton().addActionListener(main);
         display.add(getTeeButton());
 
-        commTestProgressBar.setMinimum(0);
-        commTestProgressBar.setMaximum(100);
-        commTestProgressBar.setStringPainted(true);
-        commTestProgressBar.setBounds(middleMargin, buttonRow2 + 40, buttonWidth, buttonHeight/2);
-        display.add(commTestProgressBar);
+        main.getCommTestProgressBar().setMinimum(0);
+        main.getCommTestProgressBar().setMaximum(100);
+        main.getCommTestProgressBar().setStringPainted(true);
+        main.getCommTestProgressBar().setBounds(middleMargin, buttonRow2 + 40, buttonWidth, buttonHeight/2);
+        display.add(main.getCommTestProgressBar());
 
         display.setSize(getDefaultToolkit().getScreenSize().width, getDefaultToolkit().getScreenSize().height);
         display.add(this);
@@ -189,8 +188,6 @@ public class UserExperience extends JComponent implements ActionListener
         errorCodeDisplayField.setText(codeCat);
         drawSensorBubbles(g2, frc);
         drawEmitterBubbles(g2, frc);
-        System.out.println(main.getCommTestProgress());
-        commTestProgressBar.setValue(main.getCommTestProgress());
     }
     private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
     {
@@ -272,16 +269,6 @@ public class UserExperience extends JComponent implements ActionListener
     public JButton getBasicButton()
     {
         return basicButton;
-    }
-
-    public JProgressBar getCommTestProgressBar()
-    {
-        return commTestProgressBar;
-    }
-
-    public void setCommTestProgressBar(JProgressBar commTestProgressBar)
-    {
-        this.commTestProgressBar = commTestProgressBar;
     }
 }
 

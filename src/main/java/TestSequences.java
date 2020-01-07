@@ -1,8 +1,10 @@
 import com.pi4j.io.gpio.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import static java.awt.Color.RED;
 
-public class TestSequences
+public class TestSequences implements ActionListener
 {
     // Raspberry Pi Gpio pins used for the tester
     private GpioController gpio = GpioFactory.getInstance();
@@ -192,7 +194,7 @@ public class TestSequences
         }
         pin35.high(); // ModeIn t20
         if (pin07.isHigh()) { errEmitter = 0;}  // Emitter Error
-        for (int i = 0; i < 8; i++) // t21-t36// shift out photo diode data from the sensor board CPLD shift register, low byte
+        for (int i = 0; i < 8; i++) // t21-t36// shift out photo diode data from the sensor board CPLD shift register, LOW byte
         {
             bubba = main.getSensorBubbleList()[i];
             pin36.low();  // ClkIn
@@ -218,7 +220,7 @@ public class TestSequences
             else {bubba.backgroundColor = Color.GREEN;}
             main.setBubble(main.getSensorBubbleList(), i, bubba);
         }
-        for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, high byte
+        for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, HIGH byte
         {
             bubba = main.getSensorBubbleList()[i + 8];
             pin36.low();  // ClkIn
@@ -423,83 +425,78 @@ public class TestSequences
     {
         this.errEmitter = errEmitter;
     }
-
     public void setErrDataOut(boolean errDataOut)
     {
         this.errDataOut = errDataOut;
     }
-
     public void setErrLpClkOut(boolean errLpClkOut)
     {
         this.errLpClkOut = errLpClkOut;
     }
-
     public void setErrModeOut(boolean errModeOut)
     {
         this.errModeOut = errModeOut;
     }
-
     public void setErrClkOut(boolean errClkOut)
     {
         this.errClkOut = errClkOut;
     }
-
     public void setErrEripple(boolean errEripple)
     {
         this.errEripple = errEripple;
     }
-
     public void setErrRclk(boolean errRclk)
     {
         this.errRclk = errRclk;
     }
-
     public void setErrShiftLoad(boolean errShiftLoad)
     {
         this.errShiftLoad = errShiftLoad;
     }
-
     public void setErrSin(boolean errSin)
     {
         this.errSin = errSin;
     }
-
     public boolean getErrLpClkOut()
     {
         return errLpClkOut;
     }
-
     public boolean getErrRipple()
     {
         return errEripple;
     }
-
     public boolean getErrRclk()
     {
         return errRclk;
     }
-
     public boolean getErrShiftLoad()
     {
         return errShiftLoad;
     }
-
     public int getErrEmitter()
     {
         return errEmitter;
     }
-
     public boolean[] getIndependentErrorList()
     {
         return independentErrorList;
     }
-
     public void setDisplayErrorList(int x, boolean trueFalse)
     {
         independentErrorList[x] = trueFalse;
     }
-
-    public void setSensorErrorList(int l, boolean b)
+    @Override
+    public void actionPerformed(ActionEvent e)
     {
+        if (main.getCommTestProgressBar().getValue() < 100)
+        {
+            main.getCommTestProgressBar().setValue(main.getCommTestProgressBar().getValue() + 1);
+            main.testBasic();
+        }else
+        {
+         main.getCommTestTicker().stop();
+         main.buildErrorCodeDisplayFieldString(getIndependentErrorList(), "     COMM Test Errors => ");
+         main.getCommButton().setBackground(main.getDefaultButtonBackgroundColor());
+        }
     }
 }
