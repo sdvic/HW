@@ -23,10 +23,10 @@ public class UserExperience extends JComponent implements ActionListener
     private JButton allButton = new JButton("ALL");
     private JButton teeButton = new JButton("TEE");
     private JButton screenButton = new JButton("SCREEN");
+    //private JButton screenButton = new JButton("SCREEN");
     private JButton sensorsButton = new JButton("SENSORS");
     private JButton commButton = new JButton("COMM");
     private JButton basicButton = new JButton("BASIC");
-    private JButton runButton = new JButton("RUN");
     private JButton resetButton = new JButton("RESET");
     private JButton printButton = new JButton("PRINT");
     private JTextArea errorCodeDisplayField = new JTextArea();

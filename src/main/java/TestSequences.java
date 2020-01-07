@@ -6,8 +6,7 @@ import static java.awt.Color.RED;
 
 public class TestSequences implements ActionListener
 {
-    // Raspberry Pi Gpio pins used for the tester
-    private GpioController gpio = GpioFactory.getInstance();
+    private GpioController gpio = GpioFactory.getInstance();// Raspberry Pi Gpio pins used for the tester
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
     private GpioPinDigitalInput pin40 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_29, "Raspi pin 40", PinPullResistance.PULL_UP);  // LpClkOut
     private GpioPinDigitalInput pin32 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_26, "Raspi pin 32", PinPullResistance.PULL_UP);  // ModeOut
@@ -42,7 +41,6 @@ public class TestSequences implements ActionListener
     private Main main;
     Bubble bubba;
     private boolean[] independentErrorList = new boolean[8];
-
     public TestSequences(Main main)
     {
         this.main = main;
@@ -82,7 +80,6 @@ public class TestSequences implements ActionListener
         pin36.low();  // ClkIn
         pin36.high(); // ClkIn
     }
-
     void emitterSelSequence() // Set CPLD state machine to select on-board emitter. Test signals
     {
         pin35.low();  // ModeIn t9
@@ -121,7 +118,6 @@ public class TestSequences implements ActionListener
         if (pin15.isHigh()) {independentErrorList[4] = true;}// Eripple Error
         pin36.high(); // ClkIn t14
     }
-
     void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
     {
         selectEmitterSequence(emitter);
@@ -163,7 +159,6 @@ public class TestSequences implements ActionListener
         if (pin07.isHigh()) {errEmitter = errEmitter | emitter;}   // Emitter Error
         main.setBubble(main.getEmitterBubbleList(), emitter, bubba);
     }
-
     void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
     {
         bubba = null;

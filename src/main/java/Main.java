@@ -7,7 +7,6 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main implements ActionListener
 {
-
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
      *      copyright 2019 Vic Wintriss                                                     *
@@ -43,7 +42,6 @@ public class Main implements ActionListener
      * displayErrorList[6] => errShiftLoad
      * displayErrorList[7] => errSin
      ************************************************/
-
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(() -> new Main());
@@ -82,26 +80,22 @@ public class Main implements ActionListener
             clearErrorLists();
             ux.getBasicButton().setBackground(ux.getPressedButtonColor());
             ts.loadTestWordSequence(testByte);
-            // Test in tee frame mode with on-board emitter
-            ts.resetSequence();
+            ts.resetSequence();// Test in tee frame mode with on-board emitter
             ts.teeSequence();
             ts.emitterSelSequence();
             ts.emitterFireSequence(0);
             ts.teeShiftOutSequence(false);
-            // Test in tee frame mode with next board emitter
-            ts.resetSequence();
+            ts.resetSequence(); // Test in tee frame mode with next board emitter
             ts.teeSequence();
             ts.emitterDeselSequence();
             ts.emitterFireSequence(1);
             ts.teeShiftOutSequence(true);
-            // Test the screen frame connections
-            ts.resetSequence();
+            ts.resetSequence(); // Test the screen frame connections
             ts.screenSequence();
             ts.emitterSelSequence();
             ts.emitterFireSequence(2);
             ts.screenShiftOutSequence();
-            // End of testing
-            ts.resetSequence();
+            ts.resetSequence();// End of testing
             buildErrorCodeDisplayFieldString(ts.getIndependentErrorList(), "     Basic Test Errors =>  ");
             ux.getBasicButton().setBackground(ux.getDefaultButtonBackgroundColor());
         }
@@ -146,7 +140,6 @@ public class Main implements ActionListener
         }
         ux.setCodeCat(codeCat);
     }
-
     private void testTee()// Set CPLD state machine to the tee frame and test all the emitters...mode 2
     {
         for (int i = 1; i < 5; i++) {
@@ -157,14 +150,12 @@ public class Main implements ActionListener
             ts.resetSequence();        // t1-t2
         }
     }
-
     void testScreen()// Set CPLD state machine to the screen frame and test the interconnection signals
     {
         ts.screenTestSequence();
         ts.screenShiftOutSequence();
         ts.resetSequence();
     }
-
     private void testSensors()// Test each individual IR photodiode for correct operation...mode 4
     {
         for (int i = 0; i < 8; i++) // walking 1 test pattern
@@ -193,7 +184,6 @@ public class Main implements ActionListener
             ts.resetSequence();                // t55-t56
         }
     }
-
     void testBasic() // Test the majority of the Comm Board functionality. Uses testByteHigh, testByteLow, emitter, Sin...mode 5
     {
         ts.loadTestWordSequence(testByte);
@@ -214,9 +204,7 @@ public class Main implements ActionListener
         ts.screenShiftOutSequence();
         ts.resetSequence(); // End of testing
     }
-
-    // Reset all errors and set all indicators to default state before running tests
-    public void clearErrorLists()
+    public void clearErrorLists() // Reset all errors and set all indicators to default state before running tests
     {
         for (int i = 0; i < ts.getIndependentErrorList().length; i++) {
             ts.setDisplayErrorList(i, false);
@@ -239,11 +227,9 @@ public class Main implements ActionListener
         ux.setButtonColor(ux.getAllButton(), ux.getDefaultButtonBackgroundColor());
         commTestProgressBar.setValue(0);
     }
-
     public String buildErrorCodeDisplayFieldString(boolean[] errorList, String testSource)
     {
         codeCat = testSource;
-
         for (int i = 0; i < errorList.length; i++) {
             if (errorList[i]) {
                 codeCat += (i + ", ");
@@ -268,46 +254,31 @@ public class Main implements ActionListener
     {
         this.commTestProgress = commTestProgress;
     }
-
     public JProgressBar getCommTestProgressBar()
     {
         return commTestProgressBar;
     }
-
-    public void setCommTestProgressBar(JProgressBar commTestProgressBar)
-    {
-        this.commTestProgressBar = commTestProgressBar;
-    }
-
+    public void setCommTestProgressBar(JProgressBar commTestProgressBar) {this.commTestProgressBar = commTestProgressBar;}
     public Timer getCommTestTicker()
     {
         return commTestTicker;
     }
-
     public void setCommTestTicker(Timer commTestTicker)
     {
         this.commTestTicker = commTestTicker;
     }
-
     public JButton getCommButton()
     {
         return commButton;
     }
-
     public void setCommButton(JButton commButton)
     {
         this.commButton = commButton;
     }
-
     public Color getDefaultButtonBackgroundColor()
     {
         return defaultButtonBackgroundColor;
     }
-
-    public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor)
-    {
-        this.defaultButtonBackgroundColor = defaultButtonBackgroundColor;
-    }
+    public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor){this.defaultButtonBackgroundColor = defaultButtonBackgroundColor; }
 }
-
 
