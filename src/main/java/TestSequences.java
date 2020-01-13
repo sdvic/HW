@@ -412,7 +412,20 @@ public class TestSequences implements ActionListener
             independentErrorList[3] = true;
         }
     }
-
+    @Override
+    public void actionPerformed(ActionEvent e)//run COMM test and progress bar
+    {
+        if (main.getCommTestProgressBar().getValue() < 100)
+        {
+            main.getCommTestProgressBar().setValue(main.getCommTestProgressBar().getValue() + 1);
+            main.testBasic();
+        }else
+        {
+            main.getCommTestTicker().stop();
+            main.buildErrorCodeDisplayFieldString(getIndependentErrorList(), "     COMM Test Errors => ");
+            main.getCommButton().setBackground(main.getDefaultButtonBackgroundColor());
+        }
+    }
     public void setErrTestByteHigh(int errTestByteHigh) { this.errTestByteHigh = errTestByteHigh; }
     public void setErrTestByteLow(int errTestByteLow){this.errTestByteLow = errTestByteLow;}
     public void setErrFail(boolean errFail){this.errFail = errFail;}
@@ -472,26 +485,9 @@ public class TestSequences implements ActionListener
     {
         return errEmitter;
     }
-    public boolean[] getIndependentErrorList()
-    {
-        return independentErrorList;
-    }
+    public boolean[] getIndependentErrorList() { return independentErrorList; }
     public void setDisplayErrorList(int x, boolean trueFalse)
     {
         independentErrorList[x] = trueFalse;
-    }
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (main.getCommTestProgressBar().getValue() < 100)
-        {
-            main.getCommTestProgressBar().setValue(main.getCommTestProgressBar().getValue() + 1);
-            main.testBasic();
-        }else
-        {
-         main.getCommTestTicker().stop();
-         main.buildErrorCodeDisplayFieldString(getIndependentErrorList(), "     COMM Test Errors => ");
-         main.getCommButton().setBackground(main.getDefaultButtonBackgroundColor());
-        }
     }
 }

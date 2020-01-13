@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.awt.Color.*;
 import static java.awt.Toolkit.getDefaultToolkit;
-
 public class Main implements ActionListener
 {
     /****************************************************************************************
@@ -13,8 +12,8 @@ public class Main implements ActionListener
      /****************************************************************************************/
     private int testByte;
     private String codeCat;
-    private Bubble bubble = new Bubble(0, 0, Color.BLACK);
-    Bubble[] sensorBubbleList = new Bubble[16];
+    //private Bubble bubble = new Bubble(0, 0, Color.BLACK);
+    private Bubble[] sensorBubbleList = new Bubble[16];
     private Bubble[] emitterBubbleList = new Bubble[5];
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
@@ -49,7 +48,7 @@ public class Main implements ActionListener
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 510.00", this);
+        ux = new UserExperience("ver 510.02", this);
         ts = new TestSequences(this);
         commTestTicker = new Timer(100, ts);
         commButton = ux.getCommButton();
@@ -128,7 +127,6 @@ public class Main implements ActionListener
             clearErrorLists();
             ux.getCommButton().setBackground(ux.getPressedButtonColor());
             testByte = (byte) 0b10101110; // byte used for testing sensors. Active low, LSB is D1
-
             commTestTicker.start();
         }
         if (e.getActionCommand().equals("RESET")) {
@@ -230,17 +228,19 @@ public class Main implements ActionListener
     public String buildErrorCodeDisplayFieldString(boolean[] errorList, String testSource)
     {
         codeCat = testSource;
-        for (int i = 0; i < errorList.length; i++) {
-            if (errorList[i]) {
+        for (int i = 0; i < errorList.length; i++)
+        {
+            if (errorList[i])
+            {
                 codeCat += (i + ", ");
             }
         }
-        codeCat += "\n\tEmitter Error # ";
-        for (int j = 0; j < getEmitterBubbleList().length; j++) {
-            if (getEmitterBubbleList()[j].backgroundColor.equals(RED)) {
-                codeCat += (j + ", ");
-            }
-        }
+//        codeCat += "\n\tEmitter Error # ";
+//        for (int j = 0; j < getEmitterBubbleList().length; j++) {
+//            if (getEmitterBubbleList()[j].backgroundColor.equals(RED)) {
+//                codeCat += (j + ", ");
+//            }
+//        }
         return codeCat;
     }
     public Bubble[] getEmitterBubbleList() {return emitterBubbleList;}
@@ -280,5 +280,10 @@ public class Main implements ActionListener
         return defaultButtonBackgroundColor;
     }
     public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor){this.defaultButtonBackgroundColor = defaultButtonBackgroundColor; }
+
+    public void setSensorBubbleList(Bubble[] sensorBubbleList)
+    {
+        this.sensorBubbleList = sensorBubbleList;
+    }
 }
 

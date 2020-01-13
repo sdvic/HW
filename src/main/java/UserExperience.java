@@ -51,6 +51,63 @@ public class UserExperience extends JComponent implements ActionListener
     {
         paintTicker.start();
         this.main = main;
+        buildButtons(version, main);
+    }
+    public void paint(Graphics g)
+    {
+        Graphics2D g2 = (Graphics2D) g;
+        String s = "";
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setStroke(bubbleStroke);
+        g2.draw(errorFieldBorder);
+        g2.setFont(buttonFont);
+        FontRenderContext frc = g2.getFontRenderContext();
+        errorCodeDisplayField.setText(codeCat);
+        drawSensorBubbles(g2, frc);
+        drawEmitterBubbles(g2, frc);
+    }
+    private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
+    {
+        String s;
+        for (int i = 0; i < main.getEmitterBubbleList().length; i++)//Load 4 emitter indicators
+        {
+            Bubble bubba = main.getEmitterBubbleList()[i];
+            g2.setColor(bubba.getBackgroundColor());
+            g2.fill(bubba.circle);
+            g2.setColor(Color.ORANGE);
+            g2.draw(bubba.circle);
+            s = "" + (i + 1);
+            Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
+            fontWidth = (float) bounds.getWidth();
+            fontHeight = (float)(1.2 * bounds.getHeight());
+            g2.setColor(Color.WHITE);
+            g2.drawString(s, (int) ((leftMargin + main.emitterBubblePitch) + (main.emitterBubblePitch * i) + fontWidth), (int)bubba.circle.y + fontHeight);
+        }
+    }
+    private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
+    {
+        String s = "";
+        for (int i = 0; i < main.getSensorBubbleList().length; i++)// Load 16 sensor indicators into bubble array
+        {
+            Bubble bubba = main.getSensorBubbleList()[i];
+            g2.setColor(bubba.backgroundColor);
+            g2.fill(bubba.circle);
+            g2.setColor(Color.ORANGE);
+            g2.draw(bubba.circle);
+            s = "" + (i + 1);
+            Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
+            fontWidth = (float) bounds.getWidth();
+            fontHeight = (float)(1.2 * bounds.getHeight());
+            if (fontWidth > 10)//for two digit bubble
+            {
+                fontWidth = fontWidth /4;
+            }
+            g2.setColor(Color.WHITE);
+            g2.drawString(s, (int) ((leftMargin  + (main.sensorBubblePitch * i) + fontWidth)), (int)bubba.circle.y + fontHeight);
+        }
+    }
+    private void buildButtons(String version, Main main)
+    {
         display = new JFrame(version);
         display.setType(Window.Type.UTILITY);
         display.setSize(screenWidth, screenHeight);
@@ -175,59 +232,6 @@ public class UserExperience extends JComponent implements ActionListener
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.getContentPane().setBackground(Color.BLACK);
         display.setVisible(true);
-    }
-   public void paint(Graphics g)
-    {
-        Graphics2D g2 = (Graphics2D) g;
-        String s = "";
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setStroke(bubbleStroke);
-        g2.draw(errorFieldBorder);
-        g2.setFont(buttonFont);
-        FontRenderContext frc = g2.getFontRenderContext();
-        errorCodeDisplayField.setText(codeCat);
-        drawSensorBubbles(g2, frc);
-        drawEmitterBubbles(g2, frc);
-    }
-    private void drawEmitterBubbles(Graphics2D g2, FontRenderContext frc)
-    {
-        String s;
-        for (int i = 0; i < main.getEmitterBubbleList().length; i++)//Load 4 emitter indicators
-        {
-            Bubble bubba = main.getEmitterBubbleList()[i];
-            g2.setColor(bubba.getBackgroundColor());
-            g2.fill(bubba.circle);
-            g2.setColor(Color.ORANGE);
-            g2.draw(bubba.circle);
-            s = "" + (i + 1);
-            Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-            fontWidth = (float) bounds.getWidth();
-            fontHeight = (float)(1.2 * bounds.getHeight());
-            g2.setColor(Color.WHITE);
-            g2.drawString(s, (int) ((leftMargin + main.emitterBubblePitch) + (main.emitterBubblePitch * i) + fontWidth), (int)bubba.circle.y + fontHeight);
-        }
-    }
-    private void drawSensorBubbles(Graphics2D g2, FontRenderContext frc)
-    {
-        String s = "";
-        for (int i = 0; i < main.sensorBubbleList.length; i++)// Load 16 sensor indicators into bubble array
-        {
-            Bubble bubba = main.sensorBubbleList[i];
-            g2.setColor(bubba.backgroundColor);
-            g2.fill(bubba.circle);
-            g2.setColor(Color.ORANGE);
-            g2.draw(bubba.circle);
-            s = "" + (i + 1);
-            Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
-            fontWidth = (float) bounds.getWidth();
-            fontHeight = (float)(1.2 * bounds.getHeight());
-            if (fontWidth > 10)//for two digit bubble
-            {
-                fontWidth = fontWidth /4;
-            }
-            g2.setColor(Color.WHITE);
-            g2.drawString(s, (int) ((leftMargin  + (main.sensorBubblePitch * i) + fontWidth)), (int)bubba.circle.y + fontHeight);
-        }
     }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {repaint(); }
