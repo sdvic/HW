@@ -14,7 +14,7 @@ public class Main implements ActionListener
     private String codeCat;
     //private Bubble bubble = new Bubble(0, 0, Color.BLACK);
     private Bubble[] sensorBubbleList = new Bubble[16];
-    private Bubble[] emitterBubbleList = new Bubble[5];
+    private Bubble[] emitterBubbleList = new Bubble[4];
     private int screenHeight = getDefaultToolkit().getScreenSize().height;
     private int screenWidth = getDefaultToolkit().getScreenSize().width;
     private int emitterRowYpos = screenHeight / 10;
@@ -48,7 +48,7 @@ public class Main implements ActionListener
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 510.02", this);
+        ux = new UserExperience("ver 511.00", this);
         ts = new TestSequences(this);
         commTestTicker = new Timer(100, ts);
         commButton = ux.getCommButton();
@@ -235,55 +235,23 @@ public class Main implements ActionListener
                 codeCat += (i + ", ");
             }
         }
-//        codeCat += "\n\tEmitter Error # ";
-//        for (int j = 0; j < getEmitterBubbleList().length; j++) {
-//            if (getEmitterBubbleList()[j].backgroundColor.equals(RED)) {
-//                codeCat += (j + ", ");
-//            }
-//        }
         return codeCat;
     }
     public Bubble[] getEmitterBubbleList() {return emitterBubbleList;}
     public void setBubble(Bubble[] bubbleList, int bubbleNumber, Bubble bubble) { bubbleList[bubbleNumber] = bubble; }
     public Bubble[] getSensorBubbleList(){return sensorBubbleList;}
-    public int getCommTestProgress()
-    {
-        return commTestProgress;
-    }
-    public void setCommTestProgress(int commTestProgress)
-    {
-        this.commTestProgress = commTestProgress;
-    }
     public JProgressBar getCommTestProgressBar()
     {
         return commTestProgressBar;
     }
-    public void setCommTestProgressBar(JProgressBar commTestProgressBar) {this.commTestProgressBar = commTestProgressBar;}
     public Timer getCommTestTicker()
     {
         return commTestTicker;
-    }
-    public void setCommTestTicker(Timer commTestTicker)
-    {
-        this.commTestTicker = commTestTicker;
     }
     public JButton getCommButton()
     {
         return commButton;
     }
-    public void setCommButton(JButton commButton)
-    {
-        this.commButton = commButton;
-    }
-    public Color getDefaultButtonBackgroundColor()
-    {
-        return defaultButtonBackgroundColor;
-    }
-    public void setDefaultButtonBackgroundColor(Color defaultButtonBackgroundColor){this.defaultButtonBackgroundColor = defaultButtonBackgroundColor; }
-
-    public void setSensorBubbleList(Bubble[] sensorBubbleList)
-    {
-        this.sensorBubbleList = sensorBubbleList;
-    }
+    public Color getDefaultButtonBackgroundColor() { return defaultButtonBackgroundColor; }
 }
 
