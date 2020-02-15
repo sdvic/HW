@@ -48,16 +48,16 @@ public class Main implements ActionListener
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 511.00", this);
+        ux = new UserExperience("ver 512.01", this);
         ts = new TestSequences(this);
         commTestTicker = new Timer(100, ts);
         commButton = ux.getCommButton();
         defaultButtonBackgroundColor = ux.getDefaultButtonBackgroundColor();
         for (int i = 0; i < getSensorBubbleList().length; i++)//Setup 16 sensor indicators
         {
-            setBubble(sensorBubbleList, i, new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, BLACK));
+            setBubble(sensorBubbleList, i, new Bubble(leftMargin + (sensorBubblePitch * i), sensorRowYpos, ux.getDefaultButtonBackgroundColor()));
         }
-        for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4? emitter indicators
+        for (int i = 0; i < getEmitterBubbleList().length; i++)//Setup 4 emitter indicators
         {
             setBubble(emitterBubbleList, i, new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, ux.getDefaultButtonBackgroundColor()));
         }
@@ -209,12 +209,12 @@ public class Main implements ActionListener
         }
         for (int i = 0; i < getEmitterBubbleList().length; i++) {
             Bubble bubba = getEmitterBubbleList()[i];
-            bubba.setBackgroundColor(BLACK);
+            bubba.setBackgroundColor(BLUE);
             getEmitterBubbleList()[i] = bubba;
         }
         for (int i = 0; i < getSensorBubbleList().length; i++) {
             Bubble bubba = getSensorBubbleList()[i];
-            bubba.setBackgroundColor(BLACK);
+            bubba.setBackgroundColor(BLUE);
             setBubble(getSensorBubbleList(), i, bubba);
         }
         ux.setButtonColor(ux.getSensorsButton(), ux.getDefaultButtonBackgroundColor());
