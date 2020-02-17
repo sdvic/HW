@@ -1,10 +1,21 @@
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
+import javafx.stage.Stage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.awt.Color.*;
 import static java.awt.Toolkit.getDefaultToolkit;
-public class Main implements ActionListener
+
+public class Main extends javafx.application.Application implements ActionListener
 {
     /****************************************************************************************
      *      Full Swing Golf Strip Test                                                      *
@@ -30,6 +41,13 @@ public class Main implements ActionListener
     private JProgressBar commTestProgressBar = new JProgressBar();
     private JButton commButton;
     private Color defaultButtonBackgroundColor;
+    //public static void main(String[] args) throws Exception { launch(args); }
+    private static final int R = 150;
+    Circle[] circles = new Circle[16];
+    Circle circle;
+    Text text;
+    Group group;
+    StackPane stack = new StackPane();
 
     /************************************************
      * displayErrorList[0] => errDataOut
@@ -41,14 +59,15 @@ public class Main implements ActionListener
      * displayErrorList[6] => errShiftLoad
      * displayErrorList[7] => errSin
      ************************************************/
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
+        launch(args);
         SwingUtilities.invokeLater(() -> new Main());
     }
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 512.01", this);
+        ux = new UserExperience("ver 512.04", this);
         ts = new TestSequences(this);
         commTestTicker = new Timer(100, ts);
         commButton = ux.getCommButton();
@@ -62,6 +81,30 @@ public class Main implements ActionListener
             setBubble(emitterBubbleList, i, new Bubble(leftMargin + emitterBubblePitch + (emitterBubblePitch * i), emitterRowYpos, ux.getDefaultButtonBackgroundColor()));
         }
     }
+
+    @Override
+    public void start(Stage stage) throws Exception
+    {
+        circles[0] = new Circle(R);
+        for (int i = 0; i < circles.length ; i++)
+        {
+            circle = circles[0];
+            circle.setStroke(javafx.scene.paint.Color.FORESTGREEN);
+            circle.setStrokeWidth(10);
+            circle.setStrokeType(StrokeType.INSIDE);
+            circle.setFill(javafx.scene.paint.Color.AZURE);
+            text = new Text("A");
+            text.setFont(new Font(30));
+            text.setBoundsType(TextBoundsType.VISUAL);
+            circle.relocate(R * i, 0);
+        }
+        group = new Group(circle);
+
+        stack.getChildren().addAll(group, text);
+        stage.setScene(new Scene(stack));
+        stage.show();
+    }
+
     public void actionPerformed(ActionEvent e)
     {
         if (e.getActionCommand().equals("ALL"))//mode 1
