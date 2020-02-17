@@ -67,7 +67,7 @@ public class Main extends javafx.application.Application implements ActionListen
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 512.04", this);
+        ux = new UserExperience("ver 512.07", this);
         ts = new TestSequences(this);
         commTestTicker = new Timer(100, ts);
         commButton = ux.getCommButton();
