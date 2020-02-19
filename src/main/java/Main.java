@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -8,11 +7,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.awt.Color.*;
+
+import static java.awt.Color.BLUE;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main extends javafx.application.Application implements ActionListener
@@ -67,7 +68,7 @@ public class Main extends javafx.application.Application implements ActionListen
     public Main()
     {
         main = this;
-        ux = new UserExperience("ver 512.07", this);
+        ux = new UserExperience("ver 512.08", this);
         ts = new TestSequences(this);
         commTestTicker = new Timer(100, ts);
         commButton = ux.getCommButton();
