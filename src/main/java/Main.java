@@ -16,7 +16,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 
 public class Main extends javafx.application.Application
 {
-    //public static void main(String[] args) throws Exception { launch(args); }
+    String version = "verson 600.03";
     private static final int R = 150;
     Circle[] circles = new Circle[16];
     Circle circle;

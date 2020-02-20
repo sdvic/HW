@@ -1,10 +1,6 @@
 import com.pi4j.io.gpio.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import static java.awt.Color.RED;
 
-public class TestSequences implements ActionListener
+public class TestSequences //implements ActionListener
 {
     private GpioController gpio = GpioFactory.getInstance();// Raspberry Pi Gpio pins used for the tester
     private GpioPinDigitalInput pin38 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, "Raspi pin 38", PinPullResistance.PULL_UP);  // DataOut
@@ -118,149 +114,149 @@ public class TestSequences implements ActionListener
         if (pin15.isHigh()) {independentErrorList[4] = true;}// Eripple Error
         pin36.high(); // ClkIn t14
     }
-    void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
-    {
-        selectEmitterSequence(emitter);
-        bubba = main.getEmitterBubbleList()[emitter];
-        pin35.low();  // ModeIn t15 ", eelIndex => " + eelIndex
-        if (pin40.isLow()) {// LpClkOut Error
-            bubba.backgroundColor = RED;
-        }else {bubba.backgroundColor = Color.GREEN;}
-        if (pin15.isLow()) {// Eripple Error
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        if (pin16.isLow()) {// Rclk Error
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        if (pin08.isHigh()) {// ShiftLoad Error
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        pin35.high(); // ModeIn t16
-        if (pin07.isHigh()) {// Emitter Error
-            errEmitter = errEmitter | emitter;
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        pin11.high(); // LedOn t17
-        pin36.low();  // ClkIn
-        if (pin16.isHigh()) {// Rclk Error
-            errRclk = true;
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        if (pin07.isLow()) {// Emitter Error
-            errEmitter = errEmitter | emitter;
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        pin36.high(); // ClkIn t18
-        pin11.low();  // LedOn
-        if (pin16.isLow()) {// Rclk Error
-            errRclk = true;
-            bubba.backgroundColor = RED;}
-        else {bubba.backgroundColor = Color.GREEN;}
-        if (pin07.isHigh()) {errEmitter = errEmitter | emitter;}   // Emitter Error
-        main.setBubble(main.getEmitterBubbleList(), emitter, bubba);
-    }
-    void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
-    {
-        bubba = null;
-        int data; // Photo diode test pattern data masked for each LED position
-        boolean state; // Pin state
-        if (sIn == false) {pin10.low();}   // Sin
-        else {pin10.high();} // Sin
-        pin35.low();   // ModeIn t19
-        if (pin40.isLow()) // LpClkOut Error
-        {
-            errLpClkOut = true;
-            independentErrorList[1] = true;
-        }
-        if (pin15.isLow()) // Eripple Error
-            {
-            errEripple = true;
-            independentErrorList[4] = true;
-            }
-        if (pin16.isLow()) // Rclk Error
-        {
-            errRclk = true;
-            independentErrorList[5] = true;
-        }
-        if (pin08.isHigh()) // ShiftLoad Error
-        {
-            errShiftLoad = true;
-            independentErrorList[6] = true;
-        }
-        pin35.high(); // ModeIn t20
-        if (pin07.isHigh()) { errEmitter = 0;}  // Emitter Error
-        for (int i = 0; i < 8; i++) // t21-t36// shift out photo diode data from the sensor board CPLD shift register, LOW byte
-        {
-            bubba = main.getSensorBubbleList()[i];
-            pin36.low();  // ClkIn
-            if (pin40.isHigh()) // LpClkOut Error
-            {
-                errLpClkOut = true;
-                bubba.backgroundColor = RED;
-            }
-            else {bubba.backgroundColor = Color.GREEN;}
-            pin36.high(); // ClkIn
-            if (pin40.isLow()) // LpClkOut Error
-            {
-                errLpClkOut = true;
-                bubba.backgroundColor = RED;
-            }
-            else {bubba.backgroundColor = Color.GREEN;}
-            data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
-            state = pin38.getState().isHigh();
-            if (state != (data != 0)) {
-                errDataOut = true;   // DataOut Error
-                bubba.backgroundColor = RED;
-            }
-            else {bubba.backgroundColor = Color.GREEN;}
-            main.setBubble(main.getSensorBubbleList(), i, bubba);
-        }
-        for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, HIGH byte
-        {
-            bubba = main.getSensorBubbleList()[i + 8];
-            pin36.low();  // ClkIn
-            if (pin40.isHigh()) // LpClkOut Error
-            {
-                errLpClkOut = true;
-                bubba.backgroundColor = RED;
-            }else {bubba.backgroundColor = Color.GREEN;}
-            pin36.high(); // ClkIn
-            if (pin40.isLow()) // LpClkOut Error
-            {
-                errLpClkOut = true;
-                bubba.backgroundColor = RED;
-            }
-            else {bubba.backgroundColor = Color.GREEN;}
-            data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
-            state = pin38.getState().isHigh();
-            if (state != (data != 0)) // DataOut Error
-            {
-                errDataOut = true;
-                bubba.backgroundColor = RED;
-            }
-            else {bubba.backgroundColor = Color.GREEN;}
-            pin36.low();  // ClkIn t55  // shift out Sin data
-            if (pin40.isHigh()) // LpClkOut Error
-            {
-                errLpClkOut = true;
-                bubba.backgroundColor = RED;
-            }else { bubba.backgroundColor = Color.GREEN; }
-            pin36.high(); // ClkIn t56
-            if (pin40.isLow()) // LpClkOut Error
-            {
-                errLpClkOut = true;
-                bubba.backgroundColor = RED;
-            }
-            else {bubba.backgroundColor = Color.GREEN;}
-            state = pin38.getState().isHigh();
-            if (state != sIn) // Sin Error
-            {
-                errSin = true;
-                bubba.backgroundColor = RED;
-            }else {bubba.backgroundColor = Color.GREEN;}
-            main.setBubble(main.getSensorBubbleList(), i + 8, bubba);
-        }
-    }
+//    void emitterFireSequence(int emitter)// Set CPLD state machine to set emitter position, fire emitter. Test signals
+//    {
+//        selectEmitterSequence(emitter);
+//        bubba = main.getEmitterBubbleList()[emitter];
+//        pin35.low();  // ModeIn t15 ", eelIndex => " + eelIndex
+//        if (pin40.isLow()) {// LpClkOut Error
+//            bubba.backgroundColor = RED;
+//        }else {bubba.backgroundColor = Color.GREEN;}
+//        if (pin15.isLow()) {// Eripple Error
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        if (pin16.isLow()) {// Rclk Error
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        if (pin08.isHigh()) {// ShiftLoad Error
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        pin35.high(); // ModeIn t16
+//        if (pin07.isHigh()) {// Emitter Error
+//            errEmitter = errEmitter | emitter;
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        pin11.high(); // LedOn t17
+//        pin36.low();  // ClkIn
+//        if (pin16.isHigh()) {// Rclk Error
+//            errRclk = true;
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        if (pin07.isLow()) {// Emitter Error
+//            errEmitter = errEmitter | emitter;
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        pin36.high(); // ClkIn t18
+//        pin11.low();  // LedOn
+//        if (pin16.isLow()) {// Rclk Error
+//            errRclk = true;
+//            bubba.backgroundColor = RED;}
+//        else {bubba.backgroundColor = Color.GREEN;}
+//        if (pin07.isHigh()) {errEmitter = errEmitter | emitter;}   // Emitter Error
+//        main.setBubble(main.getEmitterBubbleList(), emitter, bubba);
+//    }
+//    void teeShiftOutSequence(boolean sIn) // Set CPLD state machine to shift out data from the tee frame, including Sin. Test signals
+//    {
+//        bubba = null;
+//        int data; // Photo diode test pattern data masked for each LED position
+//        boolean state; // Pin state
+//        if (sIn == false) {pin10.low();}   // Sin
+//        else {pin10.high();} // Sin
+//        pin35.low();   // ModeIn t19
+//        if (pin40.isLow()) // LpClkOut Error
+//        {
+//            errLpClkOut = true;
+//            independentErrorList[1] = true;
+//        }
+//        if (pin15.isLow()) // Eripple Error
+//            {
+//            errEripple = true;
+//            independentErrorList[4] = true;
+//            }
+//        if (pin16.isLow()) // Rclk Error
+//        {
+//            errRclk = true;
+//            independentErrorList[5] = true;
+//        }
+//        if (pin08.isHigh()) // ShiftLoad Error
+//        {
+//            errShiftLoad = true;
+//            independentErrorList[6] = true;
+//        }
+//        pin35.high(); // ModeIn t20
+//        if (pin07.isHigh()) { errEmitter = 0;}  // Emitter Error
+//        for (int i = 0; i < 8; i++) // t21-t36// shift out photo diode data from the sensor board CPLD shift register, LOW byte
+//        {
+//            bubba = main.getSensorBubbleList()[i];
+//            pin36.low();  // ClkIn
+//            if (pin40.isHigh()) // LpClkOut Error
+//            {
+//                errLpClkOut = true;
+//                bubba.backgroundColor = RED;
+//            }
+//            else {bubba.backgroundColor = Color.GREEN;}
+//            pin36.high(); // ClkIn
+//            if (pin40.isLow()) // LpClkOut Error
+//            {
+//                errLpClkOut = true;
+//                bubba.backgroundColor = RED;
+//            }
+//            else {bubba.backgroundColor = Color.GREEN;}
+//            data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
+//            state = pin38.getState().isHigh();
+//            if (state != (data != 0)) {
+//                errDataOut = true;   // DataOut Error
+//                bubba.backgroundColor = RED;
+//            }
+//            else {bubba.backgroundColor = Color.GREEN;}
+//            main.setBubble(main.getSensorBubbleList(), i, bubba);
+//        }
+//        for (int i = 0; i < 8; i++) // t37-t54 // shift out photo diode data from the sensor board CPLD shift register, HIGH byte
+//        {
+//            bubba = main.getSensorBubbleList()[i + 8];
+//            pin36.low();  // ClkIn
+//            if (pin40.isHigh()) // LpClkOut Error
+//            {
+//                errLpClkOut = true;
+//                bubba.backgroundColor = RED;
+//            }else {bubba.backgroundColor = Color.GREEN;}
+//            pin36.high(); // ClkIn
+//            if (pin40.isLow()) // LpClkOut Error
+//            {
+//                errLpClkOut = true;
+//                bubba.backgroundColor = RED;
+//            }
+//            else {bubba.backgroundColor = Color.GREEN;}
+//            data = testByte & i ^ 2; // current test pattern masked // test for correct IR detection by photo diodes
+//            state = pin38.getState().isHigh();
+//            if (state != (data != 0)) // DataOut Error
+//            {
+//                errDataOut = true;
+//                bubba.backgroundColor = RED;
+//            }
+//            else {bubba.backgroundColor = Color.GREEN;}
+//            pin36.low();  // ClkIn t55  // shift out Sin data
+//            if (pin40.isHigh()) // LpClkOut Error
+//            {
+//                errLpClkOut = true;
+//                bubba.backgroundColor = RED;
+//            }else { bubba.backgroundColor = Color.GREEN; }
+//            pin36.high(); // ClkIn t56
+//            if (pin40.isLow()) // LpClkOut Error
+//            {
+//                errLpClkOut = true;
+//                bubba.backgroundColor = RED;
+//            }
+//            else {bubba.backgroundColor = Color.GREEN;}
+//            state = pin38.getState().isHigh();
+//            if (state != sIn) // Sin Error
+//            {
+//                errSin = true;
+//                bubba.backgroundColor = RED;
+//            }else {bubba.backgroundColor = Color.GREEN;}
+//            main.setBubble(main.getSensorBubbleList(), i + 8, bubba);
+//        }
+//    }
 
     void screenShiftOutSequence()// Set CPLD state machine to shift out data from the screen frame. Test signals
     {
@@ -412,20 +408,20 @@ public class TestSequences implements ActionListener
             independentErrorList[3] = true;
         }
     }
-    @Override
-    public void actionPerformed(ActionEvent e)//run COMM test and progress bar
-    {
-        if (main.getCommTestProgressBar().getValue() < 100)
-        {
-            main.getCommTestProgressBar().setValue(main.getCommTestProgressBar().getValue() + 1);
-            main.testBasic();
-        }else
-        {
-            main.getCommTestTicker().stop();
-            main.buildErrorCodeDisplayFieldString(getIndependentErrorList(), "     COMM Test Errors => ");
-            main.getCommButton().setBackground(main.getDefaultButtonBackgroundColor());
-        }
-    }
+//    @Override
+//    public void actionPerformed(ActionEvent e)//run COMM test and progress bar
+//    {
+//        if (main.getCommTestProgressBar().getValue() < 100)
+//        {
+//            main.getCommTestProgressBar().setValue(main.getCommTestProgressBar().getValue() + 1);
+//            main.testBasic();
+//        }else
+//        {
+//            main.getCommTestTicker().stop();
+//            main.buildErrorCodeDisplayFieldString(getIndependentErrorList(), "     COMM Test Errors => ");
+//            main.getCommButton().setBackground(main.getDefaultButtonBackgroundColor());
+//        }
+//    }
     public void setErrTestByteHigh(int errTestByteHigh) { this.errTestByteHigh = errTestByteHigh; }
     public void setErrTestByteLow(int errTestByteLow){this.errTestByteLow = errTestByteLow;}
     public void setErrFail(boolean errFail){this.errFail = errFail;}
